@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experiences — HARUKAZ</title>
+  <meta name="description" content="Six curated matcha meditation experiences for executives, teams, and private clients. Toronto and across Canada.">
+  <link rel="icon" type="image/png" href="assets/Harukaz.png">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .service-feature {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      min-height: 560px;
+    }
+    .service-feature--reverse { direction: rtl; }
+    .service-feature--reverse > * { direction: ltr; }
+    .service-feature__image .img-placeholder { height: 100%; min-height: 400px; }
+    .service-feature__body {
+      padding: 72px 64px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .service-feature__price {
+      font-family: var(--font-display);
+      font-size: 28px;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .service-feature__detail { font-size: 13px; color: var(--text-muted); letter-spacing: 0.05em; margin-bottom: 28px; }
+    .service-feature__desc { color: rgba(204,204,204,0.85); line-height: 1.9; margin-bottom: 28px; }
+    .section--light .service-feature__desc { color: var(--text-light); }
+    .inclusions { margin-bottom: 32px; }
+    .inclusions__title { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+    .section--light .inclusions__title { color: var(--matcha); }
+    .inclusions ul { list-style: none; }
+    .inclusions ul li {
+      font-size: 14px; color: rgba(204,204,204,0.75); padding: 6px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      display: flex; gap: 12px; align-items: baseline;
+    }
+    .section--light .inclusions ul li { color: #555; border-bottom-color: rgba(0,0,0,0.07); }
+    .inclusions ul li::before { content: '—'; color: var(--gold); flex-shrink: 0; }
+    .section--light .inclusions ul li::before { color: var(--matcha); }
+
+    /* Shop section */
+    .shop-banner {
+      background: var(--card-1);
+      border: 1px solid var(--border);
+      padding: 64px;
+      text-align: center;
+    }
+    .shop-waitlist {
+      display: flex; gap: 0; max-width: 380px; margin: 28px auto 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .shop-waitlist input {
+      flex: 1; background: transparent; border: none; padding: 12px 0;
+      color: var(--text-dark); font-family: var(--font-body); font-size: 14px; outline: none;
+    }
+    .shop-waitlist input::placeholder { color: var(--text-muted); }
+    .shop-waitlist button {
+      font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--gold); padding: 12px 0 12px 20px; cursor: pointer;
+      background: none; border: none; font-family: var(--font-body);
+    }
+
+    @media (max-width: 768px) {
+      .service-feature { grid-template-columns: 1fr; }
+      .service-feature--reverse { direction: ltr; }
+      .service-feature__body { padding: 40px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav id="nav-persistent">
+  <a href="index.html" class="nav-logo-mark" aria-label="HARUKAZ Home">
+    <div class="logo-placeholder" aria-hidden="true">春</div>
+  </a>
+  <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">
+    <span class="toggle-text">MENU</span>
+    <span class="hamburger" aria-hidden="true"><span></span><span></span><span></span></span>
+  </button>
+</nav>
+<div id="nav-overlay" role="dialog" aria-modal="true">
+  <div class="nav-overlay__logo" aria-hidden="true"><img src="assets/Harukaz.png" alt="HARUKAZ"></div>
+  <ul class="nav-overlay__links">
+    <li><a href="index.html">HOME</a></li>
+    <li><a href="services.html">EXPERIENCES</a></li>
+    <li><a href="corporate.html">CORPORATE</a></li>
+    <li><a href="tea.html">TEA LIBRARY</a></li>
+    <li><a href="book.html">BOOK</a></li>
+    <li><a href="about.html">ABOUT</a></li>
+    <li><a href="contact.html">CONTACT</a></li>
+  </ul>
+</div>
+
+<!-- Page Hero -->
+<header class="page-hero">
+  <div class="container">
+    <div class="label reveal">EXPERIENCES</div>
+    <h1 class="reveal reveal-delay-1">Choose Your Experience</h1>
+    <p style="max-width:560px;color:rgba(204,204,204,0.75);margin-top:20px;line-height:1.8;" class="reveal reveal-delay-2">Each session is designed with one intention: to return you to yourself. The rest — focus, clarity, presence — follows naturally.</p>
+  </div>
+</header>
+
+<!-- ── 1. Executive Wellness ── -->
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+<section id="executive" class="section section--dark" style="padding:0;">
+  <div class="service-feature reveal">
+    <div class="service-feature__image">
+      <div class="img-placeholder" style="background:linear-gradient(135deg,#1A3320,#0A0A0A);height:100%;min-height:480px;"></div>
+    </div>
+    <div class="service-feature__body">
+      <div class="label" style="margin-bottom:20px;">CORPORATE</div>
+      <h2 style="margin-bottom:12px;">Corporate Executive Wellness</h2>
+      <p class="service-feature__price">From CAD $500</p>
+      <p class="service-feature__detail">8–15 people &nbsp;·&nbsp; 60–90 minutes &nbsp;·&nbsp; On-site or private venue</p>
+      <p class="service-feature__desc">Designed for leadership teams who measure performance seriously. A HARUKAZ practitioner leads your group through a full matcha meditation session — from the first intention-setting to the final, silent sip. The science behind each step is explained without jargon; the experience speaks louder than any slide deck.</p>
+      <div class="inclusions">
+        <p class="inclusions__title">Includes</p>
+        <ul>
+          <li>Guided meditation and matcha ceremony</li>
+          <li>Premium ceremonial-grade Uji matcha</li>
+          <li>Traditional bamboo chasen (whisk) for each participant</li>
+          <li>Expert facilitation and post-session debrief</li>
+          <li>Optional premium take-home wellness kit</li>
+        </ul>
+      </div>
+      <a href="book.html" class="btn btn--gold">Request This Experience</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── 2. Leadership Retreat ── -->
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+<section id="leadership" class="section section--light" style="padding:0;">
+  <div class="service-feature service-feature--reverse reveal">
+    <div class="service-feature__image">
+      <div class="img-placeholder" style="background:linear-gradient(135deg,#1F2D1A,#1A1A2D);height:100%;min-height:480px;"></div>
+    </div>
+    <div class="service-feature__body">
+      <div class="label" style="margin-bottom:20px;">RETREAT</div>
+      <h2 style="margin-bottom:12px;">Leadership &amp; Team Building</h2>
+      <p class="service-feature__price">From CAD $1,200</p>
+      <p class="service-feature__detail">15–30 people &nbsp;·&nbsp; Half-day format &nbsp;·&nbsp; Custom facilitation</p>
+      <p class="service-feature__desc">Collective stillness as the foundation of collective excellence. This immersive half-day format weaves matcha ceremony with guided team reflection, executive-function exercises, and structured conversation. Teams leave with shared language, genuine connection, and a practice they can sustain.</p>
+      <div class="inclusions">
+        <p class="inclusions__title">Includes</p>
+        <ul>
+          <li>Custom-facilitated matcha meditation session</li>
+          <li>Team reflection and leadership-theme exercises</li>
+          <li>Premium ceremonial matcha for all participants</li>
+          <li>Executive gift sets (one per person)</li>
+          <li>Post-session resource guide</li>
+        </ul>
+      </div>
+      <a href="book.html" class="btn btn--dark">Request This Experience</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── 3. Private Experience ── -->
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+<section id="private" class="section section--dark" style="padding:0;">
+  <div class="service-feature reveal">
+    <div class="service-feature__image">
+      <div class="img-placeholder" style="background:linear-gradient(135deg,#2D1A0D,#0A0A0A);height:100%;min-height:480px;"></div>
+    </div>
+    <div class="service-feature__body">
+      <div class="label" style="margin-bottom:20px;">PRIVATE</div>
+      <h2 style="margin-bottom:12px;">Private Matcha Experience</h2>
+      <p class="service-feature__price">From CAD $350</p>
+      <p class="service-feature__detail">Individuals or families &nbsp;·&nbsp; 45–75 minutes &nbsp;·&nbsp; Your location or ours</p>
+      <p class="service-feature__desc">For those who prefer their transformation without an audience. This intimate session is shaped entirely around you — your pace, your questions, your relationship to stillness. Particularly valued by high-net-worth individuals, luxury residence guests, and family offices seeking a private practice.</p>
+      <div class="inclusions">
+        <p class="inclusions__title">Includes</p>
+        <ul>
+          <li>One-to-one (or family) guided ceremony</li>
+          <li>Single-origin matcha selected for your palate</li>
+          <li>Full equipment provided and gifted</li>
+          <li>Personalised home practice guide</li>
+          <li>Optional follow-up session at reduced rate</li>
+        </ul>
+      </div>
+      <a href="book.html" class="btn btn--gold">Request This Experience</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── 4. 7-Day Ritual Subscription ── -->
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+<section id="ritual" class="section section--light" style="padding:0;">
+  <div class="service-feature service-feature--reverse reveal">
+    <div class="service-feature__image">
+      <div class="img-placeholder" style="background:linear-gradient(135deg,#0D1A0D,#2D2D1A);height:100%;min-height:480px;"></div>
+    </div>
+    <div class="service-feature__body">
+      <div class="label" style="margin-bottom:20px;">SUBSCRIPTION</div>
+      <h2 style="margin-bottom:12px;">7-Day Matcha Ritual</h2>
+      <p class="service-feature__price">CAD $120 / week</p>
+      <p class="service-feature__detail">Cancel anytime &nbsp;·&nbsp; Delivered to your door &nbsp;·&nbsp; Nationwide</p>
+      <p class="service-feature__desc">Like a 7-day cleanse — but for the mind. Seven single-origin matcha portions arrive each week, each chosen for a different sensory character. Paired with a daily intention card and access to our guided audio meditation library, this is the easiest, most sustainable way to build your practice from the inside out.</p>
+      <div class="inclusions">
+        <p class="inclusions__title">Includes</p>
+        <ul>
+          <li>Seven single-origin matcha portions (curated variety)</li>
+          <li>HARUKAZ brewing guide (printed)</li>
+          <li>Daily intention cards (7-card set, refreshed monthly)</li>
+          <li>Guided audio meditation access (online library)</li>
+          <li>Cancel or pause anytime — no commitment</li>
+        </ul>
+      </div>
+      <a href="book.html" class="btn btn--dark">Begin Your Practice</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── 5. At-Home Tasting ── -->
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+<section id="tasting" class="section section--dark" style="padding:0;">
+  <div class="service-feature reveal">
+    <div class="service-feature__image">
+      <div class="img-placeholder" style="background:linear-gradient(135deg,#1A1A2D,#0D2213);height:100%;min-height:480px;"></div>
+    </div>
+    <div class="service-feature__body">
+      <div class="label" style="margin-bottom:20px;">CONCIERGE</div>
+      <h2 style="margin-bottom:12px;">At-Home Tasting Experience</h2>
+      <p class="service-feature__price">CAD $400 / session</p>
+      <p class="service-feature__detail">Credited toward purchase &nbsp;·&nbsp; Home or office &nbsp;·&nbsp; Toronto and GTA</p>
+      <p class="service-feature__desc">For those who wish to taste before committing to a premium matcha. A HARUKAZ specialist arrives at your home or office with five to eight single-origin varieties, each prepared and presented in a curated tasting flight. You discover your matcha — the one that fits your palate, your practice, your life. The $400 session fee is credited in full toward any subsequent purchase.</p>
+      <div class="inclusions">
+        <p class="inclusions__title">Includes</p>
+        <ul>
+          <li>5–8 single-origin matcha varieties, freshly prepared</li>
+          <li>Guided sensory tasting with flavour-profile notes</li>
+          <li>All equipment and ceramics brought by HARUKAZ</li>
+          <li>$400 credited toward any matcha or kit purchase</li>
+          <li>"We come to you" — zero effort required</li>
+        </ul>
+      </div>
+      <a href="book.html" class="btn btn--gold">Book a Tasting</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── 6. Cuisine Pairing ── -->
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+<section id="pairing" class="section section--light" style="padding:0;">
+  <div class="service-feature service-feature--reverse reveal">
+    <div class="service-feature__image">
+      <div class="img-placeholder" style="background:linear-gradient(135deg,#1A0D0D,#2D1A1A);height:100%;min-height:480px;"></div>
+    </div>
+    <div class="service-feature__body">
+      <div class="label" style="margin-bottom:20px;">PAIRING</div>
+      <h2 style="margin-bottom:12px;">Matcha &amp; Cuisine Pairing</h2>
+      <p class="service-feature__price">From CAD $1,500</p>
+      <p class="service-feature__detail">Private dinners, corporate events &nbsp;·&nbsp; Custom menu &nbsp;·&nbsp; Chef collaboration</p>
+      <p class="service-feature__desc">A multi-course evening where each dish finds its matcha — and both become more. In collaboration with a private chef, HARUKAZ curates a pairing menu that moves through umami, sweet, bitter, and savoury notes, using different matcha varietals at each course. For private dinners, corporate cultural evenings, and those who understand that a great meal is also a great conversation.</p>
+      <div class="inclusions">
+        <p class="inclusions__title">Includes</p>
+        <ul>
+          <li>Multi-course menu designed around matcha pairing</li>
+          <li>Private chef collaboration (chef quoted separately)</li>
+          <li>5–7 single-origin matcha varietals</li>
+          <li>HARUKAZ ceramic tableware for the evening</li>
+          <li>Sommelier-style tasting notes for each pairing</li>
+        </ul>
+      </div>
+      <a href="book.html" class="btn btn--dark">Enquire About Pairing</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Shop section ── -->
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+<section class="section section--dark">
+  <div class="container">
+    <div class="section-header section-header--centered reveal">
+      <div class="label">SHOP</div>
+      <h2>The Wellness Objects</h2>
+      <p>A curated selection of meditation and lifestyle objects — chosen for quality, craft, and the belief that your environment shapes your mind.</p>
+    </div>
+
+    <div class="card-grid card-grid--3" style="margin-bottom:56px;">
+      <div class="card reveal" style="background:var(--card-1);">
+        <div class="img-placeholder img-placeholder--sq" style="background:linear-gradient(135deg,#1A1A0D,#0D1A1A);"></div>
+        <div class="card__body">
+          <span class="card__tag">MEDITATION</span>
+          <h3 class="card__title">Meditation Cushion</h3>
+          <p class="card__excerpt">Japanese zafu — buckwheat-filled, ethically sourced, made to last decades.</p>
+        </div>
+      </div>
+      <div class="card reveal reveal-delay-2" style="background:var(--card-1);">
+        <div class="img-placeholder img-placeholder--sq" style="background:linear-gradient(135deg,#1A0D1A,#1A1A0D);"></div>
+        <div class="card__body">
+          <span class="card__tag">INCENSE</span>
+          <h3 class="card__title">Japanese Incense</h3>
+          <p class="card__excerpt">Kyoto-sourced aloeswood and sandalwood blends. Smoke as ceremony.</p>
+        </div>
+      </div>
+      <div class="card reveal reveal-delay-4" style="background:var(--card-1);">
+        <div class="img-placeholder img-placeholder--sq" style="background:linear-gradient(135deg,#0D1A1A,#1A0D1A);"></div>
+        <div class="card__body">
+          <span class="card__tag">CERAMIC</span>
+          <h3 class="card__title">Hand-Thrown Chawan</h3>
+          <p class="card__excerpt">Each bowl unique. Imperfection as beauty — the wabi-sabi you can hold.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="shop-banner reveal">
+      <div class="label" style="justify-content:center;margin-bottom:16px;">COMING SOON</div>
+      <h3 style="font-family:var(--font-display);font-size:32px;font-weight:300;color:#fff;margin-bottom:12px;">The HARUKAZ Shop opens soon.</h3>
+      <p style="color:var(--text-muted);max-width:460px;margin:0 auto;">Join the waitlist — first access, founding member pricing, and a personal note from us when we open.</p>
+      <form class="shop-waitlist" onsubmit="return false;">
+        <input type="email" placeholder="Your email address" aria-label="Email for waitlist">
+        <button type="submit">Join →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ── Signature Gift Kit ── -->
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+<section class="section section--light">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="label">GIFT</div>
+      <h2>The Signature Gift Kit</h2>
+      <p>For the person who has everything — except stillness. Add a HARUKAZ gift kit to any experience booking, or enquire about bespoke corporate gifting.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;" class="reveal">
+      <div>
+        <div class="img-placeholder" style="background:linear-gradient(135deg,#1A3320,#2D2D2D);aspect-ratio:4/3;"></div>
+      </div>
+      <div>
+        <p style="color:var(--text-light);line-height:1.9;margin-bottom:24px;">Each gift kit arrives in a hand-pressed Japanese paper box. Inside: a 30g tin of ceremonial-grade Uji matcha, a hand-carved bamboo chasen, a ceramic measuring scoop, a linen preparation cloth, and a handwritten note explaining the ritual.</p>
+        <p style="color:var(--text-light);line-height:1.9;margin-bottom:32px;">This is not a wellness hamper. It is an invitation to begin a practice.</p>
+        <a href="book.html" class="text-link">Enquire About Gift Kits</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div style="text-align:center;margin-bottom:8px;">
+      <div class="footer-logo"><img src="assets/Harukaz.png" alt="HARUKAZ"></div>
+    </div>
+    <p class="footer-tagline">Matcha Meditation for Elevated Minds</p>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <p class="footer-col__heading">EXPERIENCES</p>
+        <ul>
+          <li><a href="#executive">Executive Wellness</a></li>
+          <li><a href="#leadership">Leadership Retreat</a></li>
+          <li><a href="#private">Private Experience</a></li>
+          <li><a href="#ritual">7-Day Ritual</a></li>
+          <li><a href="#tasting">At-Home Tasting</a></li>
+          <li><a href="#pairing">Cuisine Pairing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col__heading">CORPORATE</p>
+        <ul>
+          <li><a href="corporate.html">Wellness Programs</a></li>
+          <li><a href="corporate.html#science">Science Brief</a></li>
+          <li><a href="corporate.html#quiz">Resilience Quiz</a></li>
+          <li><a href="book.html">Partner With Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col__heading">TEA LIBRARY</p>
+        <ul>
+          <li><a href="tea.html">Origins</a></li>
+          <li><a href="tea.html">Science</a></li>
+          <li><a href="tea.html">Ceremony</a></li>
+          <li><a href="tea.html">Tea Events</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col__heading">COMPANY</p>
+        <ul>
+          <li><a href="about.html">About HARUKAZ</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="book.html">Book an Experience</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Toronto, Canada &nbsp;·&nbsp; <a href="mailto:hello@harukaz.com" style="color:var(--gold);">hello@harukaz.com</a></p>
+      <p>© 2026 HARUKAZ. All rights reserved.</p>
+      <p class="quote">"Because the quality of your life is determined by the quality of your attention."</p>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

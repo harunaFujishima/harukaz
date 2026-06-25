@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Corporate Wellness — HARUKAZ</title>
+  <meta name="description" content="Evidence-based matcha meditation wellness programs for organizations. The ROI of stillness.">
+  <link rel="icon" type="image/png" href="assets/Harukaz.png">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .biz-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .biz-stat {
+      padding: 40px 32px;
+      background: var(--card-1);
+      border-top: 2px solid var(--gold);
+    }
+    .biz-stat__figure {
+      font-family: var(--font-display);
+      font-size: clamp(40px, 5vw, 64px);
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+    .biz-stat__label { font-size: 15px; color: var(--text-dark); line-height: 1.7; margin-bottom: 12px; }
+    .biz-stat__source { font-size: 11px; color: var(--text-muted); font-style: italic; }
+
+    .resource-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+    .resource-card {
+      padding: 36px 32px;
+      border: 1px solid var(--border);
+      transition: border-color var(--transition-fast);
+    }
+    .resource-card:hover { border-color: var(--gold); }
+    .resource-card__num {
+      font-family: var(--font-display);
+      font-size: 48px;
+      font-weight: 300;
+      color: rgba(200,169,110,0.2);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+    .resource-card__title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      color: var(--text-dark);
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+    .resource-card__desc { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+
+    .partner-cta {
+      background: linear-gradient(135deg, var(--matcha-deep) 0%, #0A0A0A 100%);
+      padding: 100px 80px;
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .biz-stats { grid-template-columns: 1fr; }
+      .resource-grid { grid-template-columns: 1fr; }
+      .partner-cta { padding: 60px 32px; }
+    }
+    @media (max-width: 768px) {
+      .biz-stats { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="nav-persistent">
+  <a href="index.html" class="nav-logo-mark" aria-label="HARUKAZ Home">
+    <div class="logo-placeholder" aria-hidden="true">春</div>
+  </a>
+  <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">
+    <span class="toggle-text">MENU</span>
+    <span class="hamburger" aria-hidden="true"><span></span><span></span><span></span></span>
+  </button>
+</nav>
+<div id="nav-overlay" role="dialog" aria-modal="true">
+  <div class="nav-overlay__logo" aria-hidden="true"><img src="assets/Harukaz.png" alt="HARUKAZ"></div>
+  <ul class="nav-overlay__links">
+    <li><a href="index.html">HOME</a></li>
+    <li><a href="services.html">EXPERIENCES</a></li>
+    <li><a href="corporate.html">CORPORATE</a></li>
+    <li><a href="tea.html">TEA LIBRARY</a></li>
+    <li><a href="book.html">BOOK</a></li>
+    <li><a href="about.html">ABOUT</a></li>
+    <li><a href="contact.html">CONTACT</a></li>
+  </ul>
+</div>
+
+<!-- Hero -->
+<header class="page-hero">
+  <div class="container">
+    <div class="label reveal">CORPORATE</div>
+    <h1 class="reveal reveal-delay-1">The ROI of Stillness</h1>
+    <p style="max-width:580px;color:rgba(204,204,204,0.75);margin-top:20px;line-height:1.8;font-family:var(--font-display);font-size:20px;font-style:italic;" class="reveal reveal-delay-2">"Evidence-based wellness for organizations that take performance seriously."</p>
+  </div>
+</header>
+
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+
+<!-- The Business Case -->
+<section class="section section--dark">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="label">THE BUSINESS CASE</div>
+      <h2>The Numbers Your CFO Will Understand</h2>
+      <p>Wellness is not a soft topic. These figures come from the same institutions your board already trusts.</p>
+    </div>
+    <div class="biz-stats">
+      <div class="biz-stat reveal">
+        <p class="biz-stat__figure">$190B</p>
+        <p class="biz-stat__label">Burnout costs employers $125–190 billion per year in healthcare spending alone — before accounting for turnover, absenteeism, or lost productivity.</p>
+        <p class="biz-stat__source">Harvard Business Review</p>
+      </div>
+      <div class="biz-stat reveal reveal-delay-2">
+        <p class="biz-stat__figure">34%</p>
+        <p class="biz-stat__label">Disengaged employees cost organizations the equivalent of 34% of their annual salary in reduced productivity. Engagement is not an HR metric — it is a financial one.</p>
+        <p class="biz-stat__source">Gallup State of the Global Workplace</p>
+      </div>
+      <div class="biz-stat reveal reveal-delay-4">
+        <p class="biz-stat__figure">25%</p>
+        <p class="biz-stat__label">Organizations with strong, structured wellness programs report up to 25% lower employee turnover — significantly reducing recruitment and onboarding costs.</p>
+        <p class="biz-stat__source">SHRM Workplace Research</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+
+<!-- Science Brief -->
+<section id="science" class="section section--light">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="label">SCIENCE BRIEF</div>
+      <h2>Peer-Reviewed. Not Trend-Driven.</h2>
+      <p>Every HARUKAZ program is grounded in published, peer-reviewed research. These are the studies we cite — and the reason we can say what we say with confidence.</p>
+    </div>
+
+    <div class="reveal" style="overflow-x:auto;">
+      <table class="science-table">
+        <thead>
+          <tr>
+            <th>Finding</th>
+            <th>Study</th>
+            <th>Key Result</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <p class="study-title">L-Theanine &amp; Attention</p>
+              <p class="study-journal">Journal of Clinical Medicine, 14(21), 7710 · 2025</p>
+            </td>
+            <td style="color:var(--text-muted);font-size:13px;">Mátyus et al.</td>
+            <td>Meta-analysis of RCTs: L-theanine reduces reaction time and improves working memory accuracy. The compound found uniquely in high-grade matcha.</td>
+          </tr>
+          <tr>
+            <td>
+              <p class="study-title">Matcha &amp; Cognitive Function</p>
+              <p class="study-journal">PLOS ONE, 19, e0309287 · 2024</p>
+            </td>
+            <td style="color:var(--text-muted);font-size:13px;">Uchida et al.</td>
+            <td>12-month RCT: regular matcha consumption improves cognitive function and sleep quality in adults.</td>
+          </tr>
+          <tr>
+            <td>
+              <p class="study-title">Mindfulness &amp; Decision-Making</p>
+              <p class="study-journal">PLOS ONE · PMC6683193 · 2019</p>
+            </td>
+            <td style="color:var(--text-muted);font-size:13px;">Maddox et al.</td>
+            <td>16-week RCT (n=160): mindfulness practice significantly improves decision-making competence — the ability to make deliberate, high-quality choices under pressure.</td>
+          </tr>
+          <tr>
+            <td>
+              <p class="study-title">Mindfulness &amp; Executive Function</p>
+              <p class="study-journal">Nature Reviews Neuroscience, 16, 213–225 · 2015</p>
+            </td>
+            <td style="color:var(--text-muted);font-size:13px;">Tang, Hölzel &amp; Posner</td>
+            <td>Mindfulness practice physically reshapes the prefrontal cortex — improving executive function, impulse control, and cognitive performance at a neurological level.</td>
+          </tr>
+          <tr>
+            <td>
+              <p class="study-title">Organizational Rituals &amp; Performance</p>
+              <p class="study-journal">Davidson &amp; McEwen (2012) · ResearchGate 2025</p>
+            </td>
+            <td style="color:var(--text-muted);font-size:13px;">Johnson &amp; Johnson case</td>
+            <td>10-minute morning mindfulness rituals at Johnson &amp; Johnson showed measurable prefrontal cortex activation and improved executive functioning across participating teams.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+
+<!-- Wellness Resilience Quiz -->
+<section id="quiz" class="section section--dark">
+  <div class="container">
+    <div class="section-header section-header--centered reveal">
+      <div class="label">ASSESSMENT</div>
+      <h2>How Resilient Is Your Team?</h2>
+      <p>Eight questions. Honest answers. A clearer picture of where your organization stands — and what a structured practice could change.</p>
+    </div>
+
+    <div class="quiz-container reveal">
+      <form id="quiz-form" novalidate>
+
+        <div class="quiz-question">
+          <p class="quiz-question__text">1. How often do team members report feeling cognitively overloaded?</p>
+          <div class="quiz-scale">
+            <label><input type="radio" name="q1" value="1"><span class="scale-btn">1</span></label>
+            <label><input type="radio" name="q1" value="2"><span class="scale-btn">2</span></label>
+            <label><input type="radio" name="q1" value="3"><span class="scale-btn">3</span></label>
+            <label><input type="radio" name="q1" value="4"><span class="scale-btn">4</span></label>
+            <label><input type="radio" name="q1" value="5"><span class="scale-btn">5</span></label>
+          </div>
+          <div class="scale-labels"><span>Constantly</span><span>Never</span></div>
+        </div>
+
+        <div class="quiz-question">
+          <p class="quiz-question__text">2. How much uninterrupted focus time does your team have each day?</p>
+          <div class="quiz-scale">
+            <label><input type="radio" name="q2" value="1"><span class="scale-btn">1</span></label>
+            <label><input type="radio" name="q2" value="2"><span class="scale-btn">2</span></label>
+            <label><input type="radio" name="q2" value="3"><span class="scale-btn">3</span></label>
+            <label><input type="radio" name="q2" value="4"><span class="scale-btn">4</span></label>
+            <label><input type="radio" name="q2" value="5"><span class="scale-btn">5</span></label>
+          </div>
+          <div class="scale-labels"><span>Almost none</span><span>4+ hours</span></div>
+        </div>
+
+        <div class="quiz-question">
+          <p class="quiz-question__text">3. How frequently are key decisions made under visible stress?</p>
+          <div class="quiz-scale">
+            <label><input type="radio" name="q3" value="1"><span class="scale-btn">1</span></label>
+            <label><input type="radio" name="q3" value="2"><span class="scale-btn">2</span></label>
+            <label><input type="radio" name="q3" value="3"><span class="scale-btn">3</span></label>
+            <label><input type="radio" name="q3" value="4"><span class="scale-btn">4</span></label>
+            <label><input type="radio" name="q3" value="5"><span class="scale-btn">5</span></label>
+          </div>
+          <div class="scale-labels"><span>Routinely</span><span>Rarely</span></div>
+        </div>
+
+        <div class="quiz-question">
+          <p class="quiz-question__text">4. How engaged do employees appear in meetings and collaborative work?</p>
+          <div class="quiz-scale">
+            <label><input type="radio" name="q4" value="1"><span class="scale-btn">1</span></label>
+            <label><input type="radio" name="q4" value="2"><span class="scale-btn">2</span></label>
+            <label><input type="radio" name="q4" value="3"><span class="scale-btn">3</span></label>
+            <label><input type="radio" name="q4" value="4"><span class="scale-btn">4</span></label>
+            <label><input type="radio" name="q4" value="5"><span class="scale-btn">5</span></label>
+          </div>
+          <div class="scale-labels"><span>Disengaged</span><span>Fully present</span></div>
+        </div>
+
+        <div class="quiz-question">
+          <p class="quiz-question__text">5. Does your organization have structured recovery rituals or transition practices?</p>
+          <div class="quiz-scale">
+            <label><input type="radio" name="q5" value="1"><span class="scale-btn">1</span></label>
+            <label><input type="radio" name="q5" value="2"><span class="scale-btn">2</span></label>
+            <label><input type="radio" name="q5" value="3"><span class="scale-btn">3</span></label>
+            <label><input type="radio" name="q5" value="4"><span class="scale-btn">4</span></label>
+            <label><input type="radio" name="q5" value="5"><span class="scale-btn">5</span></label>
+          </div>
+          <div class="scale-labels"><span>None at all</span><span>Well established</span></div>
+        </div>
+
+        <div class="quiz-question">
+          <p class="quiz-question__text">6. How often does your team take intentional, unscheduled breaks?</p>
+          <div class="quiz-scale">
+            <label><input type="radio" name="q6" value="1"><span class="scale-btn">1</span></label>
+            <label><input type="radio" name="q6" value="2"><span class="scale-btn">2</span></label>
+            <label><input type="radio" name="q6" value="3"><span class="scale-btn">3</span></label>
+            <label><input type="radio" name="q6" value="4"><span class="scale-btn">4</span></label>
+            <label><input type="radio" name="q6" value="5"><span class="scale-btn">5</span></label>
+          </div>
+          <div class="scale-labels"><span>Never</span><span>Daily</span></div>
+        </div>
+
+        <div class="quiz-question">
+          <p class="quiz-question__text">7. How connected does your team feel to each other as people, not just colleagues?</p>
+          <div class="quiz-scale">
+            <label><input type="radio" name="q7" value="1"><span class="scale-btn">1</span></label>
+            <label><input type="radio" name="q7" value="2"><span class="scale-btn">2</span></label>
+            <label><input type="radio" name="q7" value="3"><span class="scale-btn">3</span></label>
+            <label><input type="radio" name="q7" value="4"><span class="scale-btn">4</span></label>
+            <label><input type="radio" name="q7" value="5"><span class="scale-btn">5</span></label>
+          </div>
+          <div class="scale-labels"><span>Transactional</span><span>Deeply connected</span></div>
+        </div>
+
+        <div class="quiz-question">
+          <p class="quiz-question__text">8. How clearly can team members articulate their personal purpose at work?</p>
+          <div class="quiz-scale">
+            <label><input type="radio" name="q8" value="1"><span class="scale-btn">1</span></label>
+            <label><input type="radio" name="q8" value="2"><span class="scale-btn">2</span></label>
+            <label><input type="radio" name="q8" value="3"><span class="scale-btn">3</span></label>
+            <label><input type="radio" name="q8" value="4"><span class="scale-btn">4</span></label>
+            <label><input type="radio" name="q8" value="5"><span class="scale-btn">5</span></label>
+          </div>
+          <div class="scale-labels"><span>Unclear</span><span>Crystal clear</span></div>
+        </div>
+
+        <div style="text-align:center;margin-top:40px;">
+          <button type="submit" class="btn btn--gold">See Your Result</button>
+        </div>
+      </form>
+
+      <div class="quiz-result" id="quiz-result">
+        <p style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;">YOUR SCORE</p>
+        <p class="quiz-result__score">—</p>
+        <p class="quiz-result__text"></p>
+        <a href="book.html" class="btn btn--gold" style="margin-top:8px;">Book a complimentary discovery session</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+
+<!-- Wellness Resource Library -->
+<section class="section section--light">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="label">RESOURCES</div>
+      <h2>Wellness Resource Library</h2>
+      <p>For wellness directors, HR leaders, and People &amp; Culture teams building the case — or building the program.</p>
+    </div>
+    <div class="resource-grid">
+      <div class="resource-card reveal">
+        <p class="resource-card__num">01</p>
+        <h3 class="resource-card__title">The Science of Micro-Rituals in the Workplace</h3>
+        <p class="resource-card__desc">How a ten-minute structured pause — repeated consistently — changes the neurological baseline of an entire team. The research is clear. The implementation is simpler than you think.</p>
+        <a href="contact.html" class="text-link" style="margin-top:20px;display:inline-flex;">Request PDF</a>
+      </div>
+      <div class="resource-card reveal reveal-delay-2">
+        <p class="resource-card__num">02</p>
+        <h3 class="resource-card__title">Beyond Yoga: What Research Actually Says About Office Wellness</h3>
+        <p class="resource-card__desc">A frank look at which workplace wellness interventions have measurable ROI — and which ones make people feel better about doing nothing. Matcha meditation appears in the data.</p>
+        <a href="contact.html" class="text-link" style="margin-top:20px;display:inline-flex;">Request PDF</a>
+      </div>
+      <div class="resource-card reveal reveal-delay-4">
+        <p class="resource-card__num">03</p>
+        <h3 class="resource-card__title">How to Build a Business Case for Wellness Investment</h3>
+        <p class="resource-card__desc">A practical guide for wellness directors and HR leaders. The financial framework, the metrics that matter, and how to present it to a CFO who has heard it all before.</p>
+        <a href="contact.html" class="text-link" style="margin-top:20px;display:inline-flex;">Request PDF</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+
+<!-- Partnership CTA -->
+<section class="section section--dark">
+  <div class="container">
+    <div class="partner-cta reveal">
+      <div class="label" style="justify-content:center;margin-bottom:24px;">PARTNERSHIP</div>
+      <h2 style="color:#fff;margin-bottom:20px;max-width:600px;margin-left:auto;margin-right:auto;">HARUKAZ is available as an annual wellness partner.</h2>
+      <p style="color:rgba(204,204,204,0.75);max-width:520px;margin:0 auto 40px;line-height:1.9;">We work with a small number of organizations each year — deeply, not broadly. If your team is serious about performance, we would like to understand your goals.</p>
+      <a href="book.html" class="btn btn--gold">Start a Conversation</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div style="text-align:center;margin-bottom:8px;">
+      <div class="footer-logo"><img src="assets/Harukaz.png" alt="HARUKAZ"></div>
+    </div>
+    <p class="footer-tagline">Matcha Meditation for Elevated Minds</p>
+    <div class="footer-grid">
+      <div class="footer-col"><p class="footer-col__heading">EXPERIENCES</p><ul><li><a href="services.html#executive">Executive Wellness</a></li><li><a href="services.html#leadership">Leadership Retreat</a></li><li><a href="services.html#private">Private Experience</a></li></ul></div>
+      <div class="footer-col"><p class="footer-col__heading">CORPORATE</p><ul><li><a href="#science">Science Brief</a></li><li><a href="#quiz">Resilience Quiz</a></li><li><a href="book.html">Partner With Us</a></li></ul></div>
+      <div class="footer-col"><p class="footer-col__heading">TEA LIBRARY</p><ul><li><a href="tea.html">Origins</a></li><li><a href="tea.html">Science</a></li></ul></div>
+      <div class="footer-col"><p class="footer-col__heading">COMPANY</p><ul><li><a href="about.html">About HARUKAZ</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>Toronto, Canada &nbsp;·&nbsp; <a href="mailto:hello@harukaz.com" style="color:var(--gold);">hello@harukaz.com</a></p>
+      <p>© 2026 HARUKAZ. All rights reserved.</p>
+      <p class="quote">"Because the quality of your life is determined by the quality of your attention."</p>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

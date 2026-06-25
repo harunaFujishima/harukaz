@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HARUKAZ — Matcha Meditation for Elevated Minds</title>
+  <meta name="description" content="HARUKAZ offers luxury matcha meditation experiences for corporations, luxury hotels, and private clients in Toronto and across Canada.">
+  <link rel="icon" type="image/png" href="assets/Harukaz.png">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Page-specific overrides */
+    .hero { background: linear-gradient(160deg, #1A3320 0%, #0A0A0A 60%); }
+
+    /* Section 2 — Sensory Immersion */
+    .sensory { position: relative; min-height: 80vh; display: flex; align-items: center; overflow: hidden; }
+    .sensory__bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, #0D2213 0%, #0A0A0A 60%, #1A1A0A 100%);
+    }
+    .sensory__overlay { position: absolute; inset: 0; background: rgba(10,10,10,0.5); }
+    .sensory__content {
+      position: relative; z-index: 2;
+      width: 100%; padding: 120px 0;
+    }
+    .sensory__headline {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 5vw, 64px);
+      font-weight: 300;
+      font-style: italic;
+      color: #fff;
+      line-height: 1.3;
+      max-width: 800px;
+      margin-bottom: 48px;
+    }
+    .sensory__body {
+      max-width: 560px;
+      color: rgba(204,204,204,0.8);
+      line-height: 1.9;
+      font-size: 16px;
+    }
+    .sensory__body p + p { margin-top: 20px; }
+
+    /* Science section */
+    .science-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); }
+    .science-col { background: var(--bg-dark); padding: 48px 36px; }
+    .science-col__stat {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 4vw, 56px);
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+    .science-col__finding { font-size: 15px; color: var(--text-dark); line-height: 1.7; margin-bottom: 20px; }
+    .science-col__citation { font-size: 11px; color: var(--text-muted); font-style: italic; line-height: 1.5; }
+
+    /* Philosophy section */
+    .philosophy { background: var(--bg-dark); padding: 140px 0; text-align: center; }
+    .philosophy__quote {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4vw, 52px);
+      font-weight: 300;
+      font-style: italic;
+      color: #fff;
+      line-height: 1.4;
+      max-width: 900px;
+      margin: 0 auto 64px;
+    }
+    .philosophy__body {
+      max-width: 640px;
+      margin: 0 auto;
+      color: rgba(204,204,204,0.75);
+      line-height: 1.9;
+    }
+    .philosophy__body p + p { margin-top: 20px; }
+
+    /* Corporate teaser */
+    .corp-teaser {
+      background: var(--card-1);
+      padding: 80px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 40px;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .science-cols { grid-template-columns: 1fr; }
+      .corp-teaser { grid-template-columns: 1fr; padding: 48px 32px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Persistent Nav ── -->
+<nav id="nav-persistent" aria-label="Site navigation">
+  <a href="index.html" class="nav-logo-mark" aria-label="HARUKAZ Home">
+    <div class="logo-placeholder" aria-hidden="true">春</div>
+  </a>
+  <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+    <span class="toggle-text">MENU</span>
+    <span class="hamburger" aria-hidden="true">
+      <span></span><span></span><span></span>
+    </span>
+  </button>
+</nav>
+
+<!-- ── Full-Screen Overlay Nav ── -->
+<div id="nav-overlay" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <div class="nav-overlay__logo" aria-hidden="true">
+    <img src="assets/Harukaz.png" alt="HARUKAZ">
+  </div>
+  <ul class="nav-overlay__links">
+    <li><a href="index.html">HOME</a></li>
+    <li><a href="services.html">EXPERIENCES</a></li>
+    <li><a href="corporate.html">CORPORATE</a></li>
+    <li><a href="tea.html">TEA LIBRARY</a></li>
+    <li><a href="book.html">BOOK</a></li>
+    <li><a href="about.html">ABOUT</a></li>
+    <li><a href="contact.html">CONTACT</a></li>
+  </ul>
+</div>
+
+<!-- ─────────────────────────────────────
+     SECTION 1 — CINEMATIC HERO
+───────────────────────────────────────── -->
+<section class="hero" aria-label="Welcome to HARUKAZ">
+  <canvas id="hero-canvas" class="hero__canvas" aria-hidden="true"></canvas>
+  <div class="hero__content">
+    <p class="hero__eyebrow">TORONTO &nbsp;·&nbsp; EST. 2026</p>
+    <h1 class="hero__title">HARUKAZ</h1>
+    <p class="hero__tagline">Where Ancient Ritual Meets Modern Performance.</p>
+  </div>
+  <div class="hero__scroll" aria-hidden="true">
+    <div class="hero__scroll__arrow"></div>
+    <span>SCROLL</span>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────
+     HERO VIDEO — Luxury Matcha Meditation
+───────────────────────────────────────── -->
+<section class="hero-video" aria-label="HARUKAZ Experience Film">
+  <!--
+    Drop your video file into assets/ and update the src below.
+    Recommended: MP4, H.264, 1920×1080 or 1920×810 (cinematic crop).
+    Keep it under 15MB for fast load. Autoplay requires muted + playsinline.
+  -->
+  <video autoplay muted loop playsinline poster="assets/video-poster.jpg">
+    <source src="assets/hero-video.mp4" type="video/mp4">
+  </video>
+  <!-- Shown only when no video file is present -->
+  <div class="hero-video__placeholder" id="video-placeholder">
+    Video — assets/hero-video.mp4
+  </div>
+  <div class="hero-video__overlay"></div>
+  <div class="hero-video__caption reveal">
+    <div class="label">LUXURY MATCHA &nbsp;·&nbsp; DYNAMIC MEDITATION</div>
+    <p>Where stillness becomes strategy.</p>
+  </div>
+</section>
+
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+
+<!-- ─────────────────────────────────────
+     SECTION 2 — SENSORY IMMERSION
+───────────────────────────────────────── -->
+<section class="sensory section--dark">
+  <div class="sensory__bg"></div>
+  <div class="sensory__overlay"></div>
+  <div class="sensory__content">
+    <div class="container">
+      <h2 class="sensory__headline reveal">
+        "Fifteen minutes.<br>One bowl.<br>A different kind of clarity."
+      </h2>
+      <div class="sensory__body reveal reveal-delay-2">
+        <p>Before the first meeting. Before the inbox. Before the day asks anything of you — there is this: the weight of a ceramic bowl, the cool resistance of a bamboo whisk, the slow rise of steam.</p>
+        <p>HARUKAZ does not sell calm. It creates the conditions in which clarity arrives on its own. What follows — sharper thinking, longer focus, decisions made from the centre of yourself — is simply what happens when you stop performing and start being.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+
+<!-- ─────────────────────────────────────
+     SECTION 3 — THE SCIENCE
+───────────────────────────────────────── -->
+<section class="section section--dark">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="label">SCIENCE</div>
+      <h2>Performance. Backed by Science.</h2>
+    </div>
+    <div class="science-cols">
+      <div class="science-col reveal">
+        <div class="science-col__stat">↑ 18%</div>
+        <h3 style="font-size:20px;margin-bottom:12px;color:#ddd;">Attention &amp; Working Memory</h3>
+        <p class="science-col__finding">L-theanine — the amino acid found uniquely in matcha — reduces reaction time and measurably improves working memory accuracy in controlled trials.</p>
+        <p class="science-col__citation">Mátyus et al. (2025). Meta-analysis of RCTs. <em>Journal of Clinical Medicine</em>, 14(21), 7710.</p>
+      </div>
+      <div class="science-col reveal reveal-delay-2">
+        <div class="science-col__stat">16 wk</div>
+        <h3 style="font-size:20px;margin-bottom:12px;color:#ddd;">Decision-Making Competence</h3>
+        <p class="science-col__finding">A 16-week RCT (n=160) found mindfulness practice significantly improves decision-making competence — the kind that separates reactive choices from deliberate ones.</p>
+        <p class="science-col__citation">Maddox et al. (2019). <em>PLOS ONE</em>. PMC6683193.</p>
+      </div>
+      <div class="science-col reveal reveal-delay-4">
+        <div class="science-col__stat">∞</div>
+        <h3 style="font-size:20px;margin-bottom:12px;color:#ddd;">Executive Function</h3>
+        <p class="science-col__finding">Mindfulness practice physically reshapes the prefrontal cortex — the seat of executive function, impulse control, and long-range planning. The effects persist long after the session ends.</p>
+        <p class="science-col__citation">Tang, Hölzel &amp; Posner (2015). <em>Nature Reviews Neuroscience</em>, 16, 213–225.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+
+<!-- ─────────────────────────────────────
+     SECTION 4 — EXPERIENCES PREVIEW
+───────────────────────────────────────── -->
+<section class="section section--light">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="label">EXPERIENCES</div>
+      <h2>Crafted for the Exceptional</h2>
+      <p>Each HARUKAZ experience is designed around a single principle: that the quality of your presence determines the quality of everything else.</p>
+    </div>
+
+    <div class="card-grid card-grid--6" style="margin-bottom:48px;">
+
+      <article class="card card--light card--service reveal">
+        <div class="card__image">
+          <div class="img-placeholder img-placeholder--wide" style="background:linear-gradient(135deg,#1A3320,#2D2D2D);"></div>
+        </div>
+        <div class="card__body">
+          <span class="card__tag">CORPORATE</span>
+          <h3 class="card__title">Executive Wellness</h3>
+          <p class="card__excerpt">For leadership teams who understand that presence is a performance metric.</p>
+          <a href="services.html#executive" class="card__link">Discover</a>
+        </div>
+      </article>
+
+      <article class="card card--light card--service reveal reveal-delay-1">
+        <div class="card__image">
+          <div class="img-placeholder img-placeholder--wide" style="background:linear-gradient(135deg,#1F2D1A,#1A1A2D);"></div>
+        </div>
+        <div class="card__body">
+          <span class="card__tag">TEAM BUILDING</span>
+          <h3 class="card__title">Leadership Retreat</h3>
+          <p class="card__excerpt">Collective stillness as the foundation of collective excellence.</p>
+          <a href="services.html#leadership" class="card__link">Discover</a>
+        </div>
+      </article>
+
+      <article class="card card--light card--service reveal reveal-delay-2">
+        <div class="card__image">
+          <div class="img-placeholder img-placeholder--wide" style="background:linear-gradient(135deg,#2D1A0D,#1A1A1A);"></div>
+        </div>
+        <div class="card__body">
+          <span class="card__tag">PRIVATE</span>
+          <h3 class="card__title">Private Experience</h3>
+          <p class="card__excerpt">An intimate session shaped entirely around you.</p>
+          <a href="services.html#private" class="card__link">Discover</a>
+        </div>
+      </article>
+
+      <article class="card card--light card--service reveal">
+        <div class="card__image">
+          <div class="img-placeholder img-placeholder--wide" style="background:linear-gradient(135deg,#0D1A0D,#2D2D1A);"></div>
+        </div>
+        <div class="card__body">
+          <span class="card__tag">SUBSCRIPTION</span>
+          <h3 class="card__title">7-Day Matcha Ritual</h3>
+          <p class="card__excerpt">A weekly practice delivered to your door. Like a cleanse — but for the mind.</p>
+          <a href="services.html#ritual" class="card__link">Discover</a>
+        </div>
+      </article>
+
+      <article class="card card--light card--service reveal reveal-delay-1">
+        <div class="card__image">
+          <div class="img-placeholder img-placeholder--wide" style="background:linear-gradient(135deg,#1A1A2D,#0D2213);"></div>
+        </div>
+        <div class="card__body">
+          <span class="card__tag">CONCIERGE</span>
+          <h3 class="card__title">At-Home Tasting</h3>
+          <p class="card__excerpt">We come to you. Five to eight single-origin varieties. Your ideal matcha, found.</p>
+          <a href="services.html#tasting" class="card__link">Discover</a>
+        </div>
+      </article>
+
+      <article class="card card--light card--service reveal reveal-delay-2">
+        <div class="card__image">
+          <div class="img-placeholder img-placeholder--wide" style="background:linear-gradient(135deg,#1A0D0D,#2D1A1A);"></div>
+        </div>
+        <div class="card__body">
+          <span class="card__tag">PAIRING</span>
+          <h3 class="card__title">Matcha &amp; Cuisine Pairing</h3>
+          <p class="card__excerpt">A multi-course evening where each dish finds its matcha — and both become more.</p>
+          <a href="services.html#pairing" class="card__link">Discover</a>
+        </div>
+      </article>
+
+    </div>
+    <div style="text-align:center;" class="reveal">
+      <a href="services.html" class="text-link">Explore All Experiences</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+
+<!-- ─────────────────────────────────────
+     SECTION 5 — PHILOSOPHY
+───────────────────────────────────────── -->
+<section class="philosophy section--dark">
+  <div class="container container--narrow">
+    <div class="reveal">
+      <blockquote class="philosophy__quote">
+        "We are not here to fight the age of AI.<br>
+        We are here to help you become<br>fully human within it."
+      </blockquote>
+    </div>
+    <div class="philosophy__body reveal reveal-delay-2">
+      <p>The sharpest minds in history have always sought stillness before action. The Stoics practised <em>memento mori</em>. The Samurai entered the tea house before battle. The most effective leaders of any era understood: performance begins in the pause.</p>
+      <p>HARUKAZ exists at this intersection — ancient Japanese ritual and the demands of the modern mind. We do not ask you to slow down. We ask you to stop — briefly, intentionally, completely — so that when you resume, you resume as a larger version of yourself.</p>
+      <p>This is not wellness as escape. This is wellness as strategy.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+
+<!-- ─────────────────────────────────────
+     SECTION 6 — TEA LIBRARY TEASER
+───────────────────────────────────────── -->
+<section class="section section--light">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="label">TEA LIBRARY</div>
+      <h2>The World's Most Complete Matcha Resource</h2>
+      <p>Origins, ceremony, neuroscience, culture. Everything about tea — for those who understand that how you know something changes what you do with it.</p>
+    </div>
+
+    <div class="card-grid card-grid--3" style="margin-bottom:48px;">
+      <article class="card card--light reveal">
+        <div class="card__image">
+          <div class="img-placeholder img-placeholder--wide" style="background:linear-gradient(135deg,#1A3320,#0A0A0A);"></div>
+        </div>
+        <div class="card__body">
+          <span class="card__tag">ORIGINS</span>
+          <h3 class="card__title">Why Uji Matcha Is Worth Every Dollar</h3>
+          <p class="card__excerpt">The terroir of Kyoto's oldest tea gardens — and what the soil actually does to your cup.</p>
+          <a href="tea.html" class="card__link">Read more</a>
+        </div>
+      </article>
+
+      <article class="card card--light reveal reveal-delay-2">
+        <div class="card__image">
+          <div class="img-placeholder img-placeholder--wide" style="background:linear-gradient(135deg,#1A1A0A,#2D2D2D);"></div>
+        </div>
+        <div class="card__body">
+          <span class="card__tag">SCIENCE</span>
+          <h3 class="card__title">L-Theanine: The Molecule Behind the Focus</h3>
+          <p class="card__excerpt">What 40 years of research tells us about tea's most interesting compound.</p>
+          <a href="tea.html" class="card__link">Read more</a>
+        </div>
+      </article>
+
+      <article class="card card--light reveal reveal-delay-4">
+        <div class="card__image">
+          <div class="img-placeholder img-placeholder--wide" style="background:linear-gradient(135deg,#0D0D1A,#1A2D1A);"></div>
+        </div>
+        <div class="card__body">
+          <span class="card__tag">CEREMONY</span>
+          <h3 class="card__title">The Grammar of Chado — Tea as Philosophy</h3>
+          <p class="card__excerpt">Sen no Rikyū codified more than a ritual. He codified a way of attending to the world.</p>
+          <a href="tea.html" class="card__link">Read more</a>
+        </div>
+      </article>
+    </div>
+    <div style="text-align:center;" class="reveal">
+      <a href="tea.html" class="text-link">Enter the Tea Library</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+
+<!-- ─────────────────────────────────────
+     SECTION 7 — CORPORATE TEASER
+───────────────────────────────────────── -->
+<section class="section section--dark">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="label">CORPORATE</div>
+    </div>
+    <div class="corp-teaser reveal">
+      <div>
+        <h2 style="margin-bottom:20px;">Is Your Team<br>Performing at Its Best?</h2>
+        <p style="max-width:520px;color:rgba(204,204,204,0.8);line-height:1.9;margin-bottom:32px;">Burnout, decision fatigue, and cognitive overload are not personality failures — they are structural problems. HARUKAZ works with organizations that are serious about solving them, not just talking about them.</p>
+        <a href="corporate.html" class="text-link">For Wellness Directors</a>
+      </div>
+      <div style="flex-shrink:0;">
+        <div class="oct-frame" style="text-align:center;max-width:280px;">
+          <p style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px;">What the Modern Workplace Needs</p>
+          <p style="font-family:var(--font-display);font-size:18px;font-style:italic;color:var(--gold);line-height:1.6;">"Ten minutes of intentional stillness<br>changes the next eight hours."</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────
+     FOOTER
+───────────────────────────────────────── -->
+<footer>
+  <div class="container">
+    <div style="text-align:center;margin-bottom:8px;">
+      <div class="footer-logo">
+        <img src="assets/Harukaz.png" alt="HARUKAZ">
+      </div>
+    </div>
+    <p class="footer-tagline">Matcha Meditation for Elevated Minds</p>
+
+    <div class="footer-grid">
+      <div class="footer-col">
+        <p class="footer-col__heading">EXPERIENCES</p>
+        
+        <ul>
+          <li><a href="services.html#executive">Executive Wellness</a></li>
+          <li><a href="services.html#leadership">Leadership Retreat</a></li>
+          <li><a href="services.html#private">Private Experience</a></li>
+          <li><a href="services.html#ritual">7-Day Ritual</a></li>
+          <li><a href="services.html#tasting">At-Home Tasting</a></li>
+          <li><a href="services.html#pairing">Cuisine Pairing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col__heading">CORPORATE</p>
+        
+        <ul>
+          <li><a href="corporate.html">Wellness Programs</a></li>
+          <li><a href="corporate.html#science">Science Brief</a></li>
+          <li><a href="corporate.html#quiz">Resilience Quiz</a></li>
+          <li><a href="book.html">Partner With Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col__heading">TEA LIBRARY</p>
+        
+        <ul>
+          <li><a href="tea.html#origins">Origins</a></li>
+          <li><a href="tea.html#science">Science</a></li>
+          <li><a href="tea.html#ceremony">Ceremony</a></li>
+          <li><a href="tea.html#events">Tea Events</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col__heading">COMPANY</p>
+        
+        <ul>
+          <li><a href="about.html">About HARUKAZ</a></li>
+          <li><a href="about.html#values">Our Values</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="book.html">Book an Experience</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>Toronto, Canada &nbsp;·&nbsp; <a href="mailto:hello@harukaz.com" style="color:var(--gold);">hello@harukaz.com</a> &nbsp;·&nbsp; @harukaz.matcha</p>
+      <p>© 2026 HARUKAZ. All rights reserved.</p>
+      <p class="quote">"Because the quality of your life is determined by the quality of your attention."</p>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

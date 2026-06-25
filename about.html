@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — HARUKAZ</title>
+  <meta name="description" content="The story behind HARUKAZ — born between pharmaceutical burnout and a bowl of matcha.">
+  <link rel="icon" type="image/png" href="assets/Harukaz.png">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .story-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .story-text p { color: rgba(204,204,204,0.82); line-height: 1.95; }
+    .story-text p + p { margin-top: 22px; }
+    .story-text .drop-cap::first-letter {
+      font-family: var(--font-display);
+      font-size: 72px;
+      font-weight: 300;
+      float: left;
+      line-height: 0.75;
+      margin-right: 12px;
+      margin-top: 8px;
+      color: var(--gold);
+    }
+
+    .values-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+    .value-card {
+      padding: 40px 32px;
+      border: 1px solid var(--border);
+      position: relative;
+    }
+    .value-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.5s ease;
+    }
+    .value-card:hover::before { transform: scaleX(1); }
+    .value-card__icon {
+      width: 40px; height: 40px;
+      clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+      background: var(--gold-dim);
+      margin-bottom: 20px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .value-card__title { font-family: var(--font-display); font-size: 22px; color: #ddd; margin-bottom: 12px; }
+    .value-card__body { font-size: 14px; color: var(--text-muted); line-height: 1.8; }
+
+    /* Producer story */
+    .producer-spread {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      min-height: 600px;
+    }
+    .producer-spread__image .img-placeholder { height: 100%; min-height: 500px; }
+    .producer-spread__text {
+      padding: 80px 64px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .producer-spread__text blockquote {
+      font-family: var(--font-display);
+      font-size: clamp(20px, 2.5vw, 28px);
+      font-style: italic;
+      color: var(--gold);
+      line-height: 1.5;
+      margin-bottom: 32px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    .producer-spread__text p { font-size: 15px; color: rgba(204,204,204,0.8); line-height: 1.9; }
+    .producer-spread__text p + p { margin-top: 16px; }
+
+    @media (max-width: 900px) {
+      .story-layout { grid-template-columns: 1fr; gap: 40px; }
+      .values-grid { grid-template-columns: 1fr; }
+      .producer-spread { grid-template-columns: 1fr; }
+      .producer-spread__text { padding: 48px 32px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="nav-persistent">
+  <a href="index.html" class="nav-logo-mark" aria-label="HARUKAZ Home">
+    <div class="logo-placeholder" aria-hidden="true">春</div>
+  </a>
+  <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">
+    <span class="toggle-text">MENU</span>
+    <span class="hamburger" aria-hidden="true"><span></span><span></span><span></span></span>
+  </button>
+</nav>
+<div id="nav-overlay" role="dialog" aria-modal="true">
+  <div class="nav-overlay__logo" aria-hidden="true"><img src="assets/Harukaz.png" alt="HARUKAZ"></div>
+  <ul class="nav-overlay__links">
+    <li><a href="index.html">HOME</a></li>
+    <li><a href="services.html">EXPERIENCES</a></li>
+    <li><a href="corporate.html">CORPORATE</a></li>
+    <li><a href="tea.html">TEA LIBRARY</a></li>
+    <li><a href="book.html">BOOK</a></li>
+    <li><a href="about.html">ABOUT</a></li>
+    <li><a href="contact.html">CONTACT</a></li>
+  </ul>
+</div>
+
+<!-- Hero -->
+<header class="page-hero">
+  <div class="container">
+    <div class="label reveal">ABOUT</div>
+    <h1 class="reveal reveal-delay-1">Between Two Truths</h1>
+    <p style="max-width:560px;color:rgba(204,204,204,0.75);margin-top:20px;line-height:1.8;" class="reveal reveal-delay-2">The story of HARUKAZ begins not with matcha — but with the cost of never stopping.</p>
+  </div>
+</header>
+
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+
+<!-- Brand Story -->
+<section class="section section--dark">
+  <div class="container">
+    <div class="story-layout">
+      <div class="story-text reveal">
+        <div class="label" style="margin-bottom:32px;">FOUNDER'S STORY</div>
+        <p class="drop-cap">I spent thirty years in Japan before relocating to Toronto in search of something I couldn't name at the time. A new chapter, perhaps. A different kind of performance. What I found instead was that I had brought everything with me — including the urgency.</p>
+        <p>Ten years in pharmaceutical sales taught me a great deal about the human body under pressure. I watched brilliant people degrade slowly. Not from illness, but from the relentless expenditure of attention without replenishment. I also watched what happened when the same people discovered a practice — any practice — that asked them to stop. Even briefly. The difference was not subtle.</p>
+        <p>I knew what a bowl of matcha could do. I had made it for myself every morning for fifteen years, the same way, with the same attention to each step. And I had noticed — long before I read the research — that the ten minutes it took changed the character of the hours that followed.</p>
+        <p>HARUKAZ was born between those two truths: what burnout costs, and what stillness returns.</p>
+        <p style="margin-top:32px;font-family:var(--font-display);font-size:20px;font-style:italic;color:var(--gold);">"We are not anti-technology. We are pro-human. HARUKAZ helps you upgrade yourself — not your software."</p>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <div class="img-placeholder" style="background:linear-gradient(135deg,#1A3320,#0A0A0A);aspect-ratio:3/4;margin-bottom:24px;"></div>
+        <div style="padding:24px;border:1px solid var(--border);">
+          <p style="font-size:13px;color:var(--text-muted);line-height:1.7;">30 years in Japan · 10+ years in pharmaceutical sales · Founded HARUKAZ in Toronto, 2026</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+
+<!-- Matcha Meditation Flow -->
+<section class="section section--light">
+  <div class="container">
+    <div class="section-header section-header--centered reveal">
+      <div class="label">THE PRACTICE</div>
+      <h2>The Matcha Meditation™ Flow</h2>
+      <p>Each step is intentional. Each transition is the practice.</p>
+    </div>
+
+    <div class="flow-steps reveal">
+      <div class="flow-step">
+        <div class="flow-step__num">1</div>
+        <p class="flow-step__name">Pause</p>
+        <p class="flow-step__desc">A deliberate stop. You acknowledge that what comes next deserves your full presence.</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step__num">2</div>
+        <p class="flow-step__name">Prepare</p>
+        <p class="flow-step__desc">Setting out the bowl, the whisk, the scoop. Physical order creating psychological space.</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step__num">3</div>
+        <p class="flow-step__name">Whisk</p>
+        <p class="flow-step__desc">The ritual motion. Sixty seconds of attention to a single thing — the beginning of meditation.</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step__num">4</div>
+        <p class="flow-step__name">Observe</p>
+        <p class="flow-step__desc">The colour, the foam, the smell. Training your senses returns you to the present tense.</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step__num">5</div>
+        <p class="flow-step__name">Sip</p>
+        <p class="flow-step__desc">Slowly. The L-theanine enters your bloodstream. Alpha brainwave activity increases measurably.</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step__num">6</div>
+        <p class="flow-step__name">Focus</p>
+        <p class="flow-step__desc">You return to your work changed. The quality of your next hour reflects the quality of your pause.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+
+<!-- Our Values -->
+<section id="values" class="section section--dark">
+  <div class="container">
+    <div class="section-header section-header--centered reveal">
+      <div class="label">VALUES</div>
+      <h2>Three Principles. No Exceptions.</h2>
+    </div>
+    <div class="values-grid">
+      <div class="value-card reveal">
+        <div class="value-card__icon" aria-hidden="true"></div>
+        <h3 class="value-card__title">Evidence-Based</h3>
+        <p class="value-card__body">Every claim we make is traceable to published, peer-reviewed research. We do not offer wellness — we offer a practice with measurable neurological and cognitive outcomes. The science is in every session.</p>
+      </div>
+      <div class="value-card reveal reveal-delay-2">
+        <div class="value-card__icon" aria-hidden="true"></div>
+        <h3 class="value-card__title">Authentically Japanese</h3>
+        <p class="value-card__body">We use single-origin matcha from specific farms in Japan. We use traditional tools: chasen, chawan, chashaku. We practise within a tradition that is over 500 years old — and we take that seriously. No approximations.</p>
+      </div>
+      <div class="value-card reveal reveal-delay-4">
+        <div class="value-card__icon" aria-hidden="true"></div>
+        <h3 class="value-card__title">Radically Present</h3>
+        <p class="value-card__body">Our only product is your attention, returned to you. We do not sell relaxation or escapism or a lifestyle aesthetic. We offer a practice that puts you in full contact with your own mind — and then sends you back into the world more capable than you left it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+
+<!-- Producer Story — Uji Matcha -->
+<section class="section section--light" style="padding:0;">
+  <div class="producer-spread">
+    <div class="producer-spread__image">
+      <div class="img-placeholder" style="background:linear-gradient(160deg,#1A3320,#0D2D0D,#0A0A0A);height:100%;min-height:500px;"></div>
+    </div>
+    <div class="producer-spread__text reveal">
+      <div class="label" style="margin-bottom:24px;">ORIGIN STORY</div>
+      <h2 style="margin-bottom:32px;color:#1A1A1A;">The Farmers of Uji, Kyoto</h2>
+      <blockquote>"The tea knows the season. Our job is simply to listen."<br><span style="font-size:13px;font-style:normal;color:#888;">— Uji tea farmer, 4th generation</span></blockquote>
+      <p>The tea gardens of Uji have been producing ceremonial-grade matcha for over 800 years. The process begins three weeks before harvest, when the plants are covered — slowly, carefully — to deprive them of direct sunlight. Deprived of light, the leaves produce more chlorophyll, more L-theanine, more of everything that makes high-grade matcha what it is.</p>
+      <p>The farmers who do this work are not suppliers. They are practitioners. Each batch they produce is the result of a year's observation — of soil, water, weather, and the subtle intelligence of plants that have been cultivated in the same soil for centuries.</p>
+      <p>When HARUKAZ sources from Uji, we are not purchasing a commodity. We are continuing a relationship between people who care deeply about a single, humble thing — and are willing to do it properly.</p>
+      <div style="margin-top:32px;">
+        <a href="tea.html" class="text-link">Learn more about origins</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+
+<!-- Closing CTA -->
+<section class="section section--dark" style="text-align:center;">
+  <div class="container container--narrow reveal">
+    <div class="label" style="justify-content:center;margin-bottom:24px;">NEXT STEP</div>
+    <h2 style="margin-bottom:20px;">Ready to Begin?</h2>
+    <p style="color:rgba(204,204,204,0.75);max-width:480px;margin:0 auto 40px;line-height:1.9;">There is no right time to start a practice. There is only the moment you decide that the quality of your attention is worth attending to.</p>
+    <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
+      <a href="book.html" class="btn btn--gold">Book an Experience</a>
+      <a href="contact.html" class="btn btn--white">Get in Touch</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div style="text-align:center;margin-bottom:8px;"><div class="footer-logo"><img src="assets/Harukaz.png" alt="HARUKAZ"></div></div>
+    <p class="footer-tagline">Matcha Meditation for Elevated Minds</p>
+    <div class="footer-grid">
+      <div class="footer-col"><p class="footer-col__heading">EXPERIENCES</p><ul><li><a href="services.html#executive">Executive Wellness</a></li><li><a href="services.html#private">Private Experience</a></li><li><a href="services.html#ritual">7-Day Ritual</a></li></ul></div>
+      <div class="footer-col"><p class="footer-col__heading">CORPORATE</p><ul><li><a href="corporate.html">Wellness Programs</a></li><li><a href="corporate.html#quiz">Resilience Quiz</a></li></ul></div>
+      <div class="footer-col"><p class="footer-col__heading">TEA LIBRARY</p><ul><li><a href="tea.html">Origins</a></li><li><a href="tea.html">Tea Types</a></li></ul></div>
+      <div class="footer-col"><p class="footer-col__heading">COMPANY</p><ul><li><a href="about.html">About</a></li><li><a href="#values">Values</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>Toronto, Canada &nbsp;·&nbsp; <a href="mailto:hello@harukaz.com" style="color:var(--gold);">hello@harukaz.com</a></p>
+      <p>© 2026 HARUKAZ. All rights reserved.</p>
+      <p class="quote">"Because the quality of your life is determined by the quality of your attention."</p>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

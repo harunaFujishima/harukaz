@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book — HARUKAZ</title>
+  <meta name="description" content="Request a HARUKAZ matcha meditation experience. We curate each session personally.">
+  <link rel="icon" type="image/png" href="assets/Harukaz.png">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .book-layout {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 80px;
+      align-items: start;
+    }
+    .book-aside {
+      padding-top: 8px;
+    }
+    .book-aside__note {
+      border-left: 2px solid var(--border);
+      padding: 24px 28px;
+      margin-bottom: 32px;
+    }
+    .book-aside__note p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+    .book-aside__note p + p { margin-top: 12px; }
+    .book-aside__quote {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-style: italic;
+      color: rgba(204,204,204,0.7);
+      line-height: 1.5;
+      padding: 32px 0;
+      border-top: 1px solid var(--border);
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .form-submit {
+      margin-top: 40px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .form-submit .btn { padding: 18px 48px; }
+    .form-submit .note { font-size: 12px; color: var(--text-muted); }
+
+    @media (max-width: 1024px) {
+      .book-layout { grid-template-columns: 1fr; gap: 48px; }
+      .book-aside { order: -1; }
+    }
+    @media (max-width: 768px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav id="nav-persistent">
+  <a href="index.html" class="nav-logo-mark" aria-label="HARUKAZ Home">
+    <div class="logo-placeholder" aria-hidden="true">春</div>
+  </a>
+  <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">
+    <span class="toggle-text">MENU</span>
+    <span class="hamburger" aria-hidden="true"><span></span><span></span><span></span></span>
+  </button>
+</nav>
+<div id="nav-overlay" role="dialog" aria-modal="true">
+  <div class="nav-overlay__logo" aria-hidden="true"><img src="assets/Harukaz.png" alt="HARUKAZ"></div>
+  <ul class="nav-overlay__links">
+    <li><a href="index.html">HOME</a></li>
+    <li><a href="services.html">EXPERIENCES</a></li>
+    <li><a href="corporate.html">CORPORATE</a></li>
+    <li><a href="tea.html">TEA LIBRARY</a></li>
+    <li><a href="book.html">BOOK</a></li>
+    <li><a href="about.html">ABOUT</a></li>
+    <li><a href="contact.html">CONTACT</a></li>
+  </ul>
+</div>
+
+<!-- Page Hero -->
+<header class="page-hero" style="min-height:50vh;">
+  <div class="container">
+    <div class="label reveal">BOOK</div>
+    <h1 class="reveal reveal-delay-1">Request Your Experience</h1>
+    <p style="max-width:520px;color:rgba(204,204,204,0.75);margin-top:20px;line-height:1.8;" class="reveal reveal-delay-2">We curate each session personally. Tell us about you — and we will tell you how HARUKAZ can meet you where you are.</p>
+  </div>
+</header>
+
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+
+<!-- Form Section -->
+<section class="section section--dark">
+  <div class="container">
+    <div class="book-layout">
+
+      <!-- Form -->
+      <div class="reveal">
+        <form id="book-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="name">Full Name <span style="color:var(--red);">*</span></label>
+              <input class="form-input" type="text" id="name" name="name" placeholder="Your name" required autocomplete="name">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="email">Email Address <span style="color:var(--red);">*</span></label>
+              <input class="form-input" type="email" id="email" name="email" placeholder="you@company.com" required autocomplete="email">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="phone">Phone Number</label>
+              <input class="form-input" type="tel" id="phone" name="phone" placeholder="+1 (416) 000-0000" autocomplete="tel">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="service-select">Experience Type <span style="color:var(--red);">*</span></label>
+              <select class="form-select" id="service-select" name="service" required>
+                <option value="" disabled selected>Select an experience</option>
+                <option value="executive">Corporate Executive Wellness</option>
+                <option value="leadership">Leadership &amp; Team Building</option>
+                <option value="private">Private Matcha Experience</option>
+                <option value="subscription">7-Day Matcha Ritual (Subscription)</option>
+                <option value="tasting">At-Home Tasting Experience</option>
+                <option value="pairing">Matcha &amp; Cuisine Pairing</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="date">Preferred Date</label>
+              <input class="form-input" type="date" id="date" name="preferred_date">
+            </div>
+            <div class="form-group" id="group-size-row">
+              <label class="form-label" for="group-size">Group Size</label>
+              <input class="form-input" type="number" id="group-size" name="group_size" placeholder="e.g. 12" min="1" max="200">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="referral">How did you hear about HARUKAZ?</label>
+            <select class="form-select" id="referral" name="referral">
+              <option value="" disabled selected>Select one</option>
+              <option value="linkedin">LinkedIn</option>
+              <option value="instagram">Instagram</option>
+              <option value="referral">Personal Referral</option>
+              <option value="google">Google Search</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="message">Tell us about yourself or your team</label>
+            <textarea class="form-textarea" id="message" name="message" placeholder="Share anything that would help us curate your session — context, goals, constraints, questions."></textarea>
+          </div>
+
+          <div class="form-submit">
+            <button type="submit" class="btn btn--gold">Submit Your Request</button>
+            <p class="note">We respond within 24 hours. No automated replies.</p>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- Aside -->
+      <aside class="book-aside reveal reveal-delay-2">
+        <div class="book-aside__note">
+          <p style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">What happens next</p>
+          <p>We review every request personally. A HARUKAZ practitioner will reach out within 24 hours to discuss your goals, your setting, and how we can best serve you.</p>
+          <p>We do not use automated booking software. Every session is designed individually — because that is the only way to do this properly.</p>
+        </div>
+
+        <div class="book-aside__note">
+          <p style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">Our promise</p>
+          <p>If we cannot serve you as well as you deserve, we will tell you. HARUKAZ does not take every booking — only the ones we can do justice.</p>
+        </div>
+
+        <blockquote class="book-aside__quote">
+          "The tea ceremony is, at its heart, a conversation between two people paying full attention to each other."
+        </blockquote>
+
+        <div style="margin-top:32px;">
+          <p style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;">Contact directly</p>
+          <p style="font-size:14px;color:var(--text-muted);">
+            <a href="mailto:hello@harukaz.com" style="color:var(--gold);">hello@harukaz.com</a><br>
+            <span style="font-size:12px;display:block;margin-top:6px;">Toronto-based · Available across Canada</span>
+          </p>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</section>
+
+<!-- Thank-You Overlay -->
+<div id="thankyou-overlay" role="dialog" aria-modal="true" aria-label="Booking confirmation">
+  <div class="oct-rings" aria-hidden="true">
+    <div class="oct-ring"></div>
+    <div class="oct-ring"></div>
+    <div class="oct-ring"></div>
+    <div class="oct-ring"></div>
+  </div>
+  <p class="thankyou__main">Thank You.</p>
+  <p class="thankyou__jp">We are honoured.</p>
+  <p class="thankyou__body">We will craft your experience personally. Expect to hear from us within 24 hours.</p>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div style="text-align:center;margin-bottom:8px;">
+      <div class="footer-logo"><img src="assets/Harukaz.png" alt="HARUKAZ"></div>
+    </div>
+    <p class="footer-tagline">Matcha Meditation for Elevated Minds</p>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <p class="footer-col__heading">EXPERIENCES</p>
+        <ul>
+          <li><a href="services.html#executive">Executive Wellness</a></li>
+          <li><a href="services.html#leadership">Leadership Retreat</a></li>
+          <li><a href="services.html#private">Private Experience</a></li>
+          <li><a href="services.html#ritual">7-Day Ritual</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col__heading">CORPORATE</p>
+        <ul>
+          <li><a href="corporate.html">Wellness Programs</a></li>
+          <li><a href="corporate.html#quiz">Resilience Quiz</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col__heading">TEA LIBRARY</p>
+        <ul>
+          <li><a href="tea.html">Origins</a></li>
+          <li><a href="tea.html">Science</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col__heading">COMPANY</p>
+        <ul>
+          <li><a href="about.html">About HARUKAZ</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Toronto, Canada &nbsp;·&nbsp; <a href="mailto:hello@harukaz.com" style="color:var(--gold);">hello@harukaz.com</a></p>
+      <p>© 2026 HARUKAZ. All rights reserved.</p>
+      <p class="quote">"Because the quality of your life is determined by the quality of your attention."</p>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>
