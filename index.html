@@ -17,28 +17,81 @@
       position: absolute; inset: 0;
       background: linear-gradient(135deg, #0D2213 0%, #0A0A0A 60%, #1A1A0A 100%);
     }
-    .sensory__overlay { position: absolute; inset: 0; background: rgba(10,10,10,0.5); }
+    /* 画像が入ったときの処理 */
+    .sensory__img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+    .sensory__overlay { position: absolute; inset: 0; background: rgba(8,8,8,0.58); }
     .sensory__content {
       position: relative; z-index: 2;
       width: 100%; padding: 120px 0;
     }
+
+    /* バッジ — 上部に「思考をクリアにする動的瞑想」 */
+    .sensory__badge {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 40px;
+    }
+    .sensory__badge-jp {
+      font-family: var(--font-jp);
+      font-size: clamp(18px, 2.5vw, 26px);
+      font-weight: 300;
+      color: #fff;
+      letter-spacing: 0.12em;
+      line-height: 1.4;
+    }
+    .sensory__badge-en {
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
     .sensory__headline {
       font-family: var(--font-display);
-      font-size: clamp(32px, 5vw, 64px);
+      font-size: clamp(28px, 4.5vw, 58px);
       font-weight: 300;
       font-style: italic;
       color: #fff;
       line-height: 1.3;
       max-width: 800px;
-      margin-bottom: 48px;
+      margin-bottom: 40px;
     }
     .sensory__body {
       max-width: 560px;
       color: rgba(204,204,204,0.8);
       line-height: 1.9;
       font-size: 16px;
+      margin-bottom: 48px;
     }
     .sensory__body p + p { margin-top: 20px; }
+
+    /* 下部「エグゼクティブ抹茶サービス」ライン */
+    .sensory__service-tag {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      max-width: 640px;
+    }
+    .sensory__tag-line {
+      flex: 1;
+      height: 1px;
+      background: rgba(200,169,110,0.35);
+    }
+    .sensory__tag-text {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(200,169,110,0.7);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
 
     /* Science section */
     .science-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); }
@@ -166,16 +219,32 @@
      SECTION 2 — SENSORY IMMERSION
 ───────────────────────────────────────── -->
 <section class="sensory section--dark">
-  <div class="sensory__bg"></div>
+  <!-- 画像ファイルを assets/hero-matcha.jpg に置いてください -->
+  <div class="sensory__bg">
+    <img src="assets/hero-matcha.jpg" alt="Ceremonial matcha in black chawan" class="sensory__img" onerror="this.style.display='none'">
+  </div>
   <div class="sensory__overlay"></div>
   <div class="sensory__content">
     <div class="container">
-      <h2 class="sensory__headline reveal">
+
+      <!-- テキストオーバーレイ — 画像の上に重なる -->
+      <div class="sensory__badge reveal">
+        <span class="sensory__badge-jp">思考をクリアにする動的瞑想</span>
+        <span class="sensory__badge-en">DYNAMIC MEDITATION FOR EXECUTIVE CLARITY</span>
+      </div>
+
+      <h2 class="sensory__headline reveal reveal-delay-1">
         "Fifteen minutes.<br>One bowl.<br>A different kind of clarity."
       </h2>
       <div class="sensory__body reveal reveal-delay-2">
-        <p>Before the first meeting. Before the inbox. Before the day asks anything of you — there is this: the weight of a ceramic bowl, the cool resistance of a bamboo whisk, the slow rise of steam.</p>
+        <p>Before the first meeting. Before the inbox. Before the day asks anything of you — there is this: the weight of a ceramic bowl, the cool resistance of a bamboo whisk.</p>
         <p>HARUKAZ does not sell calm. It creates the conditions in which clarity arrives on its own. What follows — sharper thinking, longer focus, decisions made from the centre of yourself — is simply what happens when you stop performing and start being.</p>
+      </div>
+
+      <div class="sensory__service-tag reveal reveal-delay-3">
+        <span class="sensory__tag-line"></span>
+        <span class="sensory__tag-text">エグゼクティブ抹茶サービス &nbsp;·&nbsp; EXECUTIVE MATCHA SERVICE</span>
+        <span class="sensory__tag-line"></span>
       </div>
     </div>
   </div>
