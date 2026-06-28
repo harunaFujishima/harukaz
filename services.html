@@ -17,6 +17,11 @@
     .service-feature--reverse { direction: rtl; }
     .service-feature--reverse > * { direction: ltr; }
     .service-feature__image .img-placeholder { height: 100%; min-height: 400px; }
+    .service-feature__image img.service-img {
+      width: 100%; height: 100%; min-height: 480px;
+      object-fit: cover; object-position: center;
+      display: block;
+    }
     .service-feature__body {
       padding: 72px 64px;
       display: flex;
@@ -113,7 +118,7 @@
 <section id="executive" class="section section--dark" style="padding:0;">
   <div class="service-feature reveal">
     <div class="service-feature__image">
-      <div class="img-placeholder" style="background:linear-gradient(135deg,#1A3320,#0A0A0A);height:100%;min-height:480px;"></div>
+      <img src="assets/Corporate_Executive_Wellness_Executives_from.png" alt="Corporate Executive Wellness" class="service-img">
     </div>
     <div class="service-feature__body">
       <div class="label" style="margin-bottom:20px;">CORPORATE</div>
@@ -141,7 +146,7 @@
 <section id="leadership" class="section section--light" style="padding:0;">
   <div class="service-feature service-feature--reverse reveal">
     <div class="service-feature__image">
-      <div class="img-placeholder" style="background:linear-gradient(135deg,#1F2D1A,#1A1A2D);height:100%;min-height:480px;"></div>
+      <img src="assets/Leadership__Team_Building_In_a_tatami-mat_tea_roo.png" alt="Leadership &amp; Team Building" class="service-img">
     </div>
     <div class="service-feature__body">
       <div class="label" style="margin-bottom:20px;">RETREAT</div>
@@ -169,7 +174,7 @@
 <section id="private" class="section section--dark" style="padding:0;">
   <div class="service-feature reveal">
     <div class="service-feature__image">
-      <div class="img-placeholder" style="background:linear-gradient(135deg,#2D1A0D,#0A0A0A);height:100%;min-height:480px;"></div>
+      <img src="assets/privateMatchaExperience.png" alt="Private Matcha Experience" class="service-img">
     </div>
     <div class="service-feature__body">
       <div class="label" style="margin-bottom:20px;">PRIVATE</div>
@@ -197,7 +202,7 @@
 <section id="ritual" class="section section--light" style="padding:0;">
   <div class="service-feature service-feature--reverse reveal">
     <div class="service-feature__image">
-      <div class="img-placeholder" style="background:linear-gradient(135deg,#0D1A0D,#2D2D1A);height:100%;min-height:480px;"></div>
+      <img src="assets/7-Day_Matcha_Ritual_Just_like_a_7-day_detox_and.png" alt="7-Day Matcha Ritual" class="service-img">
     </div>
     <div class="service-feature__body">
       <div class="label" style="margin-bottom:20px;">SUBSCRIPTION</div>
@@ -225,7 +230,7 @@
 <section id="tasting" class="section section--dark" style="padding:0;">
   <div class="service-feature reveal">
     <div class="service-feature__image">
-      <div class="img-placeholder" style="background:linear-gradient(135deg,#1A1A2D,#0D2213);height:100%;min-height:480px;"></div>
+      <img src="assets/matchaTasting%20Service.png" alt="At-Home Tasting Experience" class="service-img">
     </div>
     <div class="service-feature__body">
       <div class="label" style="margin-bottom:20px;">CONCIERGE</div>
@@ -253,7 +258,7 @@
 <section id="pairing" class="section section--light" style="padding:0;">
   <div class="service-feature service-feature--reverse reveal">
     <div class="service-feature__image">
-      <div class="img-placeholder" style="background:linear-gradient(135deg,#1A0D0D,#2D1A1A);height:100%;min-height:480px;"></div>
+      <img src="assets/matchaFoodParingService.png" alt="Matcha &amp; Cuisine Pairing" class="service-img">
     </div>
     <div class="service-feature__body">
       <div class="label" style="margin-bottom:20px;">PAIRING</div>
@@ -288,7 +293,7 @@
 
     <div class="card-grid card-grid--3" style="margin-bottom:56px;">
       <div class="card reveal" style="background:var(--card-1);">
-        <div class="img-placeholder img-placeholder--sq" style="background:linear-gradient(135deg,#1A1A0D,#0D1A1A);"></div>
+        <div class="card__image"><img src="assets/Meditation_Cushion_Japanese_zafu.png" alt="Meditation Cushion" style="width:100%;aspect-ratio:1;object-fit:cover;display:block;"></div>
         <div class="card__body">
           <span class="card__tag">MEDITATION</span>
           <h3 class="card__title">Meditation Cushion</h3>
@@ -296,7 +301,7 @@
         </div>
       </div>
       <div class="card reveal reveal-delay-2" style="background:var(--card-1);">
-        <div class="img-placeholder img-placeholder--sq" style="background:linear-gradient(135deg,#1A0D1A,#1A1A0D);"></div>
+        <div class="card__image"><img src="assets/Japanese_Incense_Kyoto.png" alt="Japanese Incense" style="width:100%;aspect-ratio:1;object-fit:cover;display:block;"></div>
         <div class="card__body">
           <span class="card__tag">INCENSE</span>
           <h3 class="card__title">Japanese Incense</h3>
@@ -304,7 +309,7 @@
         </div>
       </div>
       <div class="card reveal reveal-delay-4" style="background:var(--card-1);">
-        <div class="img-placeholder img-placeholder--sq" style="background:linear-gradient(135deg,#0D1A1A,#1A0D1A);"></div>
+        <div class="card__image"><img src="assets/Hand-Thrown_Chawan_Each_bowl.png" alt="Hand-Thrown Chawan" style="width:100%;aspect-ratio:1;object-fit:cover;display:block;"></div>
         <div class="card__body">
           <span class="card__tag">CERAMIC</span>
           <h3 class="card__title">Hand-Thrown Chawan</h3>
@@ -336,7 +341,7 @@
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;" class="reveal">
       <div>
-        <div class="img-placeholder" style="background:linear-gradient(135deg,#1A3320,#2D2D2D);aspect-ratio:4/3;"></div>
+        <img src="assets/gift_kit_arrives_in_a_hand-pressed_Japanese.png" alt="HARUKAZ Signature Gift Kit" style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block;">
       </div>
       <div>
         <p style="color:var(--text-light);line-height:1.9;margin-bottom:24px;">Each gift kit arrives in a hand-pressed Japanese paper box. Inside: a 30g tin of ceremonial-grade Uji matcha, a hand-carved bamboo chasen, a ceramic measuring scoop, a linen preparation cloth, and a handwritten note explaining the ritual.</p>
@@ -394,7 +399,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>Toronto, Canada &nbsp;·&nbsp; <a href="mailto:hello@harukaz.com" style="color:var(--gold);">hello@harukaz.com</a></p>
+      <p>Toronto, Canada &nbsp;·&nbsp; <a href="mailto:info@harukazwellness.com" style="color:var(--gold);">info@harukazwellness.com</a></p>
       <p>© 2026 HARUKAZ. All rights reserved.</p>
       <p class="quote">"Because the quality of your life is determined by the quality of your attention."</p>
     </div>

@@ -9,15 +9,38 @@
   <link rel="stylesheet" href="style.css">
   <style>
     /* Page-specific overrides */
-    .hero { background: linear-gradient(160deg, #1A3320 0%, #0A0A0A 60%); }
+    .hero { background: #0A0A0A; }
+
+    .hero__bg-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      z-index: 0;
+    }
+    .hero__bg-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(10,10,10,0.35) 0%,
+        rgba(10,10,10,0.55) 60%,
+        rgba(10,10,10,0.80) 100%
+      );
+      z-index: 1;
+    }
+    .hero__canvas { z-index: 2; }
+    .hero__content { z-index: 3; }
+    .hero__scroll  { z-index: 3; }
 
     /* Section 2 — Sensory Immersion */
-    .sensory { position: relative; min-height: 80vh; display: flex; align-items: center; overflow: hidden; }
+    .sensory { position: relative; min-height: 72vh; display: flex; align-items: center; overflow: hidden; }
     .sensory__bg {
       position: absolute; inset: 0;
       background: linear-gradient(135deg, #0D2213 0%, #0A0A0A 60%, #1A1A0A 100%);
     }
-    /* 画像が入ったときの処理 */
     .sensory__img {
       position: absolute; inset: 0;
       width: 100%; height: 100%;
@@ -26,31 +49,35 @@
       display: block;
     }
     .sensory__overlay { position: absolute; inset: 0; background: rgba(8,8,8,0.58); }
-    .sensory__content {
-      position: relative; z-index: 2;
-      width: 100%; padding: 120px 0;
+
+    /* Subtle figure — right side ghost image */
+    .sensory__figure {
+      position: absolute;
+      right: 0; bottom: 0;
+      height: 100%;
+      width: auto;
+      max-width: 42%;
+      object-fit: contain;
+      object-position: bottom right;
+      opacity: 0.18;
+      mix-blend-mode: luminosity;
+      pointer-events: none;
+      z-index: 1;
     }
 
-    /* バッジ — 上部に「思考をクリアにする動的瞑想」 */
-    .sensory__badge {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin-bottom: 40px;
+    .sensory__content {
+      position: relative; z-index: 2;
+      width: 100%; padding: 96px 0;
     }
-    .sensory__badge-jp {
-      font-family: var(--font-jp);
-      font-size: clamp(18px, 2.5vw, 26px);
-      font-weight: 300;
-      color: #fff;
-      letter-spacing: 0.12em;
-      line-height: 1.4;
-    }
-    .sensory__badge-en {
+
+    /* Eyebrow label above headline */
+    .sensory__eyebrow {
       font-size: 11px;
-      letter-spacing: 0.25em;
+      letter-spacing: 0.28em;
       text-transform: uppercase;
       color: var(--gold);
+      margin-bottom: 20px;
+      display: block;
     }
 
     .sensory__headline {
@@ -60,38 +87,16 @@
       font-style: italic;
       color: #fff;
       line-height: 1.3;
-      max-width: 800px;
-      margin-bottom: 40px;
+      max-width: 700px;
+      margin-bottom: 36px;
     }
     .sensory__body {
-      max-width: 560px;
+      max-width: 520px;
       color: rgba(204,204,204,0.8);
       line-height: 1.9;
       font-size: 16px;
-      margin-bottom: 48px;
     }
     .sensory__body p + p { margin-top: 20px; }
-
-    /* 下部「エグゼクティブ抹茶サービス」ライン */
-    .sensory__service-tag {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      max-width: 640px;
-    }
-    .sensory__tag-line {
-      flex: 1;
-      height: 1px;
-      background: rgba(200,169,110,0.35);
-    }
-    .sensory__tag-text {
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(200,169,110,0.7);
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
 
     /* Science section */
     .science-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); }
@@ -178,6 +183,10 @@
      SECTION 1 — CINEMATIC HERO
 ───────────────────────────────────────── -->
 <section class="hero" aria-label="Welcome to HARUKAZ">
+  <!-- Hero background image -->
+  <img src="assets/HP_HERO.png" alt="" class="hero__bg-img" aria-hidden="true">
+  <!-- Dark overlay so text stays readable -->
+  <div class="hero__bg-overlay" aria-hidden="true"></div>
   <canvas id="hero-canvas" class="hero__canvas" aria-hidden="true"></canvas>
   <div class="hero__content">
     <p class="hero__eyebrow">TORONTO &nbsp;·&nbsp; EST. 2026</p>
@@ -219,32 +228,21 @@
      SECTION 2 — SENSORY IMMERSION
 ───────────────────────────────────────── -->
 <section class="sensory section--dark">
-  <!-- 画像ファイルを assets/hero-matcha.jpg に置いてください -->
   <div class="sensory__bg">
-    <img src="assets/hero-matcha.jpg" alt="Ceremonial matcha in black chawan" class="sensory__img" onerror="this.style.display='none'">
+    <img src="assets/hero-matcha.jpg" alt="" class="sensory__img" onerror="this.style.display='none'">
   </div>
   <div class="sensory__overlay"></div>
+  <!-- Subtle figure, right side -->
+  <img src="assets/HP_man_green.png" alt="" class="sensory__figure" aria-hidden="true">
   <div class="sensory__content">
     <div class="container">
-
-      <!-- テキストオーバーレイ — 画像の上に重なる -->
-      <div class="sensory__badge reveal">
-        <span class="sensory__badge-jp">思考をクリアにする動的瞑想</span>
-        <span class="sensory__badge-en">DYNAMIC MEDITATION FOR EXECUTIVE CLARITY</span>
-      </div>
-
+      <span class="sensory__eyebrow reveal">CLARITY IN MOTION &nbsp;·&nbsp; A PRACTICE FOR SHARPER THINKING</span>
       <h2 class="sensory__headline reveal reveal-delay-1">
         "Fifteen minutes.<br>One bowl.<br>A different kind of clarity."
       </h2>
       <div class="sensory__body reveal reveal-delay-2">
         <p>Before the first meeting. Before the inbox. Before the day asks anything of you — there is this: the weight of a ceramic bowl, the cool resistance of a bamboo whisk.</p>
         <p>HARUKAZ does not sell calm. It creates the conditions in which clarity arrives on its own. What follows — sharper thinking, longer focus, decisions made from the centre of yourself — is simply what happens when you stop performing and start being.</p>
-      </div>
-
-      <div class="sensory__service-tag reveal reveal-delay-3">
-        <span class="sensory__tag-line"></span>
-        <span class="sensory__tag-text">エグゼクティブ抹茶サービス &nbsp;·&nbsp; EXECUTIVE MATCHA SERVICE</span>
-        <span class="sensory__tag-line"></span>
       </div>
     </div>
   </div>
@@ -301,7 +299,7 @@
 
       <article class="card card--light card--service reveal">
         <div class="card__image">
-          <div class="img-placeholder img-placeholder--wide" style="background:linear-gradient(135deg,#1A3320,#2D2D2D);"></div>
+          <img src="assets/Corporate_Executive_Wellness_Executives_from.png" alt="Executive Wellness" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;">
         </div>
         <div class="card__body">
           <span class="card__tag">CORPORATE</span>
@@ -313,7 +311,7 @@
 
       <article class="card card--light card--service reveal reveal-delay-1">
         <div class="card__image">
-          <div class="img-placeholder img-placeholder--wide" style="background:linear-gradient(135deg,#1F2D1A,#1A1A2D);"></div>
+          <img src="assets/Leadership__Team_Building_In_a_tatami-mat_tea_roo.png" alt="Leadership &amp; Team Building" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;">
         </div>
         <div class="card__body">
           <span class="card__tag">TEAM BUILDING</span>
@@ -325,7 +323,7 @@
 
       <article class="card card--light card--service reveal reveal-delay-2">
         <div class="card__image">
-          <div class="img-placeholder img-placeholder--wide" style="background:linear-gradient(135deg,#2D1A0D,#1A1A1A);"></div>
+          <img src="assets/privateMatchaExperience.png" alt="Private Matcha Experience" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;">
         </div>
         <div class="card__body">
           <span class="card__tag">PRIVATE</span>
@@ -337,7 +335,7 @@
 
       <article class="card card--light card--service reveal">
         <div class="card__image">
-          <div class="img-placeholder img-placeholder--wide" style="background:linear-gradient(135deg,#0D1A0D,#2D2D1A);"></div>
+          <img src="assets/7-Day_Matcha_Ritual_Just_like_a_7-day_detox_and.png" alt="7-Day Matcha Ritual" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;">
         </div>
         <div class="card__body">
           <span class="card__tag">SUBSCRIPTION</span>
@@ -349,7 +347,7 @@
 
       <article class="card card--light card--service reveal reveal-delay-1">
         <div class="card__image">
-          <div class="img-placeholder img-placeholder--wide" style="background:linear-gradient(135deg,#1A1A2D,#0D2213);"></div>
+          <img src="assets/matchaTasting%20Service.png" alt="At-Home Tasting" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;">
         </div>
         <div class="card__body">
           <span class="card__tag">CONCIERGE</span>
@@ -361,7 +359,7 @@
 
       <article class="card card--light card--service reveal reveal-delay-2">
         <div class="card__image">
-          <div class="img-placeholder img-placeholder--wide" style="background:linear-gradient(135deg,#1A0D0D,#2D1A1A);"></div>
+          <img src="assets/matchaFoodParingService.png" alt="Matcha &amp; Cuisine Pairing" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;">
         </div>
         <div class="card__body">
           <span class="card__tag">PAIRING</span>
@@ -415,7 +413,7 @@
     <div class="card-grid card-grid--3" style="margin-bottom:48px;">
       <article class="card card--light reveal">
         <div class="card__image">
-          <div class="img-placeholder img-placeholder--wide" style="background:linear-gradient(135deg,#1A3320,#0A0A0A);"></div>
+          <img src="assets/Why_Uji_Matcha_Is_Worth_Every_Dollar_The_terroir.png" alt="Why Uji Matcha Is Worth Every Dollar" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;">
         </div>
         <div class="card__body">
           <span class="card__tag">ORIGINS</span>
@@ -427,7 +425,7 @@
 
       <article class="card card--light reveal reveal-delay-2">
         <div class="card__image">
-          <div class="img-placeholder img-placeholder--wide" style="background:linear-gradient(135deg,#1A1A0A,#2D2D2D);"></div>
+          <img src="assets/L-Theanine_The_Molecule_Behind_the_Focus_What.png" alt="L-Theanine: The Molecule Behind the Focus" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;">
         </div>
         <div class="card__body">
           <span class="card__tag">SCIENCE</span>
@@ -439,7 +437,7 @@
 
       <article class="card card--light reveal reveal-delay-4">
         <div class="card__image">
-          <div class="img-placeholder img-placeholder--wide" style="background:linear-gradient(135deg,#0D0D1A,#1A2D1A);"></div>
+          <img src="assets/The_Grammar_of_Chado_Tea_as_Philosophy_Sen_no_Rik.png" alt="The Grammar of Chado" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;">
         </div>
         <div class="card__body">
           <span class="card__tag">CEREMONY</span>
@@ -539,7 +537,7 @@
     </div>
 
     <div class="footer-bottom">
-      <p>Toronto, Canada &nbsp;·&nbsp; <a href="mailto:hello@harukaz.com" style="color:var(--gold);">hello@harukaz.com</a> &nbsp;·&nbsp; @harukaz.matcha</p>
+      <p>Toronto, Canada &nbsp;·&nbsp; <a href="mailto:info@harukazwellness.com" style="color:var(--gold);">info@harukazwellness.com</a> &nbsp;·&nbsp; @harukaz.matcha</p>
       <p>© 2026 HARUKAZ. All rights reserved.</p>
       <p class="quote">"Because the quality of your life is determined by the quality of your attention."</p>
     </div>
