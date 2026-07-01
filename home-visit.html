@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>At-Home Matcha Experience — HARUKAZ</title>
+  <meta name="description" content="A private matcha ceremony delivered to your home. North York, Lawrence Park, Forest Hill, Rosedale. From $20.">
+  <link rel="icon" type="image/png" href="assets/Harukaz.png">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ── PRICING ── */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+    }
+    .pricing-card {
+      background: var(--bg-dark);
+      padding: 48px 32px;
+      cursor: pointer;
+      transition: background var(--transition-fast);
+      position: relative;
+    }
+    .pricing-card:hover { background: var(--card-1); }
+    .pricing-card.active { background: var(--card-1); }
+    .pricing-card.active::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--gold);
+    }
+    .pricing-badge {
+      font-size: 10px; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .pricing-price {
+      font-family: var(--font-display);
+      font-size: 52px; font-weight: 300;
+      color: #fff; line-height: 1;
+      margin-bottom: 4px;
+    }
+    .pricing-per {
+      font-size: 12px; color: var(--text-muted);
+      margin-bottom: 24px; letter-spacing: 0.05em;
+    }
+    .pricing-name {
+      font-family: var(--font-display);
+      font-size: 19px; color: #ddd;
+      margin-bottom: 12px;
+    }
+    .pricing-desc {
+      font-size: 13px; color: var(--text-muted);
+      line-height: 1.75;
+    }
+
+    /* ── STEPS ── */
+    .steps-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+    }
+    .step { text-align: center; }
+    .step__num {
+      width: 52px; height: 52px;
+      clip-path: polygon(30% 0%,70% 0%,100% 30%,100% 70%,70% 100%,30% 100%,0% 70%,0% 30%);
+      background: var(--gold-dim);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 20px; color: var(--gold);
+      margin: 0 auto 20px;
+    }
+    .step__title { font-family: var(--font-display); font-size: 17px; color: #333; margin-bottom: 8px; }
+    .step__desc { font-size: 13px; color: #777; line-height: 1.7; }
+
+    /* ── CALENDAR ── */
+    .cal-nav {
+      display: flex; align-items: center; gap: 24px; margin-bottom: 24px;
+    }
+    .cal-nav__month {
+      font-family: var(--font-display); font-size: 28px; color: #fff; flex: 1;
+    }
+    .cal-nav__btn {
+      width: 40px; height: 40px; border: 1px solid var(--border);
+      background: none; color: var(--text-muted); cursor: pointer;
+      font-size: 20px; transition: all var(--transition-fast);
+      display: flex; align-items: center; justify-content: center;
+      line-height: 1;
+    }
+    .cal-nav__btn:hover { border-color: var(--gold); color: var(--gold); }
+
+    .cal-grid {
+      display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px;
+    }
+    .cal-header {
+      font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--text-muted); text-align: center; padding-bottom: 12px;
+    }
+    .cal-day {
+      aspect-ratio: 1; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      font-size: 15px; border: 1px solid transparent;
+      transition: all var(--transition-fast); border-radius: 0;
+    }
+    .cal-day--past { color: rgba(255,255,255,0.12); }
+    .cal-day--available {
+      border-color: var(--border); color: var(--text-dark); cursor: pointer;
+    }
+    .cal-day--available:hover { border-color: var(--gold); color: var(--gold); }
+    .cal-day--selected {
+      background: var(--gold); color: #000 !important;
+      border-color: var(--gold) !important;
+    }
+    .cal-day--unavailable { color: rgba(255,255,255,0.18); }
+    .cal-dot {
+      width: 4px; height: 4px; border-radius: 50%;
+      background: var(--gold); margin-top: 3px;
+    }
+    .cal-day--selected .cal-dot { background: #000; }
+
+    .slot-wrap { margin: 28px 0 40px; }
+    .slot-list { display: flex; gap: 10px; flex-wrap: wrap; }
+    .slot-btn {
+      padding: 10px 22px; border: 1px solid var(--border);
+      background: none; color: var(--text-muted); cursor: pointer;
+      font-size: 13px; letter-spacing: 0.08em; font-family: var(--font-body);
+      transition: all var(--transition-fast);
+    }
+    .slot-btn:hover, .slot-btn.active {
+      border-color: var(--gold); color: var(--gold);
+    }
+    .slot-msg { font-size: 13px; color: var(--text-muted); padding: 12px 0; }
+
+    /* ── BOOKING PANEL ── */
+    .booking-panel {
+      display: none; margin-top: 48px; padding-top: 48px;
+      border-top: 1px solid var(--border);
+    }
+    .booking-panel.show { display: block; }
+
+    .booking-summary {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 24px 32px; border: 1px solid var(--border); margin-bottom: 40px;
+      flex-wrap: wrap; gap: 16px;
+    }
+    .booking-summary__date {
+      font-family: var(--font-display); font-size: 22px; color: var(--gold);
+    }
+    .booking-summary__change {
+      font-size: 11px; letter-spacing: 0.15em; color: var(--text-muted);
+      cursor: pointer; border-bottom: 1px solid var(--border);
+      padding-bottom: 2px; text-transform: uppercase; user-select: none;
+    }
+    .booking-summary__change:hover { color: var(--gold); border-color: var(--gold); }
+
+    /* ── CONFIRM ── */
+    .booking-confirm {
+      display: none; padding: 64px 40px; text-align: center;
+      border: 1px solid var(--border); margin-top: 32px;
+    }
+    .booking-confirm.show { display: block; }
+    .booking-confirm h3 {
+      font-family: var(--font-display); font-size: 36px; color: var(--gold);
+      margin-bottom: 16px;
+    }
+    .booking-confirm p { font-size: 15px; color: var(--text-muted); line-height: 1.8; }
+
+    /* ── LOADING ── */
+    .cal-loading {
+      text-align: center; padding: 56px 0;
+      color: var(--text-muted); font-size: 14px; letter-spacing: 0.08em;
+    }
+    .cal-spinner {
+      width: 28px; height: 28px; margin: 0 auto 20px;
+      border: 2px solid var(--border); border-top-color: var(--gold);
+      border-radius: 50%; animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── INCLUDE LIST ── */
+    .include-list { list-style: none; }
+    .include-list li {
+      padding: 14px 0; border-bottom: 1px solid #eee;
+      font-size: 14px; color: #555; display: flex; gap: 12px;
+    }
+    .include-list li:last-child { border-bottom: none; }
+    .include-list li::before { content: '—'; color: #8B7355; flex-shrink: 0; }
+
+    /* ── FAQ ── */
+    .faq-item { padding: 28px 0; border-bottom: 1px solid #e5e0d8; }
+    .faq-item:first-child { border-top: 1px solid #e5e0d8; }
+    .faq-q { font-family: var(--font-display); font-size: 19px; color: #222; margin-bottom: 10px; }
+    .faq-a { font-size: 14px; color: #666; line-height: 1.85; }
+
+    @media (max-width: 900px) {
+      .pricing-grid { grid-template-columns: repeat(2, 1fr); }
+      .steps-row { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .pricing-grid { grid-template-columns: 1fr; }
+      .steps-row { grid-template-columns: 1fr; }
+      .booking-summary { flex-direction: column; align-items: flex-start; }
+      .pricing-price { font-size: 40px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav id="nav-persistent">
+  <a href="index.html" class="nav-logo-mark" aria-label="HARUKAZ Home">
+    <div class="logo-placeholder" aria-hidden="true">春</div>
+  </a>
+  <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">
+    <span class="toggle-text">MENU</span>
+    <span class="hamburger" aria-hidden="true"><span></span><span></span><span></span></span>
+  </button>
+</nav>
+<div id="nav-overlay" role="dialog" aria-modal="true">
+  <div class="nav-overlay__logo" aria-hidden="true"><img src="assets/Harukaz.png" alt="HARUKAZ"></div>
+  <ul class="nav-overlay__links">
+    <li><a href="index.html">HOME</a></li>
+    <li><a href="services.html">EXPERIENCES</a></li>
+    <li><a href="corporate.html">CORPORATE</a></li>
+    <li><a href="tea.html">TEA LIBRARY</a></li>
+    <li><a href="book.html">BOOK</a></li>
+    <li><a href="about.html">ABOUT</a></li>
+    <li><a href="contact.html">CONTACT</a></li>
+  </ul>
+</div>
+
+<!-- Hero -->
+<header class="page-hero" style="min-height:54vh;">
+  <div class="container">
+    <div class="label reveal">AT-HOME EXPERIENCE</div>
+    <h1 class="reveal reveal-delay-1">We Come to You.</h1>
+    <p style="max-width:520px;color:rgba(204,204,204,0.75);margin-top:20px;line-height:1.8;" class="reveal reveal-delay-2">
+      A private matcha ceremony in your own home — no travel, no performance, no rush. Just ritual, presence, and a bowl prepared exactly for you.
+    </p>
+    <div style="margin-top:36px;" class="reveal reveal-delay-2">
+      <span style="display:inline-flex;align-items:center;gap:10px;font-size:11px;letter-spacing:0.2em;color:var(--text-muted);">
+        <span style="color:var(--gold);font-size:8px;">◉</span>
+        NORTH YORK &nbsp;·&nbsp; LAWRENCE PARK &nbsp;·&nbsp; FOREST HILL &nbsp;·&nbsp; ROSEDALE
+      </span>
+    </div>
+  </div>
+</header>
+
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+
+<!-- What you get -->
+<section class="section section--light">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;">
+      <div class="reveal">
+        <div class="label" style="margin-bottom:24px;">THE EXPERIENCE</div>
+        <h2 style="margin-bottom:28px;">Sixty Minutes.<br>Your Living Room.</h2>
+        <p style="color:#666;line-height:1.95;margin-bottom:20px;">
+          We arrive with everything — ceremonial-grade Uji matcha from Kyoto, a handcrafted chawan, and a bamboo whisk prepared for the right temperature and texture. You provide only a quiet surface and your attention.
+        </p>
+        <p style="color:#666;line-height:1.95;margin-bottom:20px;">
+          The session moves through three acts: a brief grounding practice, the careful preparation of your bowl, and a silent tasting with guided sensory reflection. No prior experience with tea or meditation is needed.
+        </p>
+        <p style="color:#666;line-height:1.95;">
+          You leave with a small take-home portion of the matcha you tasted, and a printed tasting card to keep.
+        </p>
+      </div>
+      <div class="reveal reveal-delay-2" style="padding:40px;border:1px solid #e5e0d8;">
+        <div class="label" style="margin-bottom:24px;">WHAT'S INCLUDED</div>
+        <ul class="include-list">
+          <li>60-minute private ceremony at your home</li>
+          <li>Ceremonial-grade Uji matcha (Kyoto origin)</li>
+          <li>Hand-thrown chawan and bamboo chasen</li>
+          <li>Guided tasting and sensory reflection</li>
+          <li>Take-home matcha portion + printed tasting card</li>
+          <li>Service area: North York &amp; surrounding neighbourhoods</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+
+<!-- Pricing -->
+<section class="section section--dark" id="pricing">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="label">PRICING</div>
+      <h2>Choose Your Rhythm</h2>
+      <p>Select a plan below, then pick a date.</p>
+    </div>
+    <div class="pricing-grid reveal">
+
+      <div class="pricing-card active" data-plan="intro" data-price="20" data-label="Introductory Session">
+        <p class="pricing-badge">FIRST SESSION ONLY</p>
+        <p class="pricing-price">$20</p>
+        <p class="pricing-per">one session</p>
+        <p class="pricing-name">Introductory Session</p>
+        <p class="pricing-desc">Your first HARUKAZ experience, at half price. No commitment — simply discover what the ritual can do for you.</p>
+      </div>
+
+      <div class="pricing-card" data-plan="single" data-price="40" data-label="Single Session">
+        <p class="pricing-badge">ON DEMAND</p>
+        <p class="pricing-price">$40</p>
+        <p class="pricing-per">per session</p>
+        <p class="pricing-name">Single Session</p>
+        <p class="pricing-desc">Book whenever the moment calls for it. No recurring commitment — schedule when you need stillness.</p>
+      </div>
+
+      <div class="pricing-card" data-plan="bi" data-price="80" data-label="Bi-Weekly Subscription · $80/month">
+        <p class="pricing-badge">SUBSCRIPTION</p>
+        <p class="pricing-price">$80</p>
+        <p class="pricing-per">per month · 2 sessions</p>
+        <p class="pricing-name">Bi-Weekly Ritual</p>
+        <p class="pricing-desc">Two sessions a month. Enough cadence to build a real practice — spaced to let each session settle.</p>
+      </div>
+
+      <div class="pricing-card" data-plan="weekly" data-price="160" data-label="Weekly Subscription · $160/month">
+        <p class="pricing-badge">MOST COMMITTED</p>
+        <p class="pricing-price">$160</p>
+        <p class="pricing-per">per month · 4 sessions</p>
+        <p class="pricing-name">Weekly Ritual</p>
+        <p class="pricing-desc">Once a week, every week. For those who have decided that regular stillness is non-negotiable.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+
+<!-- How it works -->
+<section class="section section--light">
+  <div class="container">
+    <div class="section-header section-header--centered reveal">
+      <div class="label">HOW IT WORKS</div>
+      <h2>Simple by Design</h2>
+    </div>
+    <div class="steps-row reveal">
+      <div class="step">
+        <div class="step__num">1</div>
+        <p class="step__title">Choose a Plan</p>
+        <p class="step__desc">Select the option that fits your life. First-timers: start with the introductory session.</p>
+      </div>
+      <div class="step">
+        <div class="step__num">2</div>
+        <p class="step__title">Pick a Date</p>
+        <p class="step__desc">Choose from available slots on the calendar below. Sessions run Tuesday–Saturday, 10am–7pm.</p>
+      </div>
+      <div class="step">
+        <div class="step__num">3</div>
+        <p class="step__title">Pay &amp; Confirm</p>
+        <p class="step__desc">Complete your booking securely. A confirmation email follows within a few hours.</p>
+      </div>
+      <div class="step">
+        <div class="step__num">4</div>
+        <p class="step__title">We Arrive</p>
+        <p class="step__desc">On the day, we arrive on time with everything needed. You simply answer the door.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+
+<!-- Book Section -->
+<section class="section section--dark" id="book">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="label">AVAILABILITY</div>
+      <h2>Select a Date</h2>
+      <p>Highlighted dates are open. Click to choose your session time.</p>
+    </div>
+
+    <div class="reveal">
+
+      <!-- Calendar navigation -->
+      <div class="cal-nav">
+        <button class="cal-nav__btn" id="cal-prev" aria-label="Previous month">&#8249;</button>
+        <div class="cal-nav__month" id="cal-month-label"></div>
+        <button class="cal-nav__btn" id="cal-next" aria-label="Next month">&#8250;</button>
+      </div>
+
+      <!-- Loading -->
+      <div class="cal-loading" id="cal-loading">
+        <div class="cal-spinner"></div>
+        Loading availability…
+      </div>
+
+      <!-- Calendar grid -->
+      <div id="cal-grid-wrap" style="display:none;">
+        <div class="cal-grid" id="cal-grid"></div>
+      </div>
+
+      <!-- Time slots -->
+      <div class="slot-wrap" id="slot-wrap" style="display:none;">
+        <div class="label" style="margin-bottom:16px;">SELECT A TIME</div>
+        <div class="slot-list" id="slot-list"></div>
+      </div>
+
+      <!-- Booking form -->
+      <div class="booking-panel" id="booking-panel">
+
+        <div class="booking-summary">
+          <div>
+            <div class="label" style="margin-bottom:8px;">YOUR BOOKING</div>
+            <div class="booking-summary__date" id="summary-datetime"></div>
+            <div id="summary-plan" style="font-size:13px;color:var(--text-muted);margin-top:4px;"></div>
+          </div>
+          <span class="booking-summary__change" id="change-date">Change date</span>
+        </div>
+
+        <form id="home-visit-form" action="https://formspree.io/f/mbdvyqgz" method="POST" novalidate>
+          <input type="hidden" name="_subject" value="HARUKAZ At-Home Booking Request">
+          <input type="hidden" name="selected_date" id="hidden-date">
+          <input type="hidden" name="selected_time" id="hidden-time">
+          <input type="hidden" name="plan" id="hidden-plan">
+          <input type="hidden" name="price" id="hidden-price">
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+            <div class="form-group">
+              <label class="form-label" for="hv-name">Full Name</label>
+              <input class="form-input" type="text" id="hv-name" name="name" placeholder="Your name" required autocomplete="name">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="hv-email">Email Address</label>
+              <input class="form-input" type="email" id="hv-email" name="email" placeholder="your@email.com" required autocomplete="email">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="hv-address">Home Address</label>
+            <input class="form-input" type="text" id="hv-address" name="address" placeholder="Street address, city, postal code" required autocomplete="street-address">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="hv-notes">Notes (optional)</label>
+            <textarea class="form-textarea" id="hv-notes" name="notes" rows="3" placeholder="Allergies, access instructions, or any special requests."></textarea>
+          </div>
+
+          <div style="margin-top:32px;">
+            <div class="label" style="margin-bottom:16px;">COMPLETE YOUR BOOKING</div>
+            <p style="font-size:13px;color:var(--text-muted);line-height:1.7;margin-bottom:28px;">
+              After submitting your details, you will be directed to our secure payment page. Your booking is confirmed once payment is received.
+            </p>
+            <button type="submit" class="btn btn--gold" id="submit-btn">Continue to Payment →</button>
+          </div>
+        </form>
+
+        <!-- Post-submit confirmation + Stripe link -->
+        <div class="booking-confirm" id="booking-confirm">
+          <h3>You're almost there.</h3>
+          <p style="margin-bottom:32px;">
+            Your details have been received. Complete payment below to confirm your session.<br>
+            You will receive a booking confirmation email after payment.
+          </p>
+          <a id="stripe-pay-btn" href="#" class="btn btn--gold" target="_blank" rel="noopener noreferrer"
+             style="font-size:14px;letter-spacing:0.15em;display:inline-block;padding:18px 40px;">
+            Pay Securely — $<span id="confirm-price"></span>
+          </a>
+          <p style="margin-top:24px;font-size:12px;color:var(--text-muted);">
+            Powered by Stripe. Questions? <a href="mailto:info@harukazwellness.com" style="color:var(--gold);">info@harukazwellness.com</a>
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+
+<!-- FAQ -->
+<section class="section section--light">
+  <div class="container" style="max-width:720px;">
+    <div class="section-header reveal">
+      <div class="label">QUESTIONS</div>
+      <h2>Good to Know</h2>
+    </div>
+    <div class="reveal">
+      <div class="faq-item">
+        <p class="faq-q">Do I need any experience with matcha or meditation?</p>
+        <p class="faq-a">None at all. The session is designed to work for complete beginners. The only requirement is a willingness to slow down for an hour.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">What do I need to prepare at home?</p>
+        <p class="faq-a">A quiet table or low surface, and roughly one square metre of clear space. We bring absolutely everything else — including a small mat if needed.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">Which areas do you serve?</p>
+        <p class="faq-a">Currently: North York, Lawrence Park, Forest Hill, Rosedale, Leaside, and Bayview Village. Email us for other areas — we may be able to accommodate depending on distance.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">Can I reschedule or cancel?</p>
+        <p class="faq-a">Yes, with 48 hours' notice. Email <a href="mailto:info@harukazwellness.com" style="color:#8B7355;">info@harukazwellness.com</a> and we will find another time that works.</p>
+      </div>
+      <div class="faq-item" style="border-bottom:1px solid #e5e0d8;">
+        <p class="faq-q">How do subscriptions work?</p>
+        <p class="faq-a">Subscriptions are billed automatically on the same date each month. You can pause or cancel anytime by emailing us at least 5 days before your next billing date — no questions asked.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <p class="footer__brand">HARUKAZ</p>
+      <p>Toronto, Canada &nbsp;·&nbsp; <a href="mailto:info@harukazwellness.com" style="color:var(--gold);">info@harukazwellness.com</a></p>
+      <nav class="footer__links">
+        <a href="index.html">Home</a>
+        <a href="services.html">Experiences</a>
+        <a href="book.html">Book</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   HARUKAZ AT-HOME BOOKING
+
+   SETUP — 2 things to configure before going live:
+
+   ① GOOGLE CALENDAR API
+      a) Google Cloud Console (console.cloud.google.com)
+         → New Project → Enable "Google Calendar API"
+         → Credentials → Create API Key
+         → Restrict key to: Calendar API + your domain
+      b) Create a new Google Calendar called "HARUKAZ Availability"
+      c) Add events for your AVAILABLE time slots:
+         Title: "Available"  |  Set exact start & end times
+      d) Make calendar public:
+         Calendar settings → Access permissions → Make available to public
+      e) Copy your Calendar ID from settings
+         (looks like: xxxxxxxx@group.calendar.google.com)
+      f) Paste both values below ↓
+
+   ② STRIPE PAYMENT LINKS
+      Stripe Dashboard → Payment Links → + New
+      Create 4 links and paste the URLs below:
+        - Intro $20 (one-time)
+        - Single $40 (one-time)
+        - Bi-weekly $80/month (recurring subscription)
+        - Weekly $160/month (recurring subscription)
+═══════════════════════════════════════════════════════════════ */
+
+const CONFIG = {
+  GOOGLE_API_KEY:     'YOUR_GOOGLE_API_KEY',
+  GOOGLE_CALENDAR_ID: 'YOUR_CALENDAR_ID@group.calendar.google.com',
+
+  STRIPE: {
+    intro:  'YOUR_STRIPE_LINK_INTRO_20',
+    single: 'YOUR_STRIPE_LINK_SINGLE_40',
+    bi:     'YOUR_STRIPE_LINK_BIWEEKLY_80',
+    weekly: 'YOUR_STRIPE_LINK_WEEKLY_160',
+  }
+};
+
+/* ── State ── */
+let currentPlan = { plan: 'intro', price: '20', label: 'Introductory Session' };
+let currentDate = null;
+let currentTime = null;
+let viewYear, viewMonth;
+let availableEvents = [];
+
+/* ── Pricing card selection ── */
+document.querySelectorAll('.pricing-card').forEach(card => {
+  card.addEventListener('click', () => {
+    document.querySelectorAll('.pricing-card').forEach(c => c.classList.remove('active'));
+    card.classList.add('active');
+    currentPlan = {
+      plan:  card.dataset.plan,
+      price: card.dataset.price,
+      label: card.dataset.label,
+    };
+    document.getElementById('book').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+/* ══════════════════════════════════════════
+   GOOGLE CALENDAR FETCH
+══════════════════════════════════════════ */
+async function fetchAvailability() {
+  if (CONFIG.GOOGLE_API_KEY === 'YOUR_GOOGLE_API_KEY') {
+    generateDemoSlots();
+    return;
+  }
+
+  const now    = new Date();
+  const future = new Date(now.getTime() + 60 * 24 * 60 * 60 * 1000);
+  const url    = [
+    'https://www.googleapis.com/calendar/v3/calendars/',
+    encodeURIComponent(CONFIG.GOOGLE_CALENDAR_ID),
+    '/events?key=', CONFIG.GOOGLE_API_KEY,
+    '&timeMin=', now.toISOString(),
+    '&timeMax=', future.toISOString(),
+    '&singleEvents=true&orderBy=startTime&q=Available'
+  ].join('');
+
+  try {
+    const res  = await fetch(url);
+    if (!res.ok) throw new Error(res.status);
+    const data = await res.json();
+    availableEvents = (data.items || []).filter(e =>
+      e.summary && e.summary.toLowerCase().includes('available') && e.start.dateTime
+    );
+    showCalendar();
+  } catch (err) {
+    console.warn('Google Calendar API error — using demo mode.', err);
+    generateDemoSlots();
+  }
+}
+
+function generateDemoSlots() {
+  /* Demo mode: shows realistic sample availability (Tue–Sat, varied times).
+     Remove this function and set real API keys when going live. */
+  const now = new Date();
+  availableEvents = [];
+  const times = ['10:00', '13:00', '15:30', '17:00'];
+
+  for (let i = 2; i <= 50; i++) {
+    const d   = new Date(now.getTime() + i * 24 * 60 * 60 * 1000);
+    const dow = d.getDay();
+    if (dow < 2 || dow > 6) continue; // Tue–Sat only
+
+    const dayTimes = times.filter(() => Math.random() > 0.45);
+    dayTimes.forEach(t => {
+      const [h, m] = t.split(':').map(Number);
+      const start  = new Date(d.getFullYear(), d.getMonth(), d.getDate(), h, m);
+      const end    = new Date(start.getTime() + 60 * 60 * 1000);
+      availableEvents.push({
+        summary: 'Available',
+        start: { dateTime: start.toISOString() },
+        end:   { dateTime: end.toISOString() },
+      });
+    });
+  }
+  showCalendar();
+}
+
+/* ══════════════════════════════════════════
+   CALENDAR RENDER
+══════════════════════════════════════════ */
+const MONTH_NAMES = [
+  'January','February','March','April','May','June',
+  'July','August','September','October','November','December'
+];
+const DAY_NAMES = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+
+function showCalendar() {
+  document.getElementById('cal-loading').style.display = 'none';
+  document.getElementById('cal-grid-wrap').style.display = 'block';
+  renderCalendar();
+}
+
+function renderCalendar() {
+  document.getElementById('cal-month-label').textContent =
+    `${MONTH_NAMES[viewMonth]} ${viewYear}`;
+
+  const today       = new Date();
+  const todayStr    = today.toDateString();
+  const firstDayDow = new Date(viewYear, viewMonth, 1).getDay();
+  const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+
+  /* Build set of available day-numbers for quick lookup */
+  const availDays = new Set();
+  availableEvents.forEach(ev => {
+    const d = new Date(ev.start.dateTime);
+    if (d.getFullYear() === viewYear && d.getMonth() === viewMonth) {
+      availDays.add(d.getDate());
+    }
+  });
+
+  let html = DAY_NAMES.map(d => `<div class="cal-header">${d}</div>`).join('');
+
+  /* Empty cells before the 1st */
+  for (let i = 0; i < firstDayDow; i++) {
+    html += `<div class="cal-day"></div>`;
+  }
+
+  for (let day = 1; day <= daysInMonth; day++) {
+    const date   = new Date(viewYear, viewMonth, day);
+    const isPast = date < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const isAvail = availDays.has(day) && !isPast;
+    const isSelected = currentDate &&
+      currentDate.getDate() === day &&
+      currentDate.getMonth() === viewMonth &&
+      currentDate.getFullYear() === viewYear;
+
+    let cls = 'cal-day';
+    let onclick = '';
+    let dot = '';
+
+    if (isPast) {
+      cls += ' cal-day--past';
+    } else if (isAvail) {
+      cls += isSelected ? ' cal-day--selected' : ' cal-day--available';
+      onclick = `onclick="selectDay(${viewYear},${viewMonth},${day})"`;
+      dot = '<div class="cal-dot"></div>';
+    } else {
+      cls += ' cal-day--unavailable';
+    }
+
+    html += `<div class="${cls}" ${onclick}>${day}${dot}</div>`;
+  }
+
+  document.getElementById('cal-grid').innerHTML = html;
+}
+
+function selectDay(year, month, day) {
+  currentDate = new Date(year, month, day);
+  currentTime = null;
+  renderCalendar();
+  renderTimeSlots();
+  document.getElementById('booking-panel').classList.remove('show');
+}
+
+/* ══════════════════════════════════════════
+   TIME SLOTS
+══════════════════════════════════════════ */
+function renderTimeSlots() {
+  const wrap = document.getElementById('slot-wrap');
+  const list = document.getElementById('slot-list');
+  wrap.style.display = 'block';
+
+  const slots = availableEvents.filter(ev => {
+    const d = new Date(ev.start.dateTime);
+    return currentDate &&
+      d.getDate()     === currentDate.getDate() &&
+      d.getMonth()    === currentDate.getMonth() &&
+      d.getFullYear() === currentDate.getFullYear();
+  });
+
+  if (!slots.length) {
+    list.innerHTML = '<span class="slot-msg">No available times on this date — please choose another day.</span>';
+    return;
+  }
+
+  list.innerHTML = slots.map(ev => {
+    const d    = new Date(ev.start.dateTime);
+    const time = d.toLocaleTimeString('en-CA', { hour: 'numeric', minute: '2-digit', hour12: true });
+    return `<button class="slot-btn" onclick="selectTime('${time}', this)">${time}</button>`;
+  }).join('');
+}
+
+function selectTime(time, btn) {
+  document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentTime = time;
+  showBookingPanel();
+}
+
+/* ══════════════════════════════════════════
+   BOOKING PANEL
+══════════════════════════════════════════ */
+function showBookingPanel() {
+  const panel   = document.getElementById('booking-panel');
+  const dateStr = currentDate.toLocaleDateString('en-CA', {
+    weekday: 'long', month: 'long', day: 'numeric'
+  });
+
+  document.getElementById('summary-datetime').textContent = `${dateStr} · ${currentTime}`;
+  document.getElementById('summary-plan').textContent     = `${currentPlan.label} — $${currentPlan.price}`;
+  document.getElementById('hidden-date').value  = dateStr;
+  document.getElementById('hidden-time').value  = currentTime;
+  document.getElementById('hidden-plan').value  = currentPlan.label;
+  document.getElementById('hidden-price').value = `$${currentPlan.price}`;
+
+  panel.classList.add('show');
+  setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
+}
+
+document.getElementById('change-date').addEventListener('click', () => {
+  currentDate = null;
+  currentTime = null;
+  document.getElementById('booking-panel').classList.remove('show');
+  document.getElementById('slot-wrap').style.display = 'none';
+  renderCalendar();
+  document.getElementById('cal-grid-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+
+/* ══════════════════════════════════════════
+   FORM SUBMIT → STRIPE
+══════════════════════════════════════════ */
+document.getElementById('home-visit-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('submit-btn');
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+
+  try {
+    await fetch(e.target.action, {
+      method:  'POST',
+      body:    new FormData(e.target),
+      headers: { Accept: 'application/json' }
+    });
+  } catch (_) { /* silent — proceed to payment regardless */ }
+
+  /* Reveal confirmation + Stripe payment link */
+  e.target.style.display = 'none';
+
+  const stripeURL = CONFIG.STRIPE[currentPlan.plan] || '#';
+  document.getElementById('stripe-pay-btn').href = stripeURL;
+  document.getElementById('confirm-price').textContent = currentPlan.price;
+
+  const confirm = document.getElementById('booking-confirm');
+  confirm.classList.add('show');
+  confirm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+});
+
+/* ══════════════════════════════════════════
+   CALENDAR NAVIGATION
+══════════════════════════════════════════ */
+const _now = new Date();
+viewYear   = _now.getFullYear();
+viewMonth  = _now.getMonth();
+
+document.getElementById('cal-prev').addEventListener('click', () => {
+  if (viewMonth === 0) { viewMonth = 11; viewYear--; }
+  else { viewMonth--; }
+  renderCalendar();
+});
+
+document.getElementById('cal-next').addEventListener('click', () => {
+  if (viewMonth === 11) { viewMonth = 0; viewYear++; }
+  else { viewMonth++; }
+  renderCalendar();
+});
+
+/* ── Init ── */
+fetchAvailability();
+</script>
+</body>
+</html>
