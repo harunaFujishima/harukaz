@@ -149,39 +149,82 @@
 
 <div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
 
-<!-- Pain Points -->
+<!-- Pain Points & Solutions -->
 <section class="section section--dark" style="padding:80px 0;">
   <div class="container">
-    <div class="section-header reveal" style="margin-bottom:48px;">
-      <div class="label">WHY THIS EXISTS</div>
-      <h2>You've Tried Matcha.<br>But You've Never Really Met It.</h2>
+    <div class="section-header reveal" style="margin-bottom:56px;">
+      <div class="label">WHO THIS IS FOR</div>
+      <h2>You've Tasted Matcha Everywhere.<br>But No One Has Shown You What It Actually Is.</h2>
     </div>
 
-    <div class="pain-grid reveal">
-      <div class="pain-card">
-        <span class="pain-card__icon">◯</span>
-        <p class="pain-card__q">"I drink matcha lattes every day but I don't actually know what matcha is."</p>
-        <p class="pain-card__a">Most people encounter matcha as a flavouring — in drinks, desserts, powders. The actual tea, its origin, and the practice behind it are a completely different thing.</p>
-      </div>
-      <div class="pain-card">
-        <span class="pain-card__icon">◯</span>
-        <p class="pain-card__q">"I want to make matcha at home properly, but I don't know where to start."</p>
-        <p class="pain-card__a">The tools are unfamiliar. The ratios are unclear. Most tutorials miss the part that makes it meaningful — the attention you bring to the process.</p>
-      </div>
-      <div class="pain-card">
-        <span class="pain-card__icon">◯</span>
-        <p class="pain-card__q">"I want an experience that's actually educational — not just aesthetic."</p>
-        <p class="pain-card__a">Instagram matcha moments rarely teach you anything. This session gives you the history, the philosophy, the technique — and sends you home with the ability to recreate it.</p>
-      </div>
-    </div>
+    <div class="ps-grid reveal">
 
-    <div class="reveal" style="max-width:620px;">
-      <p style="color:rgba(204,204,204,0.8);line-height:1.95;font-size:15px;">
-        Chado (茶道 — the Way of Tea) is a practice rooted in four principles: harmony, respect, purity, and tranquility. In this session, HARUKAZ brings it to your home — not as performance, but as transmission. You will understand matcha differently when you leave.
-      </p>
+      <div class="ps-block">
+        <div class="ps-problem">
+          <p class="ps-tag">The Problem</p>
+          <p class="ps-text">"I order matcha lattes almost every day — but if someone asked me to explain what matcha is, where it comes from, or why it's prepared the way it is, I couldn't answer."</p>
+        </div>
+        <div class="ps-arrow">→</div>
+        <div class="ps-solution">
+          <p class="ps-tag">What This Session Does</p>
+          <p class="ps-text">The first 15 minutes cover the history and philosophy of Chado (茶道 — the Way of Tea). Where the tea comes from. Why each tool exists. What the preparation is actually asking of you. You leave with real understanding, not just a pleasant memory.</p>
+        </div>
+      </div>
+
+      <div class="ps-block">
+        <div class="ps-problem">
+          <p class="ps-tag">The Problem</p>
+          <p class="ps-text">"I want to make matcha properly at home. But I don't know which tools to buy, how much powder to use, what temperature the water should be — and every YouTube tutorial skips something."</p>
+        </div>
+        <div class="ps-arrow">→</div>
+        <div class="ps-solution">
+          <p class="ps-tag">What This Session Does</p>
+          <p class="ps-text">We bring every tool. You hold the chawan, use the chasen, measure the matcha — guided at every step. By the end of the session, you've made your own bowl by hand and know exactly how to do it again. We send you home with a portion of the matcha and a printed brewing guide.</p>
+        </div>
+      </div>
+
+      <div class="ps-block">
+        <div class="ps-problem">
+          <p class="ps-tag">The Problem</p>
+          <p class="ps-text">"I've been to wellness workshops before. They feel staged — like I'm watching someone perform. I want something that actually teaches me, at my own pace, without an audience."</p>
+        </div>
+        <div class="ps-arrow">→</div>
+        <div class="ps-solution">
+          <p class="ps-tag">What This Session Does</p>
+          <p class="ps-text">This happens in your home, with just you (and whoever you'd like to invite). No other guests. No stage. The pace is yours. You ask questions when you want. You take your time with the bowl. It is entirely private — and entirely at your level.</p>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
+
+<style>
+.ps-grid { display: flex; flex-direction: column; gap: 1px; background: var(--border); }
+.ps-block {
+  display: grid; grid-template-columns: 1fr 48px 1fr;
+  background: var(--bg-dark);
+}
+.ps-problem, .ps-solution { padding: 40px 40px; }
+.ps-problem { border-right: 1px solid var(--border); }
+.ps-arrow {
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; color: var(--gold); opacity: 0.5;
+}
+.ps-tag {
+  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 14px;
+}
+.ps-problem .ps-tag { color: #777; }
+.ps-solution .ps-tag { color: var(--gold); }
+.ps-text { font-size: 14px; line-height: 1.85; }
+.ps-problem .ps-text { color: rgba(204,204,204,0.6); font-style: italic; }
+.ps-solution .ps-text { color: rgba(204,204,204,0.85); }
+@media (max-width: 768px) {
+  .ps-block { grid-template-columns: 1fr; }
+  .ps-arrow { transform: rotate(90deg); height: 40px; }
+  .ps-problem { border-right: none; border-bottom: 1px solid var(--border); }
+}
+</style>
 
 <div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
 

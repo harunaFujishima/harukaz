@@ -250,6 +250,86 @@
 
 <div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
 
+<!-- Pain Points & Solutions -->
+<section class="section section--dark" style="padding:80px 0;">
+  <div class="container">
+    <div class="section-header reveal" style="margin-bottom:56px;">
+      <div class="label">WHO THIS IS FOR</div>
+      <h2>You Know You Need to Slow Down.<br>You Just Haven't Found the Way.</h2>
+    </div>
+
+    <div class="ps-grid reveal">
+
+      <div class="ps-block">
+        <div class="ps-problem">
+          <p class="ps-tag">The Problem</p>
+          <p class="ps-text">"I want one hour a week that's actually mine — no laptop, no to-do list, no one needing something from me. But by the time I've planned it, the moment is gone."</p>
+        </div>
+        <div class="ps-arrow">→</div>
+        <div class="ps-solution">
+          <p class="ps-tag">What This Does</p>
+          <p class="ps-text">We arrive at your door at the time you chose. You don't plan anything. You don't go anywhere. The ritual begins the moment we walk in — and it's entirely yours.</p>
+        </div>
+      </div>
+
+      <div class="ps-block">
+        <div class="ps-problem">
+          <p class="ps-tag">The Problem</p>
+          <p class="ps-text">"I've tried meditation apps and they don't stick. I start, I forget, I feel guilty. The phone is supposed to calm me down but it just doesn't."</p>
+        </div>
+        <div class="ps-arrow">→</div>
+        <div class="ps-solution">
+          <p class="ps-tag">What This Does</p>
+          <p class="ps-text">There's no screen. No notification. The ritual is physical — warm water, a ceramic bowl, a bamboo whisk. Your hands are doing something. Your mind follows. It works because it's real.</p>
+        </div>
+      </div>
+
+      <div class="ps-block">
+        <div class="ps-problem">
+          <p class="ps-tag">The Problem</p>
+          <p class="ps-text">"Every time I try to relax at home, I end up doing something productive instead. I can't switch off in my own space."</p>
+        </div>
+        <div class="ps-arrow">→</div>
+        <div class="ps-solution">
+          <p class="ps-tag">What This Does</p>
+          <p class="ps-text">A professional is present. The tools are laid out. The space is changed. That external signal — someone is here for this — makes it easier to let the hour be what it's supposed to be.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+.ps-grid { display: flex; flex-direction: column; gap: 1px; background: var(--border); }
+.ps-block {
+  display: grid; grid-template-columns: 1fr 48px 1fr;
+  background: var(--bg-dark);
+}
+.ps-problem, .ps-solution { padding: 40px 40px; }
+.ps-problem { border-right: 1px solid var(--border); }
+.ps-arrow {
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; color: var(--gold); opacity: 0.5;
+}
+.ps-tag {
+  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.ps-problem .ps-tag { color: #777; }
+.ps-solution .ps-tag { color: var(--gold); }
+.ps-text { font-size: 14px; line-height: 1.85; }
+.ps-problem .ps-text { color: rgba(204,204,204,0.6); font-style: italic; }
+.ps-solution .ps-text { color: rgba(204,204,204,0.85); }
+@media (max-width: 768px) {
+  .ps-block { grid-template-columns: 1fr; }
+  .ps-arrow { transform: rotate(90deg); height: 40px; }
+  .ps-problem { border-right: none; border-bottom: 1px solid var(--border); }
+}
+</style>
+
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+
 <!-- 60-min Timeline -->
 <section class="section section--dark" style="padding:80px 0;">
   <div class="container">

@@ -128,39 +128,82 @@
 
 <div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
 
-<!-- Pain Points -->
+<!-- Pain Points & Solutions -->
 <section class="section section--dark" style="padding:80px 0;">
   <div class="container">
-    <div class="section-header reveal" style="margin-bottom:48px;">
-      <div class="label">WHY THIS EXISTS</div>
-      <h2>You Want a Morning Practice.<br>But You Don't Know Where to Start.</h2>
+    <div class="section-header reveal" style="margin-bottom:56px;">
+      <div class="label">WHO THIS IS FOR</div>
+      <h2>You've Tried to Build a Morning Ritual.<br>It Never Lasts Past Week One.</h2>
     </div>
 
-    <div class="pain-grid reveal">
-      <div class="pain-card">
-        <span class="pain-card__icon">◯</span>
-        <p class="pain-card__q">"I start things and stop them after a week."</p>
-        <p class="pain-card__a">Most rituals fail not because of willpower — but because the effort of beginning is too high each day. When everything arrives ready, the only thing left is to show up.</p>
-      </div>
-      <div class="pain-card">
-        <span class="pain-card__icon">◯</span>
-        <p class="pain-card__q">"I want to add mindfulness to my mornings but meditation apps don't work for me."</p>
-        <p class="pain-card__a">Screens in the morning are counterproductive. A physical ritual — hands, water, a bowl — grounds you in a way that an app cannot. It doesn't require you to focus. It gives you something to focus on.</p>
-      </div>
-      <div class="pain-card">
-        <span class="pain-card__icon">◯</span>
-        <p class="pain-card__q">"I drink coffee every day and I'm tired of how it makes me feel."</p>
-        <p class="pain-card__a">Matcha provides a sustained, clean energy through the combination of caffeine and L-theanine — without the spike or crash. The ritual of making it sets the tone for the day before you've opened a single tab.</p>
-      </div>
-    </div>
+    <div class="ps-grid reveal">
 
-    <div class="reveal" style="max-width:620px;">
-      <p style="color:rgba(204,204,204,0.8);line-height:1.95;font-size:15px;">
-        The 7-Day Ritual doesn't ask you to overhaul your routine. It asks for seven minutes, once a day, for seven days. At the end of the week, most people order the next one without thinking about it. That is the point.
-      </p>
+      <div class="ps-block">
+        <div class="ps-problem">
+          <p class="ps-tag">The Problem</p>
+          <p class="ps-text">"I start a new morning habit every few months. I'm motivated for the first few days, then life gets in the way and I forget — and then I feel guilty. Nothing sticks."</p>
+        </div>
+        <div class="ps-arrow">→</div>
+        <div class="ps-solution">
+          <p class="ps-tag">What This Does</p>
+          <p class="ps-text">The kit arrives Sunday evening, ready for Monday. You don't decide what to prepare — it's already portioned. You don't need to remember — the physical box is on your counter. The only decision is: do I make the bowl now, or in five minutes? That is the entire friction of the practice. Most people find it disappears by day three.</p>
+        </div>
+      </div>
+
+      <div class="ps-block">
+        <div class="ps-problem">
+          <p class="ps-tag">The Problem</p>
+          <p class="ps-text">"I want a mindful morning but meditation apps feel like another task on my phone. The last thing I need at 7am is another screen, another notification, another thing I didn't do."</p>
+        </div>
+        <div class="ps-arrow">→</div>
+        <div class="ps-solution">
+          <p class="ps-tag">What This Does</p>
+          <p class="ps-text">The ritual is entirely offline. Boil water. Measure matcha. Whisk. The daily intention card is printed — no app to open. The guided audio meditation is optional, and short (10–20 min). Your hands are occupied before your mind decides to worry. That is not a metaphor. It works because it's physical.</p>
+        </div>
+      </div>
+
+      <div class="ps-block">
+        <div class="ps-problem">
+          <p class="ps-tag">The Problem</p>
+          <p class="ps-text">"Coffee makes me anxious. The energy is sharp and then it drops. I want to feel awake in the morning without feeling wired — but I don't know what to replace it with."</p>
+        </div>
+        <div class="ps-arrow">→</div>
+        <div class="ps-solution">
+          <p class="ps-tag">What This Does</p>
+          <p class="ps-text">Matcha contains caffeine and L-theanine together. L-theanine slows the absorption of caffeine and promotes calm alertness — the energy rises gradually, holds for hours, and fades without a crash. You are awake, but not rushed. Most people notice the difference within three days of switching.</p>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
+
+<style>
+.ps-grid { display: flex; flex-direction: column; gap: 1px; background: var(--border); }
+.ps-block {
+  display: grid; grid-template-columns: 1fr 48px 1fr;
+  background: var(--bg-dark);
+}
+.ps-problem, .ps-solution { padding: 40px 40px; }
+.ps-problem { border-right: 1px solid var(--border); }
+.ps-arrow {
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; color: var(--gold); opacity: 0.5;
+}
+.ps-tag {
+  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 14px;
+}
+.ps-problem .ps-tag { color: #777; }
+.ps-solution .ps-tag { color: var(--gold); }
+.ps-text { font-size: 14px; line-height: 1.85; }
+.ps-problem .ps-text { color: rgba(204,204,204,0.6); font-style: italic; }
+.ps-solution .ps-text { color: rgba(204,204,204,0.85); }
+@media (max-width: 768px) {
+  .ps-block { grid-template-columns: 1fr; }
+  .ps-arrow { transform: rotate(90deg); height: 40px; }
+  .ps-problem { border-right: none; border-bottom: 1px solid var(--border); }
+}
+</style>
 
 <div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
 
