@@ -150,6 +150,13 @@
 </head>
 <body>
 
+<!-- ── Top Announcement Bar ── -->
+<div id="top-bar" style="background:var(--gold);text-align:center;padding:10px 20px;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#0A0A0A;font-family:var(--font-body);position:relative;z-index:200;">
+  <a href="home-visit.html" style="color:#0A0A0A;text-decoration:none;">
+    ✦ &nbsp; Start Your Matcha Ritual — First Session from $20 &nbsp;·&nbsp; At-Home in Toronto &nbsp; ✦
+  </a>
+</div>
+
 <!-- ── Persistent Nav ── -->
 <nav id="nav-persistent" aria-label="Site navigation">
   <a href="index.html" class="nav-logo-mark" aria-label="HARUKAZ Home">
@@ -192,7 +199,12 @@
   <div class="hero__content">
     <p class="hero__eyebrow">TORONTO &nbsp;·&nbsp; EST. 2026</p>
     <h1 class="hero__title">HARUKAZ</h1>
-    <p class="hero__tagline">Where Ancient Ritual Meets Modern Performance.</p>
+    <p class="hero__tagline">Private Matcha &amp; Mindfulness Experience in Toronto</p>
+    <p style="font-size:13px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(200,169,110,0.75);margin-top:12px;">Specialized in Matcha Experience Service</p>
+    <div style="display:flex;gap:16px;margin-top:40px;flex-wrap:wrap;">
+      <a href="home-visit.html" class="btn btn--gold" style="font-size:13px;">Book At-Home Session</a>
+      <a href="services.html" style="display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:0.18em;color:rgba(255,255,255,0.7);text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,0.3);padding-bottom:2px;">Explore All Experiences</a>
+    </div>
   </div>
   <div class="hero__scroll" aria-hidden="true">
     <div class="hero__scroll__arrow"></div>
@@ -272,79 +284,82 @@
       <p>Each HARUKAZ experience is designed around a single principle: that the quality of your presence determines the quality of everything else.</p>
     </div>
 
-    <div class="card-grid card-grid--6" style="margin-bottom:48px;">
+    <div class="card-grid card-grid--3" style="margin-bottom:48px;">
 
-      <article class="card card--light card--service reveal">
-        <div class="card__image">
-          <img src="assets/Corporate_Executive_Wellness_Executives_from.png" alt="Executive Wellness" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;">
-        </div>
-        <div class="card__body">
-          <span class="card__tag">CORPORATE</span>
-          <h3 class="card__title">Executive Wellness</h3>
-          <p class="card__excerpt">For leadership teams who understand that presence is a performance metric.</p>
-          <a href="services.html#executive" class="card__link">Discover</a>
-        </div>
-      </article>
+      <!-- 1: At-Home Regular -->
+      <a href="home-visit.html" style="display:block;text-decoration:none;color:inherit;">
+        <article class="card card--light card--service reveal" style="height:100%;">
+          <div class="card__image">
+            <img src="assets/matchaTasting%20Service.png" alt="At-Home Matcha Service" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;">
+          </div>
+          <div class="card__body">
+            <span class="card__tag">AT-HOME · SUBSCRIPTION</span>
+            <h3 class="card__title">Regular At-Home Matcha</h3>
+            <p class="card__excerpt">A private matcha ceremony at your home — weekly or bi-weekly. We bring everything. You simply answer the door.</p>
+            <span class="card__link">Discover</span>
+          </div>
+        </article>
+      </a>
 
-      <article class="card card--light card--service reveal reveal-delay-1">
-        <div class="card__image">
-          <img src="assets/Leadership__Team_Building_In_a_tatami-mat_tea_roo.png" alt="Leadership &amp; Team Building" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;">
-        </div>
-        <div class="card__body">
-          <span class="card__tag">TEAM BUILDING</span>
-          <h3 class="card__title">Leadership Retreat</h3>
-          <p class="card__excerpt">Collective stillness as the foundation of collective excellence.</p>
-          <a href="services.html#leadership" class="card__link">Discover</a>
-        </div>
-      </article>
+      <!-- 2: 7-Day Ritual -->
+      <a href="services.html#ritual" style="display:block;text-decoration:none;color:inherit;">
+        <article class="card card--light card--service reveal reveal-delay-1" style="height:100%;">
+          <div class="card__image">
+            <img src="assets/7-Day_Matcha_Ritual_Just_like_a_7-day_detox_and.png" alt="7-Day Matcha Ritual" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;">
+          </div>
+          <div class="card__body">
+            <span class="card__tag">7-DAY RITUAL</span>
+            <h3 class="card__title">7-Day Matcha Ritual</h3>
+            <p class="card__excerpt">A week-long guided practice. Like a mind cleanse — reset your focus, rebuild your mornings, one bowl at a time.</p>
+            <span class="card__link">Discover</span>
+          </div>
+        </article>
+      </a>
 
-      <article class="card card--light card--service reveal reveal-delay-2">
-        <div class="card__image">
-          <img src="assets/privateMatchaExperience.png" alt="Private Matcha Experience" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;">
-        </div>
-        <div class="card__body">
-          <span class="card__tag">PRIVATE</span>
-          <h3 class="card__title">Private Experience</h3>
-          <p class="card__excerpt">An intimate session shaped entirely around you.</p>
-          <a href="services.html#private" class="card__link">Discover</a>
-        </div>
-      </article>
+      <!-- 3: At-Home Tasting -->
+      <a href="services.html#tasting" style="display:block;text-decoration:none;color:inherit;">
+        <article class="card card--light card--service reveal reveal-delay-2" style="height:100%;">
+          <div class="card__image">
+            <img src="assets/privateMatchaExperience.png" alt="At-Home Tasting Experience" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;">
+          </div>
+          <div class="card__body">
+            <span class="card__tag">TASTING EXPERIENCE</span>
+            <h3 class="card__title">At-Home Tasting</h3>
+            <p class="card__excerpt">Discover your ideal matcha. We arrive with single-origin varieties and guide you through a full 60-minute sensory ceremony.</p>
+            <span class="card__link">Discover</span>
+          </div>
+        </article>
+      </a>
 
-      <article class="card card--light card--service reveal">
-        <div class="card__image">
-          <img src="assets/7-Day_Matcha_Ritual_Just_like_a_7-day_detox_and.png" alt="7-Day Matcha Ritual" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;">
-        </div>
-        <div class="card__body">
-          <span class="card__tag">SUBSCRIPTION</span>
-          <h3 class="card__title">7-Day Matcha Ritual</h3>
-          <p class="card__excerpt">A weekly practice delivered to your door. Like a cleanse — but for the mind.</p>
-          <a href="services.html#ritual" class="card__link">Discover</a>
-        </div>
-      </article>
+      <!-- 4: Private Experience -->
+      <a href="services.html#private" style="display:block;text-decoration:none;color:inherit;">
+        <article class="card card--light card--service reveal" style="height:100%;">
+          <div class="card__image">
+            <img src="assets/privateMatchaExperience.png" alt="Private Matcha Experience" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;">
+          </div>
+          <div class="card__body">
+            <span class="card__tag">PRIVATE</span>
+            <h3 class="card__title">Private Experience</h3>
+            <p class="card__excerpt">An intimate 60-minute matcha ceremony shaped entirely around you. For those who want the full ritual.</p>
+            <span class="card__link">Discover</span>
+          </div>
+        </article>
+      </a>
 
-      <article class="card card--light card--service reveal reveal-delay-1">
-        <div class="card__image">
-          <img src="assets/matchaTasting%20Service.png" alt="At-Home Tasting" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;">
-        </div>
-        <div class="card__body">
-          <span class="card__tag">CONCIERGE</span>
-          <h3 class="card__title">At-Home Tasting</h3>
-          <p class="card__excerpt">We come to you. Five to eight single-origin varieties. Your ideal matcha, found.</p>
-          <a href="services.html#tasting" class="card__link">Discover</a>
-        </div>
-      </article>
-
-      <article class="card card--light card--service reveal reveal-delay-2">
-        <div class="card__image">
-          <img src="assets/matchaFoodParingService.png" alt="Matcha &amp; Cuisine Pairing" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;">
-        </div>
-        <div class="card__body">
-          <span class="card__tag">PAIRING</span>
-          <h3 class="card__title">Matcha &amp; Cuisine Pairing</h3>
-          <p class="card__excerpt">A multi-course evening where each dish finds its matcha — and both become more.</p>
-          <a href="services.html#pairing" class="card__link">Discover</a>
-        </div>
-      </article>
+      <!-- 5: Event Collaboration -->
+      <a href="services.html#event-collab" style="display:block;text-decoration:none;color:inherit;">
+        <article class="card card--light card--service reveal reveal-delay-1" style="height:100%;">
+          <div class="card__image">
+            <img src="assets/Corporate_Executive_Wellness_Executives_from.png" alt="Event Matcha Collaboration" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;">
+          </div>
+          <div class="card__body">
+            <span class="card__tag">EVENT COLLAB</span>
+            <h3 class="card__title">Matcha at Your Event</h3>
+            <p class="card__excerpt">Pop-up matcha service for your gathering, market, or corporate event. Ceremonial preparation, live and on-site.</p>
+            <span class="card__link">Discover</span>
+          </div>
+        </article>
+      </a>
 
     </div>
     <div style="text-align:center;" class="reveal">
