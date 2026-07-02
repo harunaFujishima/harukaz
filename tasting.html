@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>At-Home Tasting Experience — HARUKAZ</title>
+  <meta name="description" content="A 60-minute guided matcha tasting ceremony delivered to your home in Toronto. Learn the art of Chado — prepare your own bowl under guidance.">
+  <link rel="icon" type="image/png" href="assets/Harukaz.png">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ── PAIN POINT SECTION ── */
+    .pain-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      margin-bottom: 64px;
+    }
+    .pain-card {
+      background: var(--card-1);
+      padding: 40px 32px;
+    }
+    .pain-card__icon {
+      font-size: 22px;
+      margin-bottom: 16px;
+      display: block;
+      opacity: 0.7;
+    }
+    .pain-card__q {
+      font-family: var(--font-display);
+      font-size: 17px; color: #ddd;
+      margin-bottom: 10px; line-height: 1.45;
+    }
+    .pain-card__a { font-size: 13px; color: var(--text-muted); line-height: 1.75; }
+
+    /* ── TIMELINE ── */
+    .session-timeline { position: relative; padding: 40px 0 20px; }
+    .tl-track {
+      position: absolute; top: 52px; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent 0%, var(--gold) 10%, var(--gold) 90%, transparent 100%);
+      opacity: 0.35;
+    }
+    .tl-steps {
+      display: grid; grid-template-columns: repeat(5, 1fr);
+      position: relative;
+    }
+    .tl-step { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 8px; }
+    .tl-time {
+      font-size: 11px; letter-spacing: 0.12em; color: var(--gold);
+      margin-bottom: 16px; font-family: var(--font-display);
+    }
+    .tl-dot {
+      width: 14px; height: 14px; border-radius: 50%;
+      border: 2px solid var(--gold); background: var(--bg-dark);
+      margin-bottom: 20px; position: relative; z-index: 1;
+      transition: background 0.3s;
+    }
+    .tl-step:hover .tl-dot { background: var(--gold); }
+    .tl-label { font-family: var(--font-display); font-size: 15px; color: #ddd; margin-bottom: 10px; }
+    .tl-desc { font-size: 12px; color: var(--text-muted); line-height: 1.7; }
+
+    /* ── WHAT'S INCLUDED ── */
+    .includes-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px 80px;
+      margin: 40px 0;
+    }
+    .includes-item {
+      display: flex; gap: 18px; align-items: flex-start;
+    }
+    .includes-item__icon {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--gold-dim); display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; font-size: 14px; color: var(--gold);
+    }
+    .includes-item__title { font-family: var(--font-display); font-size: 15px; color: #ddd; margin-bottom: 4px; }
+    .includes-item__desc { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
+
+    /* ── PRICE BOX ── */
+    .price-box {
+      border: 1px solid var(--border);
+      padding: 56px 64px;
+      display: flex; gap: 64px; align-items: center;
+    }
+    .price-box__num {
+      font-family: var(--font-display); font-size: 72px; font-weight: 300;
+      color: #fff; line-height: 1; white-space: nowrap;
+    }
+    .price-box__num span { font-size: 32px; vertical-align: top; margin-top: 10px; display: inline-block; }
+    .price-box__per { font-size: 13px; color: var(--text-muted); margin-top: 8px; }
+    .price-box__detail { flex: 1; }
+    .price-box__detail p { color: rgba(204,204,204,0.8); line-height: 1.85; margin-bottom: 28px; }
+
+    @media (max-width: 900px) {
+      .pain-grid { grid-template-columns: 1fr; }
+      .includes-grid { grid-template-columns: 1fr; gap: 28px; }
+      .price-box { flex-direction: column; gap: 32px; padding: 40px 28px; }
+    }
+    @media (max-width: 768px) {
+      .tl-track { display: none; }
+      .tl-steps { grid-template-columns: 1fr; gap: 32px; }
+      .tl-step { flex-direction: row; text-align: left; align-items: flex-start; gap: 20px; }
+      .tl-dot { flex-shrink: 0; margin-top: 4px; margin-bottom: 0; }
+      .tl-time { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav id="nav-persistent">
+  <a href="index.html" class="nav-logo-mark" aria-label="HARUKAZ Home">
+    <div class="logo-placeholder" aria-hidden="true">春</div>
+  </a>
+  <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">
+    <span class="toggle-text">MENU</span>
+    <span class="hamburger" aria-hidden="true"><span></span><span></span><span></span></span>
+  </button>
+</nav>
+<div id="nav-overlay" role="dialog" aria-modal="true">
+  <div class="nav-overlay__logo" aria-hidden="true"><img src="assets/Harukaz.png" alt="HARUKAZ"></div>
+  <ul class="nav-overlay__links">
+    <li><a href="index.html">HOME</a></li>
+    <li><a href="services.html">EXPERIENCES</a></li>
+    <li><a href="corporate.html">CORPORATE</a></li>
+    <li><a href="tea.html">TEA LIBRARY</a></li>
+    <li><a href="book.html">BOOK</a></li>
+    <li><a href="about.html">ABOUT</a></li>
+    <li><a href="contact.html">CONTACT</a></li>
+    <li><a href="home-visit.html">AT-HOME</a></li>
+  </ul>
+</div>
+
+<!-- Hero -->
+<header class="page-hero" style="min-height:56vh;">
+  <div class="container">
+    <div class="label reveal">TASTING EXPERIENCE</div>
+    <h1 class="reveal reveal-delay-1">Learn to Make<br>Your Own Bowl.</h1>
+    <p style="max-width:540px;color:rgba(204,204,204,0.75);margin-top:20px;line-height:1.85;" class="reveal reveal-delay-2">
+      Before matcha lattes, matcha was a practice. In this 60-minute session, you learn what it actually is — and prepare your first bowl by hand.
+    </p>
+    <div style="margin-top:36px;" class="reveal reveal-delay-2">
+      <a href="home-visit.html" class="btn btn--gold" style="margin-right:16px;">Book a Tasting — $60</a>
+      <a href="services.html" class="btn btn--ghost">All Experiences</a>
+    </div>
+  </div>
+</header>
+
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+
+<!-- Pain Points -->
+<section class="section section--dark" style="padding:80px 0;">
+  <div class="container">
+    <div class="section-header reveal" style="margin-bottom:48px;">
+      <div class="label">WHY THIS EXISTS</div>
+      <h2>You've Tried Matcha.<br>But You've Never Really Met It.</h2>
+    </div>
+
+    <div class="pain-grid reveal">
+      <div class="pain-card">
+        <span class="pain-card__icon">◯</span>
+        <p class="pain-card__q">"I drink matcha lattes every day but I don't actually know what matcha is."</p>
+        <p class="pain-card__a">Most people encounter matcha as a flavouring — in drinks, desserts, powders. The actual tea, its origin, and the practice behind it are a completely different thing.</p>
+      </div>
+      <div class="pain-card">
+        <span class="pain-card__icon">◯</span>
+        <p class="pain-card__q">"I want to make matcha at home properly, but I don't know where to start."</p>
+        <p class="pain-card__a">The tools are unfamiliar. The ratios are unclear. Most tutorials miss the part that makes it meaningful — the attention you bring to the process.</p>
+      </div>
+      <div class="pain-card">
+        <span class="pain-card__icon">◯</span>
+        <p class="pain-card__q">"I want an experience that's actually educational — not just aesthetic."</p>
+        <p class="pain-card__a">Instagram matcha moments rarely teach you anything. This session gives you the history, the philosophy, the technique — and sends you home with the ability to recreate it.</p>
+      </div>
+    </div>
+
+    <div class="reveal" style="max-width:620px;">
+      <p style="color:rgba(204,204,204,0.8);line-height:1.95;font-size:15px;">
+        Chado (茶道 — the Way of Tea) is a practice rooted in four principles: harmony, respect, purity, and tranquility. In this session, HARUKAZ brings it to your home — not as performance, but as transmission. You will understand matcha differently when you leave.
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+
+<!-- 60-min Timeline -->
+<section class="section section--light" style="padding:80px 0;">
+  <div class="container">
+    <div class="section-header section-header--centered reveal" style="margin-bottom:64px;">
+      <div class="label">YOUR 60 MINUTES</div>
+      <h2>The Session, Minute by Minute</h2>
+    </div>
+    <div class="session-timeline reveal">
+      <div class="tl-track"></div>
+      <div class="tl-steps">
+        <div class="tl-step">
+          <div class="tl-time">0 min</div>
+          <div class="tl-dot" style="border-color:#5a7a4a;background:#f8f5f0;"></div>
+          <div class="tl-label" style="color:#333;">Context</div>
+          <div class="tl-desc" style="color:#666;">The history and philosophy of Chado. Why this tea asks something of the person preparing it.</div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-time">15 min</div>
+          <div class="tl-dot" style="border-color:#5a7a4a;background:#f8f5f0;"></div>
+          <div class="tl-label" style="color:#333;">Meet the Tools</div>
+          <div class="tl-desc" style="color:#666;">Introduction to the chawan, chasen, and natsume. You hold each one before anything is used.</div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-time">25 min</div>
+          <div class="tl-dot" style="border-color:#5a7a4a;background:#f8f5f0;"></div>
+          <div class="tl-label" style="color:#333;">Demonstration</div>
+          <div class="tl-desc" style="color:#666;">A full bowl prepared before you — narrated in real time. You observe before you participate.</div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-time">40 min</div>
+          <div class="tl-dot" style="border-color:#5a7a4a;background:#f8f5f0;"></div>
+          <div class="tl-label" style="color:#333;">Your Turn</div>
+          <div class="tl-desc" style="color:#666;">Same tools. Same steps. You prepare your own bowl with guidance at every stage.</div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-time">55 min</div>
+          <div class="tl-dot" style="border-color:#5a7a4a;background:#f8f5f0;"></div>
+          <div class="tl-label" style="color:#333;">Tasting &amp; Reflection</div>
+          <div class="tl-desc" style="color:#666;">Drink your bowl in silence. What do you notice — about the tea, about yourself?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+
+<!-- What's included -->
+<section class="section section--dark" style="padding:80px 0;">
+  <div class="container">
+    <div class="section-header reveal" style="margin-bottom:48px;">
+      <div class="label">WHAT'S INCLUDED</div>
+      <h2>Everything, Brought to You</h2>
+    </div>
+    <div class="includes-grid reveal">
+      <div class="includes-item">
+        <div class="includes-item__icon">◎</div>
+        <div>
+          <p class="includes-item__title">Ceremonial-Grade Uji Matcha</p>
+          <p class="includes-item__desc">Single-origin from Kyoto. Not the blended powder in most cafés — the real thing, prepared at the right temperature.</p>
+        </div>
+      </div>
+      <div class="includes-item">
+        <div class="includes-item__icon">◎</div>
+        <div>
+          <p class="includes-item__title">Handcrafted Chawan &amp; Chasen</p>
+          <p class="includes-item__desc">All tools brought by HARUKAZ. You use them, hold them, learn from them — then return them. Or enquire about purchasing.</p>
+        </div>
+      </div>
+      <div class="includes-item">
+        <div class="includes-item__icon">◎</div>
+        <div>
+          <p class="includes-item__title">Your Own Bowl, By Hand</p>
+          <p class="includes-item__desc">You don't just watch — you prepare your own bowl using the same wares, guided at every step.</p>
+        </div>
+      </div>
+      <div class="includes-item">
+        <div class="includes-item__icon">◎</div>
+        <div>
+          <p class="includes-item__title">Take-Home Matcha Portion</p>
+          <p class="includes-item__desc">A small portion of what you tasted — so you can recreate the ritual at home. Plus a printed brewing guide.</p>
+        </div>
+      </div>
+      <div class="includes-item">
+        <div class="includes-item__icon">◎</div>
+        <div>
+          <p class="includes-item__title">Printed Tasting Card</p>
+          <p class="includes-item__desc">A personal record of the session — the matcha, your notes, the date. A keepsake worth keeping.</p>
+        </div>
+      </div>
+      <div class="includes-item">
+        <div class="includes-item__icon">◎</div>
+        <div>
+          <p class="includes-item__title">At Your Home</p>
+          <p class="includes-item__desc">We come to you. North York, Lawrence Park, Forest Hill, Rosedale, and surrounding areas. No travel required.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+
+<!-- Price & CTA -->
+<section class="section section--light" style="padding:80px 0;">
+  <div class="container">
+    <div class="price-box reveal">
+      <div>
+        <p class="price-box__num"><span>$</span>60</p>
+        <p class="price-box__per">CAD · per session · 60 minutes</p>
+      </div>
+      <div class="price-box__detail">
+        <p>A single session — no subscription, no commitment. One hour at your home, and you leave knowing how to make matcha the way it was meant to be made.</p>
+        <p style="font-size:13px;color:#888;margin-bottom:28px;">First time with HARUKAZ? Use code <strong style="color:var(--matcha);">WELCOME20</strong> at checkout for $40 off — your first session from $20.</p>
+        <a href="home-visit.html" class="btn btn--dark">Book a Tasting Session</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <p class="footer__brand">HARUKAZ</p>
+      <p>Toronto, Canada &nbsp;·&nbsp; <a href="mailto:info@harukazwellness.com" style="color:var(--gold);">info@harukazwellness.com</a></p>
+      <nav class="footer__links">
+        <a href="index.html">Home</a>
+        <a href="services.html">Experiences</a>
+        <a href="home-visit.html">At-Home</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

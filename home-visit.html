@@ -250,6 +250,91 @@
 
 <div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
 
+<!-- 60-min Timeline -->
+<section class="section section--dark" style="padding:80px 0;">
+  <div class="container">
+    <div class="section-header section-header--centered reveal" style="margin-bottom:64px;">
+      <div class="label">YOUR 60 MINUTES</div>
+      <h2>What Happens During a Session</h2>
+    </div>
+    <div class="session-timeline reveal">
+      <div class="tl-track"></div>
+      <div class="tl-steps">
+        <div class="tl-step">
+          <div class="tl-time">0 min</div>
+          <div class="tl-dot"></div>
+          <div class="tl-label">Arrival &amp; Setup</div>
+          <div class="tl-desc">We arrive quietly, lay out the tools with care, and settle the space. No rushing.</div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-time">10 min</div>
+          <div class="tl-dot"></div>
+          <div class="tl-label">Grounding</div>
+          <div class="tl-desc">A brief breath practice — slowing down together before anything is prepared.</div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-time">20 min</div>
+          <div class="tl-dot"></div>
+          <div class="tl-label">Preparation</div>
+          <div class="tl-desc">Measuring, sifting, warming the chawan. Each step deliberate. You watch or participate.</div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-time">40 min</div>
+          <div class="tl-dot"></div>
+          <div class="tl-label">Your Bowl</div>
+          <div class="tl-desc">Made for you. Received in silence. The whisking, the colour, the first sip — all yours.</div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-time">55 min</div>
+          <div class="tl-dot"></div>
+          <div class="tl-label">Stillness</div>
+          <div class="tl-desc">The bowl is done. Sit as long as you like. No hurry to return to anything.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.session-timeline { position: relative; padding: 40px 0 20px; }
+.tl-track {
+  position: absolute; top: 52px; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--gold) 10%, var(--gold) 90%, transparent 100%);
+  opacity: 0.35;
+}
+.tl-steps {
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  gap: 0; position: relative;
+}
+.tl-step { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 8px; }
+.tl-time {
+  font-size: 11px; letter-spacing: 0.12em; color: var(--gold);
+  margin-bottom: 16px; font-family: var(--font-display);
+}
+.tl-dot {
+  width: 14px; height: 14px; border-radius: 50%;
+  border: 2px solid var(--gold); background: var(--bg-dark);
+  margin-bottom: 20px; position: relative; z-index: 1;
+  transition: background 0.3s;
+}
+.tl-step:hover .tl-dot { background: var(--gold); }
+.tl-label {
+  font-family: var(--font-display); font-size: 15px; color: #ddd;
+  margin-bottom: 10px;
+}
+.tl-desc { font-size: 12px; color: var(--text-muted); line-height: 1.7; }
+@media (max-width: 768px) {
+  .tl-track { display: none; }
+  .tl-steps { grid-template-columns: 1fr; gap: 32px; }
+  .tl-step { flex-direction: row; text-align: left; align-items: flex-start; gap: 20px; }
+  .tl-dot { flex-shrink: 0; margin-top: 4px; margin-bottom: 0; }
+  .tl-time { display: none; }
+  .tl-step > div:not(.tl-dot) { display: block; }
+}
+</style>
+
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+
 <!-- What you get -->
 <section class="section section--light">
   <div class="container">

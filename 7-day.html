@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>7-Day Matcha Ritual — HARUKAZ</title>
+  <meta name="description" content="Seven days. Seven single-origin matchas. A daily ritual kit delivered to your door — with intention cards and guided meditation. $99/week.">
+  <link rel="icon" type="image/png" href="assets/Harukaz.png">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ── PAIN POINT SECTION ── */
+    .pain-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      margin-bottom: 64px;
+    }
+    .pain-card {
+      background: var(--card-1);
+      padding: 40px 32px;
+    }
+    .pain-card__icon { font-size: 22px; margin-bottom: 16px; display: block; opacity: 0.7; }
+    .pain-card__q { font-family: var(--font-display); font-size: 17px; color: #ddd; margin-bottom: 10px; line-height: 1.45; }
+    .pain-card__a { font-size: 13px; color: var(--text-muted); line-height: 1.75; }
+
+    /* ── WEEKLY FLOW (days) ── */
+    .week-flow {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 1px;
+      background: var(--border);
+      margin: 48px 0;
+    }
+    .day-card {
+      background: var(--card-1);
+      padding: 28px 18px;
+      text-align: center;
+    }
+    .day-card__num {
+      font-family: var(--font-display); font-size: 28px; font-weight: 300;
+      color: var(--gold); display: block; margin-bottom: 8px;
+    }
+    .day-card__name { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; display: block; }
+    .day-card__origin { font-family: var(--font-display); font-size: 13px; color: #ccc; margin-bottom: 6px; }
+    .day-card__note { font-size: 11px; color: var(--text-muted); line-height: 1.6; }
+
+    /* ── INCLUDES ── */
+    .includes-list {
+      list-style: none;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    }
+    .includes-list li {
+      padding: 20px 0; border-bottom: 1px solid var(--border);
+      display: flex; gap: 16px; align-items: baseline;
+      font-size: 14px; color: rgba(204,204,204,0.8);
+    }
+    .includes-list li::before { content: '—'; color: var(--gold); flex-shrink: 0; }
+
+    /* ── PRICE BOX ── */
+    .price-box {
+      border: 1px solid var(--border);
+      padding: 56px 64px;
+      display: flex; gap: 64px; align-items: center;
+    }
+    .price-box__num {
+      font-family: var(--font-display); font-size: 72px; font-weight: 300;
+      color: #fff; line-height: 1; white-space: nowrap;
+    }
+    .price-box__num span { font-size: 32px; vertical-align: top; margin-top: 10px; display: inline-block; }
+    .price-box__per { font-size: 13px; color: var(--text-muted); margin-top: 8px; }
+    .price-box__detail { flex: 1; }
+    .price-box__detail p { color: rgba(204,204,204,0.8); line-height: 1.85; margin-bottom: 28px; }
+
+    @media (max-width: 1024px) {
+      .week-flow { grid-template-columns: repeat(4, 1fr); }
+    }
+    @media (max-width: 900px) {
+      .pain-grid { grid-template-columns: 1fr; }
+      .includes-list { grid-template-columns: 1fr; }
+      .price-box { flex-direction: column; gap: 32px; padding: 40px 28px; }
+    }
+    @media (max-width: 600px) {
+      .week-flow { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav id="nav-persistent">
+  <a href="index.html" class="nav-logo-mark" aria-label="HARUKAZ Home">
+    <div class="logo-placeholder" aria-hidden="true">春</div>
+  </a>
+  <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">
+    <span class="toggle-text">MENU</span>
+    <span class="hamburger" aria-hidden="true"><span></span><span></span><span></span></span>
+  </button>
+</nav>
+<div id="nav-overlay" role="dialog" aria-modal="true">
+  <div class="nav-overlay__logo" aria-hidden="true"><img src="assets/Harukaz.png" alt="HARUKAZ"></div>
+  <ul class="nav-overlay__links">
+    <li><a href="index.html">HOME</a></li>
+    <li><a href="services.html">EXPERIENCES</a></li>
+    <li><a href="corporate.html">CORPORATE</a></li>
+    <li><a href="tea.html">TEA LIBRARY</a></li>
+    <li><a href="book.html">BOOK</a></li>
+    <li><a href="about.html">ABOUT</a></li>
+    <li><a href="contact.html">CONTACT</a></li>
+    <li><a href="home-visit.html">AT-HOME</a></li>
+  </ul>
+</div>
+
+<!-- Hero -->
+<header class="page-hero" style="min-height:56vh;">
+  <div class="container">
+    <div class="label reveal">7-DAY RITUAL</div>
+    <h1 class="reveal reveal-delay-1">Seven Days.<br>Seven Bowls.<br>One Practice.</h1>
+    <p style="max-width:520px;color:rgba(204,204,204,0.75);margin-top:20px;line-height:1.85;" class="reveal reveal-delay-2">
+      Like a 7-day mind cleanse — but sustainable. A weekly ritual kit arrives at your door with everything you need to build a daily matcha practice from the inside out.
+    </p>
+    <div style="margin-top:36px;" class="reveal reveal-delay-2">
+      <a href="https://buy.stripe.com/6oUfZa7tbcsg73Kci7cIE03" class="btn btn--gold" style="margin-right:16px;">Begin Your Practice — $99/week</a>
+      <a href="services.html" class="btn btn--ghost">All Experiences</a>
+    </div>
+  </div>
+</header>
+
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+
+<!-- Pain Points -->
+<section class="section section--dark" style="padding:80px 0;">
+  <div class="container">
+    <div class="section-header reveal" style="margin-bottom:48px;">
+      <div class="label">WHY THIS EXISTS</div>
+      <h2>You Want a Morning Practice.<br>But You Don't Know Where to Start.</h2>
+    </div>
+
+    <div class="pain-grid reveal">
+      <div class="pain-card">
+        <span class="pain-card__icon">◯</span>
+        <p class="pain-card__q">"I start things and stop them after a week."</p>
+        <p class="pain-card__a">Most rituals fail not because of willpower — but because the effort of beginning is too high each day. When everything arrives ready, the only thing left is to show up.</p>
+      </div>
+      <div class="pain-card">
+        <span class="pain-card__icon">◯</span>
+        <p class="pain-card__q">"I want to add mindfulness to my mornings but meditation apps don't work for me."</p>
+        <p class="pain-card__a">Screens in the morning are counterproductive. A physical ritual — hands, water, a bowl — grounds you in a way that an app cannot. It doesn't require you to focus. It gives you something to focus on.</p>
+      </div>
+      <div class="pain-card">
+        <span class="pain-card__icon">◯</span>
+        <p class="pain-card__q">"I drink coffee every day and I'm tired of how it makes me feel."</p>
+        <p class="pain-card__a">Matcha provides a sustained, clean energy through the combination of caffeine and L-theanine — without the spike or crash. The ritual of making it sets the tone for the day before you've opened a single tab.</p>
+      </div>
+    </div>
+
+    <div class="reveal" style="max-width:620px;">
+      <p style="color:rgba(204,204,204,0.8);line-height:1.95;font-size:15px;">
+        The 7-Day Ritual doesn't ask you to overhaul your routine. It asks for seven minutes, once a day, for seven days. At the end of the week, most people order the next one without thinking about it. That is the point.
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+
+<!-- The 7 Days -->
+<section class="section section--light" style="padding:80px 0;">
+  <div class="container">
+    <div class="section-header section-header--centered reveal" style="margin-bottom:48px;">
+      <div class="label">THE WEEK</div>
+      <h2>Seven Origins. Seven Moods.</h2>
+      <p style="max-width:520px;color:#666;margin:12px auto 0;line-height:1.8;">Each day brings a different single-origin matcha, chosen for a distinct sensory character. You taste the range of what matcha can be.</p>
+    </div>
+    <div class="week-flow reveal">
+      <div class="day-card">
+        <span class="day-card__num">1</span>
+        <span class="day-card__name">Monday</span>
+        <p class="day-card__origin">Uji, Kyoto</p>
+        <p class="day-card__note">Bright. Grassy. Classic. The benchmark.</p>
+      </div>
+      <div class="day-card">
+        <span class="day-card__num">2</span>
+        <span class="day-card__name">Tuesday</span>
+        <p class="day-card__origin">Nishio, Aichi</p>
+        <p class="day-card__note">Smooth. Mild. The everyday bowl.</p>
+      </div>
+      <div class="day-card">
+        <span class="day-card__num">3</span>
+        <span class="day-card__name">Wednesday</span>
+        <p class="day-card__origin">Yame, Fukuoka</p>
+        <p class="day-card__note">Deep umami. Rich. Rare.</p>
+      </div>
+      <div class="day-card">
+        <span class="day-card__num">4</span>
+        <span class="day-card__name">Thursday</span>
+        <p class="day-card__origin">Wazuka, Kyoto</p>
+        <p class="day-card__note">Floral. Subtle sweetness. Lingering.</p>
+      </div>
+      <div class="day-card">
+        <span class="day-card__num">5</span>
+        <span class="day-card__name">Friday</span>
+        <p class="day-card__origin">Kagoshima</p>
+        <p class="day-card__note">Bold. Earthy. Grounding.</p>
+      </div>
+      <div class="day-card">
+        <span class="day-card__num">6</span>
+        <span class="day-card__name">Saturday</span>
+        <p class="day-card__origin">Uji Ceremonial</p>
+        <p class="day-card__note">Highest grade. Intense. Saved for stillness.</p>
+      </div>
+      <div class="day-card">
+        <span class="day-card__num">7</span>
+        <span class="day-card__name">Sunday</span>
+        <p class="day-card__origin">HARUKAZ Blend</p>
+        <p class="day-card__note">Curated for reflection. End of the week.</p>
+      </div>
+    </div>
+    <p style="text-align:center;font-size:12px;color:#999;margin-top:16px;">Origins rotate seasonally. Each kit includes a tasting card describing the specific lot.</p>
+  </div>
+</section>
+
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+
+<!-- What's included -->
+<section class="section section--dark" style="padding:80px 0;">
+  <div class="container">
+    <div class="section-header reveal" style="margin-bottom:40px;">
+      <div class="label">WHAT'S IN THE KIT</div>
+      <h2>Everything Ready When You Wake Up</h2>
+    </div>
+    <ul class="includes-list reveal">
+      <li>Seven single-origin matcha portions (curated, one per day)</li>
+      <li>Daily intention cards — 7-card set, refreshed monthly</li>
+      <li>HARUKAZ brewing guide (printed, reusable)</li>
+      <li>Guided audio meditation library (online access, 10–20 min per session)</li>
+      <li>Sensory tasting card for each origin</li>
+      <li>Delivered to your door before Monday morning</li>
+      <li>Cancel or pause anytime — no commitment required</li>
+      <li>Nationwide delivery across Canada</li>
+    </ul>
+  </div>
+</section>
+
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+
+<!-- Price & CTA -->
+<section class="section section--light" style="padding:80px 0;">
+  <div class="container">
+    <div class="price-box reveal">
+      <div>
+        <p class="price-box__num"><span>$</span>99</p>
+        <p class="price-box__per">CAD · per week · cancel anytime</p>
+      </div>
+      <div class="price-box__detail">
+        <p>One week at a time. If it works for you, continue. If life gets in the way, pause. No contracts, no minimums, no friction.</p>
+        <p style="font-size:13px;color:#777;margin-bottom:28px;">Delivered nationwide. Toronto orders received by Sunday evening for a Monday start.</p>
+        <a href="https://buy.stripe.com/6oUfZa7tbcsg73Kci7cIE03" class="btn btn--dark">Begin Your Practice</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <p class="footer__brand">HARUKAZ</p>
+      <p>Toronto, Canada &nbsp;·&nbsp; <a href="mailto:info@harukazwellness.com" style="color:var(--gold);">info@harukazwellness.com</a></p>
+      <nav class="footer__links">
+        <a href="index.html">Home</a>
+        <a href="services.html">Experiences</a>
+        <a href="home-visit.html">At-Home</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>
