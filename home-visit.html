@@ -823,7 +823,7 @@ function slotsToEvents(slots) {
 async function fetchAvailability() {
   /* Netlify Function 経由で空き枠を取得（カレンダーは非公開のまま） */
   try {
-    const res  = await fetch('/.netlify/functions/availability');
+    const res  = await fetch('/functions/availability');
     if (!res.ok) throw new Error(res.status);
     const data = await res.json();
 
