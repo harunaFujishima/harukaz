@@ -719,19 +719,29 @@
 /* ═══════════════════════════════════════════════════════════════
    ★ HARUKAZ スケジュール設定 ★
 
-   【空き日の追加方法 — Google Calendar を使う】
-   ① Googleカレンダーを開く（スマホのカレンダーアプリでもOK）
-   ② 「HARUKAZ Availability」カレンダーを選択
-   ③ 空いている日時に予定を追加
-      タイトル: "Available"（必ずこの単語を含める）
-      時間: セッション開始〜終了（例: 10:00〜11:00）
-   ④ 保存すると自動でサイトに反映される
+   【カレンダー管理の方法】
+   月〜土 7:00〜15:00 が基本の営業時間として全枠表示されます。
+   「予約できない時間」をGoogleカレンダーに追加するだけでOK。
 
-   【開始可能日の設定】↓ ここを変更
+   ① Googleカレンダーアプリを開く
+   ② 「HARUKAZ」カレンダーに予定を追加（外出・用事など何でもOK）
+      例: 「歯医者」9:00〜10:00 → その枠が自動で消える
+      例: 「終日ブロック」→ その日が丸ごと予約不可になる
+   ③ 保存するだけ。タイトルは何でもOK。
+
+   【受付開始日の設定】↓ ここだけ変更すればOK
    ※ 現在は July 20, 2026 に設定中
 ═══════════════════════════════════════════════════════════════ */
 
 const MIN_DATE = new Date(2026, 6, 20); // ← 受付開始日: 年, 月(0=Jan), 日
+
+/* 営業時間設定 */
+const BIZ = {
+  days:      [1, 2, 3, 4, 5, 6],  // 1=月, 2=火, 3=水, 4=木, 5=金, 6=土
+  startHour: 7,   // 開始時刻
+  endHour:   14,  // 最終枠の開始時刻（セッション60分なので14:00スタート→15:00終了）
+  interval:  30,  // 分刻み
+};
 
 const CONFIG = {
   GOOGLE_API_KEY:     'YOUR_GOOGLE_API_KEY',
@@ -767,6 +777,49 @@ document.querySelectorAll('.pricing-card').forEach(card => {
 });
 
 /* ══════════════════════════════════════════
+   スロット生成（営業時間ベース）
+══════════════════════════════════════════ */
+
+/** 営業時間内の全スロットを生成して返す（60日分） */
+function generateAllSlots() {
+  const slots = [];
+  for (let i = 0; i <= 60; i++) {
+    const d   = new Date(MIN_DATE.getTime() + i * 24 * 60 * 60 * 1000);
+    const dow = d.getDay();
+    if (!BIZ.days.includes(dow)) continue;
+
+    for (let h = BIZ.startHour; h <= BIZ.endHour; h++) {
+      const minutes = (h === BIZ.endHour) ? [0] : [0, 30];
+      for (const m of minutes) {
+        if (h === BIZ.endHour && m > 0) continue;
+        const start = new Date(d.getFullYear(), d.getMonth(), d.getDate(), h, m);
+        const end   = new Date(start.getTime() + 60 * 60 * 1000);
+        slots.push({ start, end });
+      }
+    }
+  }
+  return slots;
+}
+
+/** busyPeriods（{start,end} の配列）と重なるスロットを除外 */
+function subtractBusy(allSlots, busyPeriods) {
+  return allSlots.filter(slot =>
+    !busyPeriods.some(busy =>
+      slot.start < busy.end && slot.end > busy.start
+    )
+  );
+}
+
+/** スロット配列を availableEvents 形式に変換 */
+function slotsToEvents(slots) {
+  return slots.map(s => ({
+    summary: 'Available',
+    start: { dateTime: s.start.toISOString() },
+    end:   { dateTime: s.end.toISOString() },
+  }));
+}
+
+/* ══════════════════════════════════════════
    GOOGLE CALENDAR FETCH
 ══════════════════════════════════════════ */
 async function fetchAvailability() {
@@ -775,24 +828,31 @@ async function fetchAvailability() {
     return;
   }
 
-  const now    = new Date();
-  const future = new Date(now.getTime() + 60 * 24 * 60 * 60 * 1000);
-  const url    = [
+  const timeMin = MIN_DATE.toISOString();
+  const timeMax = new Date(MIN_DATE.getTime() + 60 * 24 * 60 * 60 * 1000).toISOString();
+  const url = [
     'https://www.googleapis.com/calendar/v3/calendars/',
     encodeURIComponent(CONFIG.GOOGLE_CALENDAR_ID),
     '/events?key=', CONFIG.GOOGLE_API_KEY,
-    '&timeMin=', now.toISOString(),
-    '&timeMax=', future.toISOString(),
-    '&singleEvents=true&orderBy=startTime&q=Available'
+    '&timeMin=', timeMin,
+    '&timeMax=', timeMax,
+    '&singleEvents=true&orderBy=startTime'
   ].join('');
 
   try {
     const res  = await fetch(url);
     if (!res.ok) throw new Error(res.status);
     const data = await res.json();
-    availableEvents = (data.items || []).filter(e =>
-      e.summary && e.summary.toLowerCase().includes('available') && e.start.dateTime
-    );
+
+    /* カレンダーにある予定を「ブロック」として扱う */
+    const busyPeriods = (data.items || []).map(e => ({
+      start: new Date(e.start.dateTime || e.start.date),
+      end:   new Date(e.end.dateTime   || e.end.date),
+    }));
+
+    const allSlots       = generateAllSlots();
+    const availableSlots = subtractBusy(allSlots, busyPeriods);
+    availableEvents      = slotsToEvents(availableSlots);
     showCalendar();
   } catch (err) {
     console.warn('Google Calendar API error — using demo mode.', err);
@@ -801,28 +861,18 @@ async function fetchAvailability() {
 }
 
 function generateDemoSlots() {
-  /* Demo mode: shows realistic sample availability (Tue–Sat, varied times).
-     Remove this function and set real API keys when going live. */
-  availableEvents = [];
-  const times = ['10:00', '13:00', '15:30', '17:00'];
+  /* デモ用: 営業時間内の全枠を生成し、ランダムでいくつかブロック */
+  const allSlots = generateAllSlots();
+  const demoBusy = [];
 
-  for (let i = 0; i <= 50; i++) {
-    const d   = new Date(MIN_DATE.getTime() + i * 24 * 60 * 60 * 1000);
-    const dow = d.getDay();
-    if (dow < 2 || dow > 6) continue; // Tue–Sat only
+  /* ランダムにブロック（実際はGoogleカレンダーの予定が入る） */
+  allSlots.forEach(slot => {
+    if (Math.random() < 0.35) {
+      demoBusy.push({ start: slot.start, end: slot.end });
+    }
+  });
 
-    const dayTimes = times.filter(() => Math.random() > 0.45);
-    dayTimes.forEach(t => {
-      const [h, m] = t.split(':').map(Number);
-      const start  = new Date(d.getFullYear(), d.getMonth(), d.getDate(), h, m);
-      const end    = new Date(start.getTime() + 60 * 60 * 1000);
-      availableEvents.push({
-        summary: 'Available',
-        start: { dateTime: start.toISOString() },
-        end:   { dateTime: end.toISOString() },
-      });
-    });
-  }
+  availableEvents = slotsToEvents(subtractBusy(allSlots, demoBusy));
   showCalendar();
 }
 
