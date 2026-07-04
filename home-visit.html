@@ -823,7 +823,7 @@ function slotsToEvents(slots) {
 async function fetchAvailability() {
   /* Netlify Function 経由で空き枠を取得（カレンダーは非公開のまま） */
   try {
-    const res  = await fetch('/functions/availability');
+    const res  = await fetch('https://harukaz-booking-management.ringo144516.workers.dev');
     if (!res.ok) throw new Error(res.status);
     const data = await res.json();
 
