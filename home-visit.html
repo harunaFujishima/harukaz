@@ -743,10 +743,8 @@ const BIZ = {
   interval:  30,  // 分刻み
 };
 
+/* Stripe決済リンク（プランごと） */
 const CONFIG = {
-  GOOGLE_API_KEY:     'YOUR_GOOGLE_API_KEY',
-  GOOGLE_CALENDAR_ID: 'YOUR_CALENDAR_ID@group.calendar.google.com',
-
   STRIPE: {
     intro:  'https://buy.stripe.com/6oU14g5l363SafW2HxcIE02', // $60 single (WELCOME20 coupon = $20)
     single: 'https://buy.stripe.com/6oU14g5l363SafW2HxcIE02', // $60
@@ -823,39 +821,24 @@ function slotsToEvents(slots) {
    GOOGLE CALENDAR FETCH
 ══════════════════════════════════════════ */
 async function fetchAvailability() {
-  if (CONFIG.GOOGLE_API_KEY === 'YOUR_GOOGLE_API_KEY') {
-    generateDemoSlots();
-    return;
-  }
-
-  const timeMin = MIN_DATE.toISOString();
-  const timeMax = new Date(MIN_DATE.getTime() + 60 * 24 * 60 * 60 * 1000).toISOString();
-  const url = [
-    'https://www.googleapis.com/calendar/v3/calendars/',
-    encodeURIComponent(CONFIG.GOOGLE_CALENDAR_ID),
-    '/events?key=', CONFIG.GOOGLE_API_KEY,
-    '&timeMin=', timeMin,
-    '&timeMax=', timeMax,
-    '&singleEvents=true&orderBy=startTime'
-  ].join('');
-
+  /* Netlify Function 経由で空き枠を取得（カレンダーは非公開のまま） */
   try {
-    const res  = await fetch(url);
+    const res  = await fetch('/.netlify/functions/availability');
     if (!res.ok) throw new Error(res.status);
     const data = await res.json();
 
-    /* カレンダーにある予定を「ブロック」として扱う */
-    const busyPeriods = (data.items || []).map(e => ({
-      start: new Date(e.start.dateTime || e.start.date),
-      end:   new Date(e.end.dateTime   || e.end.date),
-    }));
-
-    const allSlots       = generateAllSlots();
-    const availableSlots = subtractBusy(allSlots, busyPeriods);
-    availableEvents      = slotsToEvents(availableSlots);
-    showCalendar();
+    if (data.slots && data.slots.length) {
+      availableEvents = data.slots.map(s => ({
+        summary: 'Available',
+        start: { dateTime: s.start },
+        end:   { dateTime: s.end },
+      }));
+      showCalendar();
+    } else {
+      generateDemoSlots(); // フォールバック
+    }
   } catch (err) {
-    console.warn('Google Calendar API error — using demo mode.', err);
+    console.warn('Availability API error — using demo mode.', err);
     generateDemoSlots();
   }
 }
