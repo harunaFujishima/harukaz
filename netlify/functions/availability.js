@@ -1,161 +1,137 @@
 /**
- * HARUKAZ — Google Calendar Availability (Service Account, private calendar)
+ * HARUKAZ — Google Calendar Availability
+ * OAuth2 refresh token 方式（サービスアカウントキー不要）
  *
- * 環境変数 (Netlify Dashboard → Site Settings → Environment Variables):
- *   GOOGLE_SERVICE_ACCOUNT_JSON  ← サービスアカウントのJSONキー全体をペースト
- *   GOOGLE_CALENDAR_ID           ← カレンダーのID (例: abc123@group.calendar.google.com)
+ * Netlify Dashboard → Environment Variables に以下を登録:
+ *   GOOGLE_CLIENT_ID      ← OAuthクライアントID
+ *   GOOGLE_CLIENT_SECRET  ← OAuthクライアントシークレット
+ *   GOOGLE_REFRESH_TOKEN  ← OAuth Playgroundで取得したリフレッシュトークン
+ *   GOOGLE_CALENDAR_ID    ← カレンダーID (例: xxx@group.calendar.google.com)
  */
 
-const crypto = require('crypto');
-
-/* ── 営業時間設定（home-visit.htmlと同じ値を保つこと） ── */
+/* ── 営業時間設定 ── */
 const BIZ = {
   days:      [1, 2, 3, 4, 5, 6], // 1=月 〜 6=土
   startHour: 7,
-  endHour:   14,  // 最終枠の開始時刻（60分セッション → 15:00終了）
+  endHour:   14,  // 最終枠開始時刻（60分セッション → 15:00終了）
+  interval:  30,  // 分刻み
 };
 
-/* ── 受付開始日 ── */
-const MIN_DATE = new Date('2026-07-20T00:00:00');
+const MIN_DATE = new Date('2026-07-20');
+
+/* ─────────────────────────────────────────
+   アクセストークン取得（リフレッシュトークンから）
+───────────────────────────────────────── */
+async function getAccessToken() {
+  const res = await fetch('https://oauth2.googleapis.com/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+      client_id:     process.env.GOOGLE_CLIENT_ID,
+      client_secret: process.env.GOOGLE_CLIENT_SECRET,
+      refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
+      grant_type:    'refresh_token',
+    }),
+  });
+
+  const data = await res.json();
+  if (!data.access_token) {
+    throw new Error(`トークン取得失敗: ${JSON.stringify(data)}`);
+  }
+  return data.access_token;
+}
 
 /* ─────────────────────────────────────────
    全営業スロット生成（60日分）
 ───────────────────────────────────────── */
 function generateAllSlots() {
   const slots = [];
-  for (let i = 0; i <= 60; i++) {
-    const d   = new Date(MIN_DATE.getTime() + i * 86400000);
-    const dow = d.getUTCDay(); // UTC基準。ローカルタイムに要注意
-    // EST (UTC-5) / EDT (UTC-4) 補正: カナダ東部
-    const local = new Date(d.toLocaleString('en-CA', { timeZone: 'America/Toronto' }));
-    const localDow = local.getDay();
-    if (!BIZ.days.includes(localDow)) continue;
 
-    const y = local.getFullYear();
-    const mo = local.getMonth();
-    const dy = local.getDate();
+  for (let i = 0; i <= 60; i++) {
+    const base = new Date(MIN_DATE);
+    base.setDate(base.getDate() + i);
+
+    // トロント現地時間で曜日を判定
+    const localStr  = base.toLocaleDateString('en-CA', { timeZone: 'America/Toronto', weekday: 'short' });
+    const dowMap    = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+    const dow       = dowMap[localStr];
+    if (!BIZ.days.includes(dow)) continue;
+
+    const dateStr = base.toLocaleDateString('en-CA', {
+      timeZone: 'America/Toronto',
+      year: 'numeric', month: '2-digit', day: '2-digit',
+    }); // → "2026-07-20"
 
     for (let h = BIZ.startHour; h <= BIZ.endHour; h++) {
       const mins = h === BIZ.endHour ? [0] : [0, 30];
       for (const m of mins) {
-        // トロント時間でスロットを作成
-        const startLocal = new Date(
-          new Date(`${y}-${String(mo+1).padStart(2,'0')}-${String(dy).padStart(2,'0')}T${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:00`)
-            .toLocaleString('en-CA', { timeZone: 'America/Toronto' })
-        );
-        // ISO文字列として保存（タイムゾーン付き）
-        const startISO = toTorontoISO(y, mo, dy, h, m, 0);
-        const endISO   = toTorontoISO(y, mo, dy, h, m + 60, 0);
-        slots.push({ startISO, endISO,
-          startMs: new Date(startISO).getTime(),
-          endMs:   new Date(endISO).getTime() });
+        const hh    = String(h).padStart(2, '0');
+        const mm    = String(m).padStart(2, '0');
+        // トロント現地時間でISO文字列を作る
+        const startISO = `${dateStr}T${hh}:${mm}:00`;
+        const endH     = h + Math.floor((m + 60) / 60);
+        const endM     = (m + 60) % 60;
+        const endISO   = `${dateStr}T${String(endH).padStart(2,'0')}:${String(endM).padStart(2,'0')}:00`;
+
+        slots.push({ startISO, endISO });
       }
     }
   }
+
   return slots;
-}
-
-/** トロント現地時間でISO文字列を作る */
-function toTorontoISO(year, month, day, hour, minute, second) {
-  // minute > 59 を繰り上げ
-  const d = new Date(year, month, day, hour, minute, second);
-  // UTCオフセットを取得（Intlで）
-  const fmt = new Intl.DateTimeFormat('en-CA', {
-    timeZone: 'America/Toronto',
-    year: 'numeric', month: '2-digit', day: '2-digit',
-    hour: '2-digit', minute: '2-digit', second: '2-digit',
-    hour12: false,
-  });
-  // 実際にUTC→Torontoの逆変換はせず、Dateを使ってUTC取得
-  // ここでは簡易版: Date.toISOStringを使いつつオフセット付与
-  return d.toISOString(); // UTC として扱う（後述の比較もUTCで統一）
-}
-
-/* ─────────────────────────────────────────
-   Google Service Account → OAuth token
-───────────────────────────────────────── */
-async function getAccessToken(sa) {
-  const now = Math.floor(Date.now() / 1000);
-
-  const header  = b64url(JSON.stringify({ alg: 'RS256', typ: 'JWT' }));
-  const payload = b64url(JSON.stringify({
-    iss:   sa.client_email,
-    scope: 'https://www.googleapis.com/auth/calendar.readonly',
-    aud:   'https://oauth2.googleapis.com/token',
-    iat:   now,
-    exp:   now + 3600,
-  }));
-
-  const signingInput = `${header}.${payload}`;
-  const sign = crypto.createSign('RSA-SHA256');
-  sign.update(signingInput);
-  const signature = sign.sign(sa.private_key, 'base64url');
-
-  const jwt = `${signingInput}.${signature}`;
-
-  const res = await fetch('https://oauth2.googleapis.com/token', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({
-      grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
-      assertion: jwt,
-    }),
-  });
-
-  const data = await res.json();
-  if (!data.access_token) throw new Error(`Token error: ${JSON.stringify(data)}`);
-  return data.access_token;
-}
-
-function b64url(str) {
-  return Buffer.from(str).toString('base64url');
 }
 
 /* ─────────────────────────────────────────
    Netlify Function ハンドラ
 ───────────────────────────────────────── */
 exports.handler = async () => {
-  const headers = {
+  const corsHeaders = {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
     'Cache-Control': 'no-store',
   };
 
   try {
-    const sa         = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_JSON);
     const calendarId = process.env.GOOGLE_CALENDAR_ID;
-
-    if (!sa || !calendarId) {
-      throw new Error('環境変数が設定されていません。Netlify Dashboard を確認してください。');
+    if (!process.env.GOOGLE_CLIENT_ID || !calendarId) {
+      throw new Error('環境変数が未設定です。Netlify Dashboard を確認してください。');
     }
 
-    const token = await getAccessToken(sa);
+    const token = await getAccessToken();
 
     /* カレンダーイベントを取得（60日分） */
-    const timeMin = MIN_DATE.toISOString();
-    const timeMax = new Date(MIN_DATE.getTime() + 61 * 86400000).toISOString();
+    const timeMin = new Date(MIN_DATE).toISOString();
+    const timeMax = new Date(new Date(MIN_DATE).setDate(MIN_DATE.getDate() + 61)).toISOString();
 
     const calRes = await fetch(
       `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events` +
-      `?timeMin=${timeMin}&timeMax=${timeMax}&singleEvents=true&orderBy=startTime`,
+      `?timeMin=${encodeURIComponent(timeMin)}&timeMax=${encodeURIComponent(timeMax)}` +
+      `&singleEvents=true&orderBy=startTime`,
       { headers: { Authorization: `Bearer ${token}` } }
     );
     const calData = await calRes.json();
 
-    /* カレンダーの予定 = ブロック済み時間帯 */
+    if (calData.error) throw new Error(JSON.stringify(calData.error));
+
+    /* カレンダーの予定 = ブロック時間帯 */
     const busy = (calData.items || []).map(e => ({
-      startMs: new Date(e.start.dateTime || e.start.date).getTime(),
-      endMs:   new Date(e.end.dateTime   || e.end.date).getTime(),
+      start: new Date(e.start.dateTime || e.start.date),
+      end:   new Date(e.end.dateTime   || e.end.date),
     }));
 
     /* 全スロット − ブロック = 予約可能スロット */
-    const available = generateAllSlots()
-      .filter(s => !busy.some(b => s.startMs < b.endMs && s.endMs > b.startMs))
+    const allSlots = generateAllSlots();
+    const available = allSlots
+      .filter(s => {
+        const sStart = new Date(s.startISO + ' America/Toronto');
+        const sEnd   = new Date(s.endISO   + ' America/Toronto');
+        return !busy.some(b => sStart < b.end && sEnd > b.start);
+      })
       .map(s => ({ start: s.startISO, end: s.endISO }));
 
     return {
       statusCode: 200,
-      headers,
+      headers: corsHeaders,
       body: JSON.stringify({ slots: available }),
     };
 
@@ -163,7 +139,7 @@ exports.handler = async () => {
     console.error('availability error:', err.message);
     return {
       statusCode: 500,
-      headers,
+      headers: corsHeaders,
       body: JSON.stringify({ error: err.message }),
     };
   }
