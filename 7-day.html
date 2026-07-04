@@ -120,7 +120,7 @@
       A complete matcha ritual kit — bowl, whisk, scoop, sifter, two matchas, and a 7-day brewing and meditation guide — delivered to your door. Everything you need to build a daily practice, from the very first morning.
     </p>
     <div style="margin-top:36px;" class="reveal reveal-delay-2">
-      <a href="https://buy.stripe.com/6oUfZa7tbcsg73Kci7cIE03" class="btn btn--gold" style="margin-right:16px;">Begin Your Practice — $99/week</a>
+      <a href="#reserve" class="btn btn--gold" style="margin-right:16px;">Reserve Your Kit — $99/week</a>
       <a href="services.html" class="btn btn--ghost">All Experiences</a>
     </div>
   </div>
@@ -289,22 +289,123 @@
 
 <div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
 
-<!-- Price & CTA -->
-<section class="section section--light" style="padding:80px 0;">
-  <div class="container">
-    <div class="price-box reveal">
-      <div>
-        <p class="price-box__num"><span>$</span>99</p>
-        <p class="price-box__per">CAD · per week · cancel anytime</p>
-      </div>
-      <div class="price-box__detail">
-        <p>One week at a time. If it works for you, continue. If life gets in the way, pause. No contracts, no minimums, no friction.</p>
-        <p style="font-size:13px;color:#777;margin-bottom:28px;">Kit includes all tools — bowl, whisk, scoop, sifter, two matchas, and the 7-day guide book. Delivered to your door; Toronto orders arrive Sunday evening for a Monday start.</p>
-        <a href="https://buy.stripe.com/6oUfZa7tbcsg73Kci7cIE03" class="btn btn--dark">Begin Your Practice</a>
-      </div>
+<!-- Pre-order / Reservation -->
+<section class="section section--light" style="padding:80px 0;" id="reserve">
+  <div class="container" style="max-width:760px;">
+
+    <div class="section-header reveal" style="margin-bottom:48px;">
+      <div class="label">RESERVE YOUR KIT</div>
+      <h2>Pre-Order the 7-Day Ritual</h2>
+      <p style="color:#666;margin-top:16px;line-height:1.85;max-width:560px;">
+        Payment is not collected here. Submit your details and we will contact you within 48 hours to confirm availability, answer any questions, and arrange delivery. <strong style="color:#333;">$99 / week — cancel anytime.</strong>
+      </p>
     </div>
+
+    <!-- Reservation form -->
+    <form id="preorder-form" action="https://formspree.io/f/mbdvyqgz" method="POST" class="reveal">
+      <input type="hidden" name="service" value="7-Day Matcha Ritual Kit — Pre-order">
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px 32px;">
+        <div class="form-group">
+          <label class="form-label" for="po-name">Full Name *</label>
+          <input class="form-input" type="text" id="po-name" name="name" required placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="po-email">Email Address *</label>
+          <input class="form-input" type="email" id="po-email" name="email" required placeholder="you@example.com">
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-top:20px;">
+        <label class="form-label" for="po-address">Delivery Address *</label>
+        <input class="form-input" type="text" id="po-address" name="address_street" required placeholder="Street address">
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px 32px;margin-top:12px;">
+        <div class="form-group">
+          <input class="form-input" type="text" name="address_city" required placeholder="City">
+        </div>
+        <div class="form-group">
+          <input class="form-input" type="text" name="address_postal" required placeholder="Postal code (e.g. M2N 1A1)">
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-top:20px;">
+        <label class="form-label" for="po-week">Preferred Start Week *</label>
+        <input class="form-input" type="date" id="po-week" name="preferred_start_date" required
+               min="2026-07-20"
+               style="color:#333;">
+        <p style="font-size:12px;color:#999;margin-top:6px;">Kits are delivered Sunday evening for a Monday start. Select any Monday on or after July 20.</p>
+      </div>
+
+      <div class="form-group" style="margin-top:20px;">
+        <label class="form-label" for="po-message">Questions or Notes</label>
+        <textarea class="form-input" id="po-message" name="message" rows="3"
+                  style="resize:vertical;font-family:inherit;font-size:14px;padding:14px 16px;"
+                  placeholder="Any questions, dietary notes, or special requests."></textarea>
+      </div>
+
+      <div style="margin-top:36px;border-top:1px solid #e5e0d8;padding-top:32px;">
+        <p style="font-size:13px;color:#888;margin-bottom:20px;">
+          By submitting, you are reserving your interest — no payment is taken at this step. HARUKAZ will contact you within 48 hours to confirm your order.
+        </p>
+        <button type="submit" id="po-submit" class="btn btn--dark">Reserve My Kit →</button>
+      </div>
+    </form>
+
+    <!-- Confirmation -->
+    <div id="preorder-confirm" style="display:none;text-align:center;padding:56px 0;">
+      <div style="font-size:32px;margin-bottom:24px;">◎</div>
+      <h3 style="font-family:var(--font-display);font-size:28px;font-weight:300;color:#333;margin-bottom:16px;">Reservation Received.</h3>
+      <p style="color:#666;line-height:1.85;max-width:480px;margin:0 auto;">
+        Thank you. We will review your order and be in touch within 48 hours to confirm delivery details and arrange payment. Check your inbox — including your spam folder.
+      </p>
+      <p style="margin-top:24px;font-size:13px;color:#999;">
+        Questions in the meantime? <a href="mailto:info@harukazwellness.com" style="color:var(--matcha);">info@harukazwellness.com</a>
+      </p>
+    </div>
+
   </div>
 </section>
+
+<style>
+.form-label { display:block;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#888;margin-bottom:8px; }
+.form-input {
+  width:100%;box-sizing:border-box;
+  background:#fff;border:1px solid #ddd;
+  padding:13px 16px;font-size:14px;font-family:inherit;color:#333;
+  outline:none;transition:border-color 0.2s;
+}
+.form-input:focus { border-color:#8B7355; }
+@media (max-width:640px) {
+  #preorder-form > div[style*="grid-template-columns:1fr 1fr"] { grid-template-columns:1fr!important; }
+}
+</style>
+
+<script>
+document.getElementById('preorder-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const btn = document.getElementById('po-submit');
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+  try {
+    const res = await fetch(this.action, {
+      method: 'POST',
+      body: new FormData(this),
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      document.getElementById('preorder-form').style.display = 'none';
+      document.getElementById('preorder-confirm').style.display = 'block';
+    } else {
+      btn.textContent = 'Error — please email us directly';
+      btn.disabled = false;
+    }
+  } catch {
+    btn.textContent = 'Error — please email us directly';
+    btn.disabled = false;
+  }
+});
+</script>
 
 <!-- Footer -->
 <footer class="footer">

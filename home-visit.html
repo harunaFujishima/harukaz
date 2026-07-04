@@ -716,6 +716,23 @@
         - Weekly $160/month (recurring subscription)
 ═══════════════════════════════════════════════════════════════ */
 
+/* ═══════════════════════════════════════════════════════════════
+   ★ HARUKAZ スケジュール設定 ★
+
+   【空き日の追加方法 — Google Calendar を使う】
+   ① Googleカレンダーを開く（スマホのカレンダーアプリでもOK）
+   ② 「HARUKAZ Availability」カレンダーを選択
+   ③ 空いている日時に予定を追加
+      タイトル: "Available"（必ずこの単語を含める）
+      時間: セッション開始〜終了（例: 10:00〜11:00）
+   ④ 保存すると自動でサイトに反映される
+
+   【開始可能日の設定】↓ ここを変更
+   ※ 現在は July 20, 2026 に設定中
+═══════════════════════════════════════════════════════════════ */
+
+const MIN_DATE = new Date(2026, 6, 20); // ← 受付開始日: 年, 月(0=Jan), 日
+
 const CONFIG = {
   GOOGLE_API_KEY:     'YOUR_GOOGLE_API_KEY',
   GOOGLE_CALENDAR_ID: 'YOUR_CALENDAR_ID@group.calendar.google.com',
@@ -786,12 +803,11 @@ async function fetchAvailability() {
 function generateDemoSlots() {
   /* Demo mode: shows realistic sample availability (Tue–Sat, varied times).
      Remove this function and set real API keys when going live. */
-  const now = new Date();
   availableEvents = [];
   const times = ['10:00', '13:00', '15:30', '17:00'];
 
-  for (let i = 2; i <= 50; i++) {
-    const d   = new Date(now.getTime() + i * 24 * 60 * 60 * 1000);
+  for (let i = 0; i <= 50; i++) {
+    const d   = new Date(MIN_DATE.getTime() + i * 24 * 60 * 60 * 1000);
     const dow = d.getDay();
     if (dow < 2 || dow > 6) continue; // Tue–Sat only
 
@@ -829,8 +845,6 @@ function renderCalendar() {
   document.getElementById('cal-month-label').textContent =
     `${MONTH_NAMES[viewMonth]} ${viewYear}`;
 
-  const today       = new Date();
-  const todayStr    = today.toDateString();
   const firstDayDow = new Date(viewYear, viewMonth, 1).getDay();
   const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
 
@@ -852,7 +866,7 @@ function renderCalendar() {
 
   for (let day = 1; day <= daysInMonth; day++) {
     const date   = new Date(viewYear, viewMonth, day);
-    const isPast = date < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const isPast = date < new Date(MIN_DATE.getFullYear(), MIN_DATE.getMonth(), MIN_DATE.getDate());
     const isAvail = availDays.has(day) && !isPast;
     const isSelected = currentDate &&
       currentDate.getDate() === day &&
