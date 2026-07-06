@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Continue Your Ritual — HARUKAZ</title>
+  <meta name="description" content="You're holding the HARUKAZ 7-Day Kit. Here's exactly how to use it, day by day — and how to continue the ritual after day seven.">
+  <link rel="icon" type="image/png" href="assets/Harukaz.png">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ── DAY-BY-DAY GUIDE ── */
+    .guide-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); }
+    .guide-row {
+      background: var(--bg-dark);
+      display: grid; grid-template-columns: 90px 1fr;
+      padding: 32px 40px;
+    }
+    .guide-row__day {
+      font-family: var(--font-display); font-size: 34px; font-weight: 300;
+      color: var(--gold); line-height: 1;
+    }
+    .guide-row__day span { display:block; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-top: 8px; }
+    .guide-row__title { font-family: var(--font-display); font-size: 17px; color: #ddd; margin-bottom: 10px; }
+    .guide-row__text { font-size: 13.5px; color: var(--text-muted); line-height: 1.8; max-width: 620px; }
+    @media (max-width: 640px) {
+      .guide-row { grid-template-columns: 1fr; gap: 12px; }
+    }
+
+    /* ── BREWING STEPS ── */
+    .brew-steps {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1px; background: var(--border); margin: 48px 0;
+    }
+    .brew-step { background: var(--card-1); padding: 32px 24px; }
+    .brew-step__num { font-family: var(--font-display); font-size: 22px; color: var(--gold); margin-bottom: 12px; display:block; }
+    .brew-step__text { font-size: 13px; color: var(--text-muted); line-height: 1.75; }
+    @media (max-width: 900px) { .brew-steps { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { .brew-steps { grid-template-columns: 1fr; } }
+
+    /* ── CONTINUE CTA ── */
+    .continue-box {
+      border: 1px solid var(--border);
+      padding: 56px 64px;
+      display: flex; gap: 48px; align-items: center; justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .continue-box__text { flex: 1; min-width: 260px; }
+    .continue-box__text h3 { font-family: var(--font-display); font-size: 24px; font-weight: 300; color: #fff; margin-bottom:12px; }
+    .continue-box__text p { color: rgba(204,204,204,0.75); line-height: 1.85; }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav id="nav-persistent">
+  <a href="index.html" class="nav-logo-mark" aria-label="HARUKAZ Home">
+    <div class="logo-placeholder" aria-hidden="true">春</div>
+  </a>
+  <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">
+    <span class="toggle-text">MENU</span>
+    <span class="hamburger" aria-hidden="true"><span></span><span></span><span></span></span>
+  </button>
+</nav>
+<div id="nav-overlay" role="dialog" aria-modal="true">
+  <div class="nav-overlay__logo" aria-hidden="true"><img src="assets/Harukaz.png" alt="HARUKAZ"></div>
+  <ul class="nav-overlay__links">
+    <li><a href="index.html">HOME</a></li>
+    <li><a href="services.html">EXPERIENCES</a></li>
+    <li><a href="corporate.html">CORPORATE</a></li>
+    <li><a href="tea.html">TEA LIBRARY</a></li>
+    <li><a href="book.html">BOOK</a></li>
+    <li><a href="about.html">ABOUT</a></li>
+    <li><a href="contact.html">CONTACT</a></li>
+    <li><a href="home-visit.html">AT-HOME</a></li>
+  </ul>
+</div>
+
+<!-- Hero -->
+<header class="page-hero" style="min-height:48vh;">
+  <div class="container">
+    <div class="label reveal">YOUR 7-DAY KIT</div>
+    <h1 class="reveal reveal-delay-1">You're Holding<br>Everything You Need.</h1>
+    <p style="max-width:540px;color:rgba(204,204,204,0.75);margin-top:20px;line-height:1.85;" class="reveal reveal-delay-2">
+      Welcome. This page walks you through exactly how to use your kit — day by day — and what to do once your seven days are complete.
+    </p>
+  </div>
+</header>
+
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+
+<!-- How to brew -->
+<section class="section section--dark" style="padding:72px 0;">
+  <div class="container">
+    <div class="section-header reveal" style="margin-bottom:40px;">
+      <div class="label">BEFORE DAY ONE</div>
+      <h2>How to Prepare Your Bowl</h2>
+      <p style="max-width:560px;color:var(--text-muted);margin-top:16px;line-height:1.85;">The same four steps, every morning. It gets faster — and quieter — each day.</p>
+    </div>
+
+    <div class="brew-steps reveal">
+      <div class="brew-step">
+        <span class="brew-step__num">01</span>
+        <p class="brew-step__text"><strong style="color:#ccc;">Sift.</strong> One level scoop (chashaku) of matcha through the furui, into the chawan. This breaks up clumps — the step most people skip, and the reason store-bought matcha tastes gritty.</p>
+      </div>
+      <div class="brew-step">
+        <span class="brew-step__num">02</span>
+        <p class="brew-step__text"><strong style="color:#ccc;">Add water.</strong> About 70ml of water just off the boil (roughly 80°C — let boiled water sit 1 minute). Too hot and the matcha turns bitter.</p>
+      </div>
+      <div class="brew-step">
+        <span class="brew-step__num">03</span>
+        <p class="brew-step__text"><strong style="color:#ccc;">Whisk.</strong> Hold the chasen loosely, whisk in a brisk "W" motion for 15–20 seconds until a fine foam forms on top.</p>
+      </div>
+      <div class="brew-step">
+        <span class="brew-step__num">04</span>
+        <p class="brew-step__text"><strong style="color:#ccc;">Sit.</strong> No phone. Drink slowly. This is the part most people rush — don't. The guide book has a one-line intention for each day.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+
+<!-- Day-by-day guide -->
+<section class="section section--dark" style="padding:72px 0;">
+  <div class="container">
+    <div class="section-header reveal" style="margin-bottom:40px;">
+      <div class="label">YOUR SEVEN DAYS</div>
+      <h2>What to Expect, Morning by Morning</h2>
+    </div>
+
+    <div class="guide-list reveal">
+      <div class="guide-row">
+        <div class="guide-row__day">01<span>MON</span></div>
+        <div>
+          <p class="guide-row__title">Start with the everyday matcha.</p>
+          <p class="guide-row__text">Use the first tin. Don't aim for a perfect bowl — aim for a finished one. Read the day-one intention card before you whisk, not after.</p>
+        </div>
+      </div>
+      <div class="guide-row">
+        <div class="guide-row__day">02<span>TUE</span></div>
+        <div>
+          <p class="guide-row__title">Notice the energy curve.</p>
+          <p class="guide-row__text">Pay attention to how you feel at hour two and hour four, compared to a normal coffee morning. Most people notice the difference starting today.</p>
+        </div>
+      </div>
+      <div class="guide-row">
+        <div class="guide-row__day">03<span>WED</span></div>
+        <div>
+          <p class="guide-row__title">This is the day it usually breaks — or sticks.</p>
+          <p class="guide-row__text">If you're tempted to skip, do the shortest version: sift, whisk, drink, no sitting. Two minutes. The habit survives on completion, not intensity.</p>
+        </div>
+      </div>
+      <div class="guide-row">
+        <div class="guide-row__day">04<span>THU</span></div>
+        <div>
+          <p class="guide-row__title">Try the guided audio meditation.</p>
+          <p class="guide-row__text">Optional, 10–20 minutes, after your bowl. It's in the guide book's QR code on page 3. No app required — it plays straight from your browser.</p>
+        </div>
+      </div>
+      <div class="guide-row">
+        <div class="guide-row__day">05<span>FRI</span></div>
+        <div>
+          <p class="guide-row__title">Switch to the second matcha.</p>
+          <p class="guide-row__text">A different profile — slower, rounder. Notice what changes in taste and in how you feel by mid-morning.</p>
+        </div>
+      </div>
+      <div class="guide-row">
+        <div class="guide-row__day">06<span>SAT</span></div>
+        <div>
+          <p class="guide-row__title">Take your time.</p>
+          <p class="guide-row__text">No morning rush today. Extend the "sit" step — five extra minutes with the empty bowl in your hands before you move on.</p>
+        </div>
+      </div>
+      <div class="guide-row">
+        <div class="guide-row__day">07<span>SUN</span></div>
+        <div>
+          <p class="guide-row__title">Your last bowl from this kit.</p>
+          <p class="guide-row__text">Use whatever matcha remains. This is a good morning to decide: keep going, or let it go. Either is fine — but if you want to keep going, read below.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider__line"></div><div class="divider__octagon"></div><div class="divider__line"></div></div>
+
+<!-- Continue the ritual -->
+<section class="section section--dark" style="padding:80px 0;">
+  <div class="container">
+    <div class="section-header reveal" style="margin-bottom:48px;">
+      <div class="label">AFTER DAY SEVEN</div>
+      <h2>Continue the Ritual</h2>
+      <p style="max-width:600px;color:var(--text-muted);margin-top:16px;line-height:1.85;">
+        Most people who finish all seven days want one thing: not to lose the momentum. There are two ways to keep it going.
+      </p>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:1px;background:var(--border);">
+      <div class="continue-box reveal" style="background:var(--bg-dark);border:none;border-bottom:1px solid var(--border);border-radius:0;">
+        <div class="continue-box__text">
+          <h3>Re-order the 7-Day Kit</h3>
+          <p>Same kit, new matcha, delivered again — keep the practice going week after week, at your own pace.</p>
+        </div>
+        <a href="7-day.html#reserve" class="btn btn--gold">Reserve Another Week →</a>
+      </div>
+      <div class="continue-box reveal" style="background:var(--bg-dark);border:none;border-radius:0;">
+        <div class="continue-box__text">
+          <h3>Bring HARUKAZ to Your Home</h3>
+          <p>Skip the prep. A private matcha ceremony, delivered in person, weekly or bi-weekly — we bring everything and guide the whole hour.</p>
+        </div>
+        <a href="home-visit.html" class="btn btn--ghost">Book an At-Home Session →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <p class="footer__brand">HARUKAZ</p>
+      <p>Toronto, Canada &nbsp;·&nbsp; <a href="mailto:info@harukazwellness.com" style="color:var(--gold);">info@harukazwellness.com</a></p>
+      <nav class="footer__links">
+        <a href="index.html">Home</a>
+        <a href="services.html">Experiences</a>
+        <a href="home-visit.html">At-Home</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

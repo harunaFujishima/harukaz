@@ -942,13 +942,15 @@ function renderTimeSlots() {
   const list = document.getElementById('slot-list');
   wrap.style.display = 'block';
 
-  const slots = availableEvents.filter(ev => {
-    const d = new Date(ev.start.dateTime);
-    return currentDate &&
-      d.getDate()     === currentDate.getDate() &&
-      d.getMonth()    === currentDate.getMonth() &&
-      d.getFullYear() === currentDate.getFullYear();
-  });
+  const toDateStr = d => new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Toronto', year: 'numeric', month: '2-digit', day: '2-digit'
+  }).format(new Date(d));
+
+  const selectedStr = currentDate ? toDateStr(currentDate) : null;
+
+  const slots = availableEvents.filter(ev =>
+    selectedStr && toDateStr(ev.start.dateTime) === selectedStr
+  );
 
   if (!slots.length) {
     list.innerHTML = '<span class="slot-msg">No available times on this date — please choose another day.</span>';
@@ -957,7 +959,9 @@ function renderTimeSlots() {
 
   list.innerHTML = slots.map(ev => {
     const d    = new Date(ev.start.dateTime);
-    const time = d.toLocaleTimeString('en-CA', { hour: 'numeric', minute: '2-digit', hour12: true });
+    const time = d.toLocaleTimeString('en-CA', {
+      timeZone: 'America/Toronto', hour: 'numeric', minute: '2-digit', hour12: true
+    });
     return `<button class="slot-btn" onclick="selectTime('${time}', this)">${time}</button>`;
   }).join('');
 }
