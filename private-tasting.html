@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HARUKAZ — Private Tea Ceremony</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0b0c09;
+    --ink-soft:#14170f;
+    --panel:#0f1109;
+    --matcha:#7c8c5b;
+    --matcha-bright:#a9bc7c;
+    --gold:#c9a96a;
+    --ivory:#f1ecdd;
+    --ivory-dim:#b3ac97;
+    --line: rgba(201,169,106,0.25);
+    --radius: 2px;
+  }
+
+  *{ box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--ivory);
+    font-family:'EB Garamond', serif;
+    font-size:17px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,.display{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:500;
+    letter-spacing:0.01em;
+  }
+
+  .eyebrow{
+    font-family:'EB Garamond', serif;
+    text-transform:uppercase;
+    letter-spacing:0.32em;
+    font-size:12px;
+    color:var(--gold);
+  }
+
+  a{ color:inherit; }
+
+  .wrap{
+    max-width:720px;
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  /* ---------- HERO ---------- */
+
+  .hero{
+    position:relative;
+    min-height:100svh;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    overflow:hidden;
+    background:
+      radial-gradient(circle at 50% 42%, rgba(124,140,91,0.14), transparent 60%),
+      linear-gradient(180deg, #0b0c09 0%, #0b0c09 70%, #0d0f08 100%);
+  }
+
+  .ripples{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    pointer-events:none;
+  }
+
+  .ripples svg{ width:min(720px, 140vw); height:auto; opacity:0.5; }
+
+  .ripples circle{
+    fill:none;
+    stroke:var(--gold);
+    stroke-width:0.6;
+    transform-origin:center;
+    animation:ripple 7s ease-out infinite;
+  }
+  .ripples circle:nth-child(2){ animation-delay:1.6s; }
+  .ripples circle:nth-child(3){ animation-delay:3.2s; }
+  .ripples circle:nth-child(4){ animation-delay:4.8s; }
+
+  @keyframes ripple{
+    0%   { r:6;   opacity:0; }
+    8%   { opacity:0.55; }
+    100% { r:200; opacity:0; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .ripples circle{ animation:none; opacity:0.18; }
+  }
+
+  .hero-top{
+    padding:36px 28px 0;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+
+  .brandmark{
+    font-family:'Cormorant Garamond', serif;
+    font-size:20px;
+    letter-spacing:0.24em;
+    color:var(--ivory);
+  }
+
+  .hero-body{
+    position:relative;
+    z-index:2;
+    text-align:center;
+    padding:0 28px;
+  }
+
+  .hero-body .eyebrow{ display:block; margin-bottom:22px; }
+
+  .hero-body h1{
+    font-size:clamp(34px, 7vw, 58px);
+    line-height:1.12;
+    margin:0 auto 26px;
+    max-width:11.5em;
+    color:var(--ivory);
+  }
+
+  .hero-body h1 em{
+    font-style:italic;
+    color:var(--matcha-bright);
+  }
+
+  .quote{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:19px;
+    color:var(--ivory-dim);
+    max-width:30em;
+    margin:0 auto 40px;
+  }
+
+  .cta{
+    display:inline-block;
+    font-family:'EB Garamond', serif;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    font-size:13px;
+    color:var(--ink);
+    background:var(--gold);
+    padding:16px 34px;
+    border-radius:var(--radius);
+    text-decoration:none;
+    border:1px solid var(--gold);
+    transition:background 0.25s ease, color 0.25s ease;
+  }
+
+  .cta:hover{ background:transparent; color:var(--gold); }
+  .cta:focus-visible{ outline:2px solid var(--matcha-bright); outline-offset:4px; }
+
+  .hero-bottom{
+    position:relative;
+    z-index:2;
+    text-align:center;
+    padding:0 0 34px;
+  }
+
+  .scroll-cue{
+    font-size:11px;
+    letter-spacing:0.3em;
+    text-transform:uppercase;
+    color:var(--ivory-dim);
+  }
+
+  /* ---------- NARRATIVE ---------- */
+
+  .narrative{
+    padding:110px 0 100px;
+    text-align:center;
+  }
+
+  .narrative p{
+    font-family:'Cormorant Garamond', serif;
+    font-size:clamp(20px, 3vw, 25px);
+    color:var(--ivory-dim);
+    margin:0 0 20px;
+  }
+
+  .narrative p:last-of-type{ color:var(--ivory); }
+
+  .trust{
+    list-style:none;
+    margin:56px 0 0;
+    padding:32px 0 0;
+    border-top:1px solid var(--line);
+    display:grid;
+    gap:18px;
+  }
+
+  .trust li{
+    font-size:15px;
+    color:var(--ivory-dim);
+    display:flex;
+    gap:12px;
+    justify-content:center;
+    align-items:baseline;
+  }
+
+  .trust li::before{
+    content:"·";
+    color:var(--gold);
+    font-size:22px;
+    line-height:0;
+  }
+
+  /* ---------- BOOKING ---------- */
+
+  .booking{
+    background:var(--ink-soft);
+    padding:100px 0 110px;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+
+  .booking h2{
+    text-align:center;
+    font-size:clamp(26px,4vw,34px);
+    margin:0 0 10px;
+  }
+
+  .booking .lede{
+    text-align:center;
+    color:var(--ivory-dim);
+    font-size:15px;
+    margin:0 0 48px;
+  }
+
+  .field-group{ margin-bottom:34px; }
+
+  .field-label{
+    display:block;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:0.2em;
+    color:var(--gold);
+    margin-bottom:14px;
+  }
+
+  .day-row{
+    display:flex;
+    gap:10px;
+    overflow-x:auto;
+    padding-bottom:6px;
+    -webkit-overflow-scrolling:touch;
+  }
+
+  .chip{
+    flex:0 0 auto;
+    background:transparent;
+    border:1px solid var(--line);
+    color:var(--ivory-dim);
+    font-family:'EB Garamond', serif;
+    font-size:14px;
+    padding:12px 16px;
+    border-radius:var(--radius);
+    cursor:pointer;
+    text-align:center;
+    min-width:64px;
+    transition:border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+  }
+
+  .chip .d{ display:block; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; opacity:0.75; }
+  .chip .n{ display:block; font-family:'Cormorant Garamond', serif; font-size:20px; margin-top:2px; color:inherit; }
+
+  .chip[aria-pressed="true"]{
+    border-color:var(--gold);
+    color:var(--ivory);
+    background:rgba(201,169,106,0.08);
+  }
+
+  .chip:focus-visible{ outline:2px solid var(--matcha-bright); outline-offset:2px; }
+
+  .slot-row{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(110px, 1fr));
+    gap:10px;
+  }
+
+  .slot{
+    background:transparent;
+    border:1px solid var(--line);
+    color:var(--ivory-dim);
+    font-family:'EB Garamond', serif;
+    font-size:14px;
+    padding:13px 10px;
+    border-radius:var(--radius);
+    cursor:pointer;
+    transition:border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+  }
+
+  .slot[aria-pressed="true"]{
+    border-color:var(--matcha-bright);
+    color:var(--ivory);
+    background:rgba(124,140,91,0.12);
+  }
+
+  .slot:focus-visible{ outline:2px solid var(--matcha-bright); outline-offset:2px; }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  textarea{
+    width:100%;
+    background:transparent;
+    border:none;
+    border-bottom:1px solid var(--line);
+    color:var(--ivory);
+    font-family:'EB Garamond', serif;
+    font-size:16px;
+    padding:10px 2px;
+    transition:border-color 0.2s ease;
+  }
+
+  input::placeholder, textarea::placeholder{ color:#6f6a5b; }
+
+  input:focus, textarea:focus{
+    outline:none;
+    border-color:var(--gold);
+  }
+
+  textarea{ resize:vertical; min-height:64px; }
+
+  .grid-2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:28px 24px;
+  }
+
+  @media (max-width:560px){
+    .grid-2{ grid-template-columns:1fr; }
+  }
+
+  .submit-row{
+    text-align:center;
+    margin-top:52px;
+  }
+
+  .submit-btn{
+    font-family:'EB Garamond', serif;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    font-size:13px;
+    color:var(--ink);
+    background:var(--gold);
+    padding:17px 40px;
+    border-radius:var(--radius);
+    border:1px solid var(--gold);
+    cursor:pointer;
+    transition:background 0.25s ease, color 0.25s ease;
+  }
+
+  .submit-btn:hover{ background:transparent; color:var(--gold); }
+  .submit-btn:focus-visible{ outline:2px solid var(--matcha-bright); outline-offset:4px; }
+
+  .reassure{
+    text-align:center;
+    color:var(--ivory-dim);
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:16px;
+    margin-top:22px;
+  }
+
+  .confirm{
+    display:none;
+    text-align:center;
+    padding:40px 0 0;
+  }
+
+  .confirm.show{ display:block; }
+
+  .confirm h3{
+    font-size:26px;
+    color:var(--matcha-bright);
+    margin:0 0 12px;
+  }
+
+  .confirm p{ color:var(--ivory-dim); font-size:15px; }
+
+  .booking-form.hide{ display:none; }
+
+  /* ---------- FOOTER ---------- */
+
+  footer{
+    padding:64px 0 48px;
+    text-align:center;
+  }
+
+  footer .brandmark{ display:block; margin-bottom:10px; }
+
+  footer .contact{
+    color:var(--ivory-dim);
+    font-size:14px;
+    letter-spacing:0.04em;
+  }
+
+  footer .contact a{ color:var(--gold); text-decoration:none; }
+
+  footer .fine{
+    margin-top:24px;
+    font-size:11px;
+    color:#6f6a5b;
+    letter-spacing:0.05em;
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="ripples" aria-hidden="true">
+    <svg viewBox="0 0 400 400">
+      <circle cx="200" cy="200" r="6"></circle>
+      <circle cx="200" cy="200" r="6"></circle>
+      <circle cx="200" cy="200" r="6"></circle>
+      <circle cx="200" cy="200" r="6"></circle>
+    </svg>
+  </div>
+
+  <div class="hero-top">
+    <span class="brandmark">HARUKAZ</span>
+  </div>
+
+  <div class="hero-body">
+    <span class="eyebrow">A Private Invitation</span>
+    <h1>The tea ceremony<br>worth stopping <em>time</em> for.</h1>
+    <p class="quote">True luxury isn't owning more. It's finally making time for yourself.</p>
+    <a href="#booking" class="cta">Reserve Your Private Tasting</a>
+  </div>
+
+  <div class="hero-bottom">
+    <span class="scroll-cue">Twenty minutes, at your door</span>
+  </div>
+</section>
+
+<section class="narrative">
+  <div class="wrap">
+    <p>You have built something rare. The house, the car, the view.</p>
+    <p>Somewhere along the way, the quiet got harder to find.</p>
+    <p>This is twenty minutes of it, brought to your door.</p>
+
+    <ul class="trust">
+      <li>No sales pitch, ever</li>
+      <li>Twenty minutes, in your own home</li>
+      <li>Ceremonial grade matcha, prepared for you</li>
+    </ul>
+  </div>
+</section>
+
+<section class="booking" id="booking">
+  <div class="wrap">
+    <h2>Choose Your Time</h2>
+    <p class="lede">Pick a day and a window that suits you. We'll confirm within one business day.</p>
+
+    <form class="booking-form" id="bookingForm" action="https://formspree.io/f/mbdvyqgz" method="POST" novalidate>
+      <div class="field-group">
+        <span class="field-label">Preferred Day</span>
+        <p class="lede" id="availLoading" style="text-align:left;margin:0 0 14px;">Loading available days…</p>
+        <div class="day-row" id="dayRow" role="group" aria-label="Select a day"></div>
+      </div>
+
+      <div class="field-group" id="slotGroup" style="display:none;">
+        <span class="field-label">Preferred Time</span>
+        <div class="slot-row" id="slotRow" role="group" aria-label="Select a time"></div>
+      </div>
+
+      <div class="grid-2">
+        <div class="field-group">
+          <span class="field-label">Name</span>
+          <input type="text" name="name" placeholder="Your full name" required>
+        </div>
+        <div class="field-group">
+          <span class="field-label">Address</span>
+          <input type="text" name="address" placeholder="Confirms you're within our visiting area" required>
+        </div>
+        <div class="field-group">
+          <span class="field-label">Email</span>
+          <input type="email" name="email" placeholder="you@example.com" required>
+        </div>
+        <div class="field-group">
+          <span class="field-label">Phone</span>
+          <input type="tel" name="phone" placeholder="(000) 000-0000">
+        </div>
+      </div>
+
+      <div class="field-group">
+        <span class="field-label">Anything We Should Know</span>
+        <textarea name="notes" placeholder="Allergies, preferences, or a good gate code"></textarea>
+      </div>
+
+      <div class="submit-row">
+        <button type="submit" class="submit-btn">Request My Private Tasting</button>
+        <p class="reassure">This visit is a gift of time, not a sales call. If matcha isn't for you, there's no obligation at all.</p>
+      </div>
+    </form>
+
+    <div class="confirm" id="confirmMsg">
+      <h3>Thank you.</h3>
+      <p>Your request has been received. We'll reach out within one business day to confirm your visit.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="brandmark">HARUKAZ</span>
+  <div class="contact">
+    Private Tea Ceremony &nbsp;·&nbsp; <a href="tel:+14372972618">(437) 297-2618</a> &nbsp;·&nbsp; Mon–Fri, 10 am – 6 pm
+  </div>
+  <div class="fine">This visiting area is limited. Requests are confirmed in the order received.</div>
+</footer>
+
+<script>
+  /* ══════════════════════════════════════════
+     HARUKAZ PRIVATE TASTING — live availability
+     Pulls open slots from the same Google Calendar
+     worker used by home-visit.html, so both pages
+     stay in sync with one shared calendar.
+  ══════════════════════════════════════════ */
+  const TZ = 'America/Toronto';
+  const dayNames  = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+  const dayRow      = document.getElementById('dayRow');
+  const availLoading = document.getElementById('availLoading');
+  const slotGroup   = document.getElementById('slotGroup');
+  const slotRow     = document.getElementById('slotRow');
+
+  let availableEvents = [];
+  let selectedDay  = null;  // { dateStr, label }
+  let selectedSlot = null;  // { label, startISO, endISO }
+
+  const toDateStr = iso => new Intl.DateTimeFormat('en-CA', {
+    timeZone: TZ, year: 'numeric', month: '2-digit', day: '2-digit'
+  }).format(new Date(iso));
+
+  async function fetchAvailability(){
+    try {
+      const res = await fetch('https://harukaz-booking-management.ringo144516.workers.dev');
+      if(!res.ok) throw new Error(res.status);
+      const data = await res.json();
+      if(data.slots && data.slots.length){
+        availableEvents = data.slots;
+        renderDays();
+      } else {
+        showNoAvailability();
+      }
+    } catch(err){
+      console.warn('Availability API error', err);
+      showNoAvailability();
+    }
+  }
+
+  function showNoAvailability(){
+    availLoading.textContent = 'No upcoming openings right now — email info@harukazwellness.com and we\'ll find a time.';
+  }
+
+  function renderDays(){
+    availLoading.style.display = 'none';
+
+    const byDate = new Map();
+    availableEvents.forEach(s => {
+      const dateStr = toDateStr(s.start);
+      if(!byDate.has(dateStr)) byDate.set(dateStr, []);
+      byDate.get(dateStr).push(s);
+    });
+
+    Array.from(byDate.keys()).sort().forEach(dateStr => {
+      const d = new Date(dateStr + 'T12:00:00');
+      const chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = 'chip';
+      chip.setAttribute('aria-pressed','false');
+      chip.dataset.date = dateStr;
+      chip.innerHTML = `<span class="d">${dayNames[d.getDay()]}</span><span class="n">${d.getDate()}</span>`;
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed','false'));
+        chip.setAttribute('aria-pressed','true');
+        selectedDay  = { dateStr, label: d.toLocaleDateString('en-CA', { weekday:'long', month:'long', day:'numeric' }) };
+        selectedSlot = null;
+        renderSlots(byDate.get(dateStr));
+      });
+      dayRow.appendChild(chip);
+    });
+  }
+
+  function renderSlots(daySlots){
+    slotGroup.style.display = 'block';
+    slotRow.innerHTML = '';
+    daySlots.forEach(s => {
+      const time = new Date(s.start).toLocaleTimeString('en-CA', {
+        timeZone: TZ, hour: 'numeric', minute: '2-digit', hour12: true
+      });
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'slot';
+      btn.setAttribute('aria-pressed','false');
+      btn.textContent = time;
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.slot').forEach(b => b.setAttribute('aria-pressed','false'));
+        btn.setAttribute('aria-pressed','true');
+        selectedSlot = { label: time, startISO: s.start, endISO: s.end };
+      });
+      slotRow.appendChild(btn);
+    });
+  }
+
+  document.getElementById('bookingForm').addEventListener('submit', async function(e){
+    e.preventDefault();
+
+    if(!selectedDay || !selectedSlot){
+      alert('Please choose a day and a time before submitting.');
+      return;
+    }
+
+    const btn = this.querySelector('.submit-btn');
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+
+    const formData = new FormData(this);
+    formData.set('_subject', 'HARUKAZ Private Tasting Request');
+    formData.set('preferred_date', selectedDay.label);
+    formData.set('preferred_time', selectedSlot.label);
+
+    try {
+      await fetch(this.action, {
+        method:  'POST',
+        body:    formData,
+        headers: { Accept: 'application/json' }
+      });
+    } catch(_) { /* silent — UX still proceeds */ }
+
+    this.classList.add('hide');
+    document.getElementById('confirmMsg').classList.add('show');
+    document.getElementById('confirmMsg').scrollIntoView({behavior:'smooth', block:'center'});
+  });
+
+  fetchAvailability();
+</script>
+
+</body>
+</html>
