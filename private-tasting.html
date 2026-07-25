@@ -503,12 +503,8 @@
 
       <div class="field-group">
         <span class="field-label">Preferred Time</span>
-        <div class="slot-row" role="group" aria-label="Select a time">
-          <button type="button" class="slot" data-slot="Morning · 10–11am">Morning<br>10 – 11 am</button>
-          <button type="button" class="slot" data-slot="Midday · 1–2pm">Midday<br>1 – 2 pm</button>
-          <button type="button" class="slot" data-slot="Afternoon · 3–4pm">Afternoon<br>3 – 4 pm</button>
-          <button type="button" class="slot" data-slot="Evening · 5–6pm">Evening<br>5 – 6 pm</button>
-        </div>
+        <p class="avail-status" id="slotStatus">Select a day above to see available times.</p>
+        <div class="slot-row" id="slotRow" role="group" aria-label="Select a time"></div>
       </div>
 
       <div class="grid-2">
@@ -558,19 +554,18 @@
 </footer>
 
 <script>
-  // ---------- Calendar: connects to the harukaz-booking-management Worker ----------
-  // That Worker is already bound to harukazwellness.com/api/availability and syncs
-  // with Google Calendar. This page calls it with a same-origin relative path, so it
-  // must be deployed under harukazwellness.com (any path) for this fetch to reach it.
-  // If the Worker lives elsewhere, replace AVAILABILITY_ENDPOINT with its full URL
-  // and make sure that Worker's CORS headers allow this page's origin.
-  const AVAILABILITY_ENDPOINT = '/api/availability';
+  // ---------- Calendar: connects to the same booking Worker as home-visit.html ----------
+  // Same Google Calendar, same Worker — so blocking time in either page keeps both in sync.
+  const AVAILABILITY_ENDPOINT = 'https://harukaz-booking-management.ringo144516.workers.dev';
+  const TZ = 'America/Toronto';
 
   const LEAD_DAYS = 3;     // minimum notice required before a visit (today + 3, not today or tomorrow)
   const WINDOW_DAYS = 14;  // how many days of choices to offer after the lead time
 
   const dayRow = document.getElementById('dayRow');
   const availStatus = document.getElementById('availStatus');
+  const slotRow = document.getElementById('slotRow');
+  const slotStatus = document.getElementById('slotStatus');
   const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 
   const today = new Date();
@@ -586,6 +581,10 @@
     return `${y}-${m}-${day}`;
   }
 
+  const toDateStr = iso => new Intl.DateTimeFormat('en-CA', {
+    timeZone: TZ, year: 'numeric', month: '2-digit', day: '2-digit'
+  }).format(new Date(iso));
+
   const candidates = [];
   for(let i = LEAD_DAYS; i < LEAD_DAYS + WINDOW_DAYS; i++){
     const d = new Date(today);
@@ -593,13 +592,14 @@
     candidates.push(d);
   }
 
-  function renderChips(availableSet){
-    // availableSet === null means "we don't know yet / couldn't load live data",
+  function renderChips(byDate){
+    // byDate === null means "we don't know yet / couldn't load live data",
     // so every candidate day is offered as requestable and confirmed by hand.
     dayRow.innerHTML = '';
     candidates.forEach(d => {
       const key = isoDate(d);
-      const open = availableSet ? availableSet.has(key) : true;
+      const daySlots = byDate ? (byDate.get(key) || []) : null;
+      const open = byDate ? daySlots.length > 0 : true;
       const chip = document.createElement('button');
       chip.type = 'button';
       chip.className = 'chip' + (open ? '' : ' unavailable');
@@ -615,9 +615,36 @@
           document.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed','false'));
           chip.setAttribute('aria-pressed','true');
           selectedDay = key;
+          selectedSlot = null;
+          renderSlots(daySlots || []);
         });
       }
       dayRow.appendChild(chip);
+    });
+  }
+
+  function renderSlots(daySlots){
+    slotRow.innerHTML = '';
+    if(!daySlots.length){
+      slotStatus.textContent = 'No times available on this day — please choose another.';
+      return;
+    }
+    slotStatus.textContent = 'Tap a time to select it.';
+    daySlots.forEach(s => {
+      const time = new Date(s.start).toLocaleTimeString('en-CA', {
+        timeZone: TZ, hour: 'numeric', minute: '2-digit', hour12: true
+      });
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'slot';
+      btn.setAttribute('aria-pressed','false');
+      btn.textContent = time;
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.slot').forEach(b => b.setAttribute('aria-pressed','false'));
+        btn.setAttribute('aria-pressed','true');
+        selectedSlot = { label: time, startISO: s.start, endISO: s.end };
+      });
+      slotRow.appendChild(btn);
     });
   }
 
@@ -627,12 +654,15 @@
   fetch(AVAILABILITY_ENDPOINT)
     .then(res => res.ok ? res.json() : Promise.reject(new Error('Availability request failed: ' + res.status)))
     .then(data => {
-      // Accepts a plain array of date strings, or an object with an "available" or
-      // "dates" array. Adjust this if the Worker's real response shape differs.
-      const list = Array.isArray(data) ? data : (data.available || data.dates || []);
-      const availableSet = new Set(list.map(v => (typeof v === 'string' ? v.slice(0,10) : v)));
-      availStatus.textContent = 'Highlighted dates are open. Tap to choose your time.';
-      renderChips(availableSet);
+      const slots = data.slots || [];
+      const byDate = new Map();
+      slots.forEach(s => {
+        const key = toDateStr(s.start);
+        if(!byDate.has(key)) byDate.set(key, []);
+        byDate.get(key).push(s);
+      });
+      availStatus.textContent = 'Highlighted dates are open. Tap to choose your day.';
+      renderChips(byDate);
     })
     .catch(err => {
       console.warn('Could not load live availability from the booking Worker:', err);
@@ -640,17 +670,15 @@
       renderChips(null);
     });
 
-  document.querySelectorAll('.slot').forEach(slot => {
-    slot.addEventListener('click', () => {
-      document.querySelectorAll('.slot').forEach(s => s.setAttribute('aria-pressed','false'));
-      slot.setAttribute('aria-pressed','true');
-      selectedSlot = slot.dataset.slot;
-    });
-  });
-
   // ---------- Submission and homepage redirect ----------
   document.getElementById('bookingForm').addEventListener('submit', function(e){
     e.preventDefault();
+
+    if(!selectedDay || !selectedSlot){
+      alert('Please choose a day and a time before submitting.');
+      return;
+    }
+
     // selectedDay / selectedSlot hold the chosen date (YYYY-MM-DD) and time window.
     // NOTE: this still needs to be wired to actually send the request (to the booking
     // Worker, an email webhook, etc.) so the practitioner receives it.
@@ -668,7 +696,7 @@
       if(countdownEl) countdownEl.textContent = seconds;
       if(seconds <= 0){
         clearInterval(redirectTimer);
-        window.location.href = '/';
+        window.location.href = 'https://harukazwellness.com/';
       }
     }, 1000);
   });
