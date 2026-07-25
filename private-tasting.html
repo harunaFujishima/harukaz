@@ -466,8 +466,10 @@
 
 <section class="booking" id="booking">
   <div class="wrap">
-    <h2>Choose Your Time</h2>
-    <p class="lede">Pick a day and a window that suits you. We'll confirm within one business day.</p>
+    <div id="bookingIntro">
+      <h2>Choose Your Time</h2>
+      <p class="lede">Pick a day and a window that suits you. We'll confirm within one business day.</p>
+    </div>
 
     <form class="booking-form" id="bookingForm" action="https://formspree.io/f/mbdvyqgz" method="POST" novalidate>
       <div class="field-group">
@@ -646,6 +648,7 @@
     } catch(_) { /* silent — UX still proceeds */ }
 
     this.classList.add('hide');
+    document.getElementById('bookingIntro').style.display = 'none';
     document.getElementById('confirmMsg').classList.add('show');
     document.getElementById('confirmMsg').scrollIntoView({behavior:'smooth', block:'center'});
   });
