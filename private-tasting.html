@@ -254,6 +254,12 @@
     margin-bottom:14px;
   }
 
+  .avail-status{
+    font-size:13px;
+    color:var(--ivory-dim);
+    margin:0 0 14px;
+  }
+
   .day-row{
     display:flex;
     gap:10px;
@@ -284,6 +290,11 @@
     border-color:var(--gold);
     color:var(--ivory);
     background:rgba(201,169,106,0.08);
+  }
+
+  .chip.unavailable{
+    opacity:0.32;
+    cursor:not-allowed;
   }
 
   .chip:focus-visible{ outline:2px solid var(--matcha-bright); outline-offset:2px; }
@@ -395,7 +406,19 @@
 
   .confirm p{ color:var(--ivory-dim); font-size:15px; }
 
-  .booking-form.hide{ display:none; }
+  .confirm .redirect-note{
+    margin-top:24px;
+    font-size:13px;
+    color:var(--ivory-dim);
+  }
+
+  .confirm .redirect-note #countdown{
+    color:var(--gold);
+    font-weight:600;
+  }
+
+  .booking-form.hide,
+  .booking-intro.hide{ display:none; }
 
   /* ---------- FOOTER ---------- */
 
@@ -466,21 +489,26 @@
 
 <section class="booking" id="booking">
   <div class="wrap">
-    <div id="bookingIntro">
+    <div class="booking-intro" id="bookingIntro">
       <h2>Choose Your Time</h2>
       <p class="lede">Pick a day and a window that suits you. We'll confirm within one business day.</p>
     </div>
 
-    <form class="booking-form" id="bookingForm" action="https://formspree.io/f/mbdvyqgz" method="POST" novalidate>
+    <form class="booking-form" id="bookingForm">
       <div class="field-group">
         <span class="field-label">Preferred Day</span>
-        <p class="lede" id="availLoading" style="text-align:left;margin:0 0 14px;">Loading available days…</p>
+        <p class="avail-status" id="availStatus">Loading availability…</p>
         <div class="day-row" id="dayRow" role="group" aria-label="Select a day"></div>
       </div>
 
-      <div class="field-group" id="slotGroup" style="display:none;">
+      <div class="field-group">
         <span class="field-label">Preferred Time</span>
-        <div class="slot-row" id="slotRow" role="group" aria-label="Select a time"></div>
+        <div class="slot-row" role="group" aria-label="Select a time">
+          <button type="button" class="slot" data-slot="Morning · 10–11am">Morning<br>10 – 11 am</button>
+          <button type="button" class="slot" data-slot="Midday · 1–2pm">Midday<br>1 – 2 pm</button>
+          <button type="button" class="slot" data-slot="Afternoon · 3–4pm">Afternoon<br>3 – 4 pm</button>
+          <button type="button" class="slot" data-slot="Evening · 5–6pm">Evening<br>5 – 6 pm</button>
+        </div>
       </div>
 
       <div class="grid-2">
@@ -516,6 +544,7 @@
     <div class="confirm" id="confirmMsg">
       <h3>Thank you.</h3>
       <p>Your request has been received. We'll reach out within one business day to confirm your visit.</p>
+      <p class="redirect-note">You will be automatically redirected to our homepage in <span id="countdown">15</span> seconds.</p>
     </div>
   </div>
 </section>
@@ -529,131 +558,120 @@
 </footer>
 
 <script>
-  /* ══════════════════════════════════════════
-     HARUKAZ PRIVATE TASTING — live availability
-     Pulls open slots from the same Google Calendar
-     worker used by home-visit.html, so both pages
-     stay in sync with one shared calendar.
-  ══════════════════════════════════════════ */
-  const TZ = 'America/Toronto';
-  const dayNames  = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  // ---------- Calendar: connects to the harukaz-booking-management Worker ----------
+  // That Worker is already bound to harukazwellness.com/api/availability and syncs
+  // with Google Calendar. This page calls it with a same-origin relative path, so it
+  // must be deployed under harukazwellness.com (any path) for this fetch to reach it.
+  // If the Worker lives elsewhere, replace AVAILABILITY_ENDPOINT with its full URL
+  // and make sure that Worker's CORS headers allow this page's origin.
+  const AVAILABILITY_ENDPOINT = '/api/availability';
 
-  const dayRow      = document.getElementById('dayRow');
-  const availLoading = document.getElementById('availLoading');
-  const slotGroup   = document.getElementById('slotGroup');
-  const slotRow     = document.getElementById('slotRow');
+  const LEAD_DAYS = 3;     // minimum notice required before a visit (today + 3, not today or tomorrow)
+  const WINDOW_DAYS = 14;  // how many days of choices to offer after the lead time
 
-  let availableEvents = [];
-  let selectedDay  = null;  // { dateStr, label }
-  let selectedSlot = null;  // { label, startISO, endISO }
+  const dayRow = document.getElementById('dayRow');
+  const availStatus = document.getElementById('availStatus');
+  const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 
-  const toDateStr = iso => new Intl.DateTimeFormat('en-CA', {
-    timeZone: TZ, year: 'numeric', month: '2-digit', day: '2-digit'
-  }).format(new Date(iso));
+  const today = new Date();
+  today.setHours(0,0,0,0);
 
-  async function fetchAvailability(){
-    try {
-      const res = await fetch('https://harukaz-booking-management.ringo144516.workers.dev');
-      if(!res.ok) throw new Error(res.status);
-      const data = await res.json();
-      if(data.slots && data.slots.length){
-        availableEvents = data.slots;
-        renderDays();
-      } else {
-        showNoAvailability();
-      }
-    } catch(err){
-      console.warn('Availability API error', err);
-      showNoAvailability();
-    }
+  let selectedDay = null;
+  let selectedSlot = null;
+
+  function isoDate(d){
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2,'0');
+    const day = String(d.getDate()).padStart(2,'0');
+    return `${y}-${m}-${day}`;
   }
 
-  function showNoAvailability(){
-    availLoading.textContent = 'No upcoming openings right now — email info@harukazwellness.com and we\'ll find a time.';
+  const candidates = [];
+  for(let i = LEAD_DAYS; i < LEAD_DAYS + WINDOW_DAYS; i++){
+    const d = new Date(today);
+    d.setDate(today.getDate() + i);
+    candidates.push(d);
   }
 
-  function renderDays(){
-    availLoading.style.display = 'none';
-
-    const byDate = new Map();
-    availableEvents.forEach(s => {
-      const dateStr = toDateStr(s.start);
-      if(!byDate.has(dateStr)) byDate.set(dateStr, []);
-      byDate.get(dateStr).push(s);
-    });
-
-    Array.from(byDate.keys()).sort().forEach(dateStr => {
-      const d = new Date(dateStr + 'T12:00:00');
+  function renderChips(availableSet){
+    // availableSet === null means "we don't know yet / couldn't load live data",
+    // so every candidate day is offered as requestable and confirmed by hand.
+    dayRow.innerHTML = '';
+    candidates.forEach(d => {
+      const key = isoDate(d);
+      const open = availableSet ? availableSet.has(key) : true;
       const chip = document.createElement('button');
       chip.type = 'button';
-      chip.className = 'chip';
+      chip.className = 'chip' + (open ? '' : ' unavailable');
       chip.setAttribute('aria-pressed','false');
-      chip.dataset.date = dateStr;
+      chip.dataset.date = key;
+      if(!open){
+        chip.disabled = true;
+        chip.setAttribute('aria-disabled','true');
+      }
       chip.innerHTML = `<span class="d">${dayNames[d.getDay()]}</span><span class="n">${d.getDate()}</span>`;
-      chip.addEventListener('click', () => {
-        document.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed','false'));
-        chip.setAttribute('aria-pressed','true');
-        selectedDay  = { dateStr, label: d.toLocaleDateString('en-CA', { weekday:'long', month:'long', day:'numeric' }) };
-        selectedSlot = null;
-        renderSlots(byDate.get(dateStr));
-      });
+      if(open){
+        chip.addEventListener('click', () => {
+          document.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed','false'));
+          chip.setAttribute('aria-pressed','true');
+          selectedDay = key;
+        });
+      }
       dayRow.appendChild(chip);
     });
   }
 
-  function renderSlots(daySlots){
-    slotGroup.style.display = 'block';
-    slotRow.innerHTML = '';
-    daySlots.forEach(s => {
-      const time = new Date(s.start).toLocaleTimeString('en-CA', {
-        timeZone: TZ, hour: 'numeric', minute: '2-digit', hour12: true
-      });
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'slot';
-      btn.setAttribute('aria-pressed','false');
-      btn.textContent = time;
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.slot').forEach(b => b.setAttribute('aria-pressed','false'));
-        btn.setAttribute('aria-pressed','true');
-        selectedSlot = { label: time, startISO: s.start, endISO: s.end };
-      });
-      slotRow.appendChild(btn);
+  // Show every candidate as tentatively selectable while we wait on the live data.
+  renderChips(null);
+
+  fetch(AVAILABILITY_ENDPOINT)
+    .then(res => res.ok ? res.json() : Promise.reject(new Error('Availability request failed: ' + res.status)))
+    .then(data => {
+      // Accepts a plain array of date strings, or an object with an "available" or
+      // "dates" array. Adjust this if the Worker's real response shape differs.
+      const list = Array.isArray(data) ? data : (data.available || data.dates || []);
+      const availableSet = new Set(list.map(v => (typeof v === 'string' ? v.slice(0,10) : v)));
+      availStatus.textContent = 'Highlighted dates are open. Tap to choose your time.';
+      renderChips(availableSet);
+    })
+    .catch(err => {
+      console.warn('Could not load live availability from the booking Worker:', err);
+      availStatus.textContent = "We'll confirm your exact date and time by email or phone.";
+      renderChips(null);
     });
-  }
 
-  document.getElementById('bookingForm').addEventListener('submit', async function(e){
-    e.preventDefault();
-
-    if(!selectedDay || !selectedSlot){
-      alert('Please choose a day and a time before submitting.');
-      return;
-    }
-
-    const btn = this.querySelector('.submit-btn');
-    btn.textContent = 'Sending…';
-    btn.disabled = true;
-
-    const formData = new FormData(this);
-    formData.set('_subject', 'HARUKAZ Private Tasting Request');
-    formData.set('preferred_date', selectedDay.label);
-    formData.set('preferred_time', selectedSlot.label);
-
-    try {
-      await fetch(this.action, {
-        method:  'POST',
-        body:    formData,
-        headers: { Accept: 'application/json' }
-      });
-    } catch(_) { /* silent — UX still proceeds */ }
-
-    this.classList.add('hide');
-    document.getElementById('bookingIntro').style.display = 'none';
-    document.getElementById('confirmMsg').classList.add('show');
-    document.getElementById('confirmMsg').scrollIntoView({behavior:'smooth', block:'center'});
+  document.querySelectorAll('.slot').forEach(slot => {
+    slot.addEventListener('click', () => {
+      document.querySelectorAll('.slot').forEach(s => s.setAttribute('aria-pressed','false'));
+      slot.setAttribute('aria-pressed','true');
+      selectedSlot = slot.dataset.slot;
+    });
   });
 
-  fetchAvailability();
+  // ---------- Submission and homepage redirect ----------
+  document.getElementById('bookingForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    // selectedDay / selectedSlot hold the chosen date (YYYY-MM-DD) and time window.
+    // NOTE: this still needs to be wired to actually send the request (to the booking
+    // Worker, an email webhook, etc.) so the practitioner receives it.
+    this.classList.add('hide');
+    document.getElementById('bookingIntro').classList.add('hide');
+
+    const confirmMsg = document.getElementById('confirmMsg');
+    confirmMsg.classList.add('show');
+    confirmMsg.scrollIntoView({behavior:'smooth', block:'center'});
+
+    let seconds = 15;
+    const countdownEl = document.getElementById('countdown');
+    const redirectTimer = setInterval(() => {
+      seconds -= 1;
+      if(countdownEl) countdownEl.textContent = seconds;
+      if(seconds <= 0){
+        clearInterval(redirectTimer);
+        window.location.href = '/';
+      }
+    }, 1000);
+  });
 </script>
 
 </body>
